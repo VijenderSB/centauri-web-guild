@@ -1,0 +1,77 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { PageShell, PageHero, Section, SectionHeading, CtaBand } from "@/components/site/PageShell";
+import { Code2, Wrench, Layers, ShoppingCart, TrendingUp, Gauge, Users2, Siren, CheckCircle2, ArrowRight } from "lucide-react";
+
+export const Route = createFileRoute("/services")({
+  head: () => ({
+    meta: [
+      { title: "Services — Web Development, SEO, Maintenance & Dedicated Teams | WebCentauri" },
+      { name: "description", content: "Full-service technology partner: website development, maintenance, WordPress, eCommerce, SEO, performance, security, and dedicated developers for USA & Canada businesses." },
+      { property: "og:title", content: "WebCentauri Services" },
+      { property: "og:description", content: "Eight integrated service lines, one accountable partner." },
+      { property: "og:url", content: "/services" },
+    ],
+    links: [{ rel: "canonical", href: "/services" }],
+  }),
+  component: ServicesPage,
+});
+
+const SERVICES = [
+  { icon: Code2, title: "Website Development", desc: "Custom websites, corporate sites, web apps, redesigns, and migrations engineered for performance and scale.", items: ["Custom Websites","Corporate Websites","Business Websites","Website Redesign","Website Migration","Custom Web Applications"] },
+  { icon: Wrench, title: "Website Maintenance", desc: "Stay secure, fast, and online. Monthly care plans with backups, monitoring, updates, and dev time.", items: ["Security Updates","Daily Backups","Uptime Monitoring","Bug Fixes","Performance Optimization","Monthly Reporting"] },
+  { icon: Layers, title: "WordPress Services", desc: "Senior WordPress specialists for WooCommerce, custom plugins, theme work, hardening, and speed.", items: ["WooCommerce","Custom Plugins","Theme Customization","WordPress Support","Speed Optimization","Security Hardening"] },
+  { icon: ShoppingCart, title: "eCommerce Solutions", desc: "Launch, optimize, and scale stores on Shopify, WooCommerce, or Magento. Build conversions, not just features.", items: ["Shopify","WooCommerce","Magento","Store Optimization","Checkout Improvements","Conversion Optimization"] },
+  { icon: TrendingUp, title: "SEO & Growth Marketing", desc: "Technical, local, and content SEO plus paid acquisition — built around your real revenue goals.", items: ["Technical SEO","Local SEO","Content SEO","Google Ads","Meta Ads","Landing Page Optimization"] },
+  { icon: Gauge, title: "Performance & Security", desc: "Core Web Vitals, Cloudflare configuration, malware removal, audits, and incident recovery.", items: ["Website Speed Optimization","Core Web Vitals","Cloudflare Setup","Malware Removal","Security Audits","Website Recovery"] },
+  { icon: Users2, title: "Dedicated Development Teams", desc: "Scale engineering without the hiring lift. Embedded senior developers and full project teams.", items: ["Dedicated Developer","Dedicated Senior Developer","Dedicated Project Team","Ongoing Technical Support"] },
+  { icon: Siren, title: "Emergency Website Support", desc: "Under-60-minute response for site outages, malware, and critical issues — 24/7.", items: ["Broken Website Recovery","Website Down Support","Malware Removal","Critical Issue Resolution","Emergency Technical Assistance"] },
+];
+
+function ServicesPage() {
+  return (
+    <PageShell>
+      <PageHero
+        eyebrow="Services"
+        title="Everything you need to build, run, and grow your digital presence."
+        subtitle="One accountable partner across development, maintenance, SEO, performance, security, and dedicated engineering."
+      />
+      <Section>
+        <div className="grid lg:grid-cols-2 gap-6">
+          {SERVICES.map(({ icon: Icon, title, desc, items }) => (
+            <div key={title} className="p-7 rounded-2xl border border-border bg-card" style={{ boxShadow: "var(--shadow-card)" }}>
+              <div className="flex items-start gap-4">
+                <div className="grid h-12 w-12 place-items-center rounded-xl shrink-0" style={{ background: "var(--gradient-primary)" }}>
+                  <Icon className="h-6 w-6 text-primary-foreground" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-xl font-semibold">{title}</h3>
+                  <p className="mt-1 text-sm text-muted-foreground">{desc}</p>
+                </div>
+              </div>
+              <ul className="mt-5 grid grid-cols-2 gap-2 text-sm">
+                {items.map((i) => (
+                  <li key={i} className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-primary mt-0.5 shrink-0" /><span>{i}</span></li>
+                ))}
+              </ul>
+              <Link to="/contact" className="mt-6 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:gap-2 transition-all">
+                Discuss this service <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          ))}
+        </div>
+      </Section>
+      <Section bg="muted">
+        <SectionHeading eyebrow="Our Process" title="Discovery → Growth, every time" subtitle="A consistent 8-step methodology built over 15+ years and 500+ projects." />
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {["Discovery","Audit","Planning","Development","Testing","Launch","Support","Growth"].map((s, i) => (
+            <div key={s} className="p-5 rounded-xl border border-border bg-card">
+              <div className="text-3xl font-bold text-primary/30">{String(i+1).padStart(2,"0")}</div>
+              <div className="font-semibold mt-2">{s}</div>
+            </div>
+          ))}
+        </div>
+      </Section>
+      <CtaBand />
+    </PageShell>
+  );
+}
