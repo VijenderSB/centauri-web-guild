@@ -6,13 +6,13 @@ import { Mail, Phone, MessageSquare, Siren, Calendar, CheckCircle2 } from "lucid
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — Book a Consultation or Request Emergency Support | WebCentauri" },
-      { name: "description", content: "Get in touch with WebCentauri. Book a free consultation, request a website audit, or get emergency support for downtime, hacks, or critical bugs." },
+      { title: "Contact — Book Consultation or Get Support | WebCentauri" },
+      { name: "description", content: "Book a free consultation, request a website audit, or get 24/7 emergency support for downtime, hacks, or critical bugs." },
       { property: "og:title", content: "Contact WebCentauri" },
       { property: "og:description", content: "Book a consultation, request an audit, or get emergency support." },
-      { property: "og:url", content: "/contact" },
+      { property: "og:url", content: "https://centauri-web-guild.lovable.app/contact" },
     ],
-    links: [{ rel: "canonical", href: "/contact" }],
+    links: [{ rel: "canonical", href: "https://centauri-web-guild.lovable.app/contact" }],
   }),
   component: ContactPage,
 });

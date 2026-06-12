@@ -1,17 +1,17 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { PageShell, PageHero, Section, CtaBand } from "@/components/site/PageShell";
+import { PageShell, PageHero, Section, SectionHeading, CtaBand } from "@/components/site/PageShell";
 import { ArrowRight, TrendingUp } from "lucide-react";
 
 export const Route = createFileRoute("/case-studies")({
   head: () => ({
     meta: [
       { title: "Case Studies — Real Client Results | WebCentauri" },
-      { name: "description", content: "Real projects, real results. See how WebCentauri delivers measurable outcomes for clients across healthcare, eCommerce, legal, real estate, and more." },
+      { name: "description", content: "Real projects, real results. See how WebCentauri delivers measurable outcomes across healthcare, eCommerce, legal, and more." },
       { property: "og:title", content: "Case Studies — WebCentauri" },
       { property: "og:description", content: "Outcome-driven case studies from across USA & Canada." },
-      { property: "og:url", content: "/case-studies" },
+      { property: "og:url", content: "https://centauri-web-guild.lovable.app/case-studies" },
     ],
-    links: [{ rel: "canonical", href: "/case-studies" }],
+    links: [{ rel: "canonical", href: "https://centauri-web-guild.lovable.app/case-studies" }],
   }),
   component: CaseStudiesPage,
 });
@@ -36,6 +36,11 @@ function CaseStudiesPage() {
     <PageShell>
       <PageHero eyebrow="Case Studies" title="Real projects. Real results." subtitle="A sample of the work we've shipped for clients across USA & Canada." />
       <Section>
+        <SectionHeading
+          eyebrow="Selected Work"
+          title="Outcomes our clients can measure"
+          subtitle="A cross-section of recent engagements with the metrics that mattered to each client."
+        />
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {CASES.map(([title, loc, metric, summary, tag]) => (
             <Link to="/contact" key={title} className="group p-6 rounded-2xl border border-border bg-card hover:border-primary/40 transition-all flex flex-col" style={{ boxShadow: "var(--shadow-card)" }}>

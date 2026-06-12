@@ -5,13 +5,13 @@ import { Target, Eye, Heart, Globe2, Users2, ShieldCheck } from "lucide-react";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About — Long-Term Technology Partner for USA & Canada | WebCentauri" },
-      { name: "description", content: "WebCentauri is a long-term technology partner — not a web agency. Learn our mission, values, and why North American businesses stay with us for years." },
+      { title: "About — Long-Term Tech Partner | WebCentauri" },
+      { name: "description", content: "WebCentauri is a long-term technology partner — not a web agency. Learn our mission, values, and why clients stay for years." },
       { property: "og:title", content: "About WebCentauri" },
       { property: "og:description", content: "A reliable, accountable technology partner — not a freelance shop." },
-      { property: "og:url", content: "/about" },
+      { property: "og:url", content: "https://centauri-web-guild.lovable.app/about" },
     ],
-    links: [{ rel: "canonical", href: "/about" }],
+    links: [{ rel: "canonical", href: "https://centauri-web-guild.lovable.app/about" }],
   }),
   component: AboutPage,
 });

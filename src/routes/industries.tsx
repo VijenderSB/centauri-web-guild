@@ -1,17 +1,17 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { PageShell, PageHero, Section, CtaBand } from "@/components/site/PageShell";
+import { PageShell, PageHero, Section, SectionHeading, CtaBand } from "@/components/site/PageShell";
 import { Stethoscope, Scale, Building2, Hammer, Calculator, Factory, Briefcase, HomeIcon, ShoppingCart, Heart, Wrench, ArrowRight } from "lucide-react";
 
 export const Route = createFileRoute("/industries")({
   head: () => ({
     meta: [
-      { title: "Industries We Serve — Healthcare, Legal, eCommerce, Real Estate & More | WebCentauri" },
-      { name: "description", content: "Specialized web, SEO, and support solutions for healthcare, dental, legal, real estate, construction, eCommerce, accounting, manufacturing and more across USA & Canada." },
-      { property: "og:title", content: "Industries — WebCentauri" },
+      { title: "Industries — Healthcare, Legal, eCommerce | WebCentauri" },
+      { name: "description", content: "Web, SEO, and support for healthcare, legal, real estate, eCommerce, accounting, manufacturing and more across USA & Canada." },
+      { property: "og:title", content: "Industries We Serve — WebCentauri" },
       { property: "og:description", content: "Deep experience across regulated and service industries." },
-      { property: "og:url", content: "/industries" },
+      { property: "og:url", content: "https://centauri-web-guild.lovable.app/industries" },
     ],
-    links: [{ rel: "canonical", href: "/industries" }],
+    links: [{ rel: "canonical", href: "https://centauri-web-guild.lovable.app/industries" }],
   }),
   component: IndustriesPage,
 });
@@ -40,6 +40,11 @@ function IndustriesPage() {
         subtitle="500+ projects across regulated, service, retail, and B2B verticals — we speak your industry's language."
       />
       <Section>
+        <SectionHeading
+          eyebrow="Verticals"
+          title="Specialized solutions for the industries we serve"
+          subtitle="Pick your industry to see how we apply our development, SEO, and support expertise to your sector."
+        />
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {INDUSTRIES.map(([Icon, name, desc]) => (
             <Link to="/contact" key={name as string} className="group p-6 rounded-2xl border border-border bg-card hover:border-primary/40 transition-all" style={{ boxShadow: "var(--shadow-card)" }}>

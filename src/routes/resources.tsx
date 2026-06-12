@@ -5,13 +5,27 @@ import { BookOpen, FileText, ListChecks, Shield, Gauge, TrendingUp, ArrowRight }
 export const Route = createFileRoute("/resources")({
   head: () => ({
     meta: [
-      { title: "Resources — Guides, Checklists & Insights | WebCentauri" },
-      { name: "description", content: "Practical guides, checklists, and resources on website maintenance, SEO, security, performance, and growth — from WebCentauri." },
+      { title: "Resources — Guides & Checklists | WebCentauri" },
+      { name: "description", content: "Practical guides, checklists, and insights on website maintenance, SEO, security, performance, and growth." },
       { property: "og:title", content: "Resources — WebCentauri" },
       { property: "og:description", content: "Guides, checklists, and insights for growing businesses." },
-      { property: "og:url", content: "/resources" },
+      { property: "og:url", content: "https://centauri-web-guild.lovable.app/resources" },
     ],
-    links: [{ rel: "canonical", href: "/resources" }],
+    links: [{ rel: "canonical", href: "https://centauri-web-guild.lovable.app/resources" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: FAQS.map(([q, a]) => ({
+            "@type": "Question",
+            name: q,
+            acceptedAnswer: { "@type": "Answer", text: a },
+          })),
+        }),
+      },
+    ],
   }),
   component: ResourcesPage,
 });

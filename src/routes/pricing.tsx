@@ -5,13 +5,13 @@ import { CheckCircle2 } from "lucide-react";
 export const Route = createFileRoute("/pricing")({
   head: () => ({
     meta: [
-      { title: "Pricing — Transparent Website, SEO & Dev Team Pricing (USD) | WebCentauri" },
-      { name: "description", content: "Transparent USD pricing for website development, maintenance care plans, SEO retainers, and dedicated developers. No hidden fees, no surprises." },
+      { title: "Pricing — Website, SEO & Dev Teams (USD) | WebCentauri" },
+      { name: "description", content: "Transparent USD pricing for website development, maintenance, SEO retainers, and dedicated developers. No hidden fees." },
       { property: "og:title", content: "Pricing — WebCentauri" },
       { property: "og:description", content: "Predictable USD pricing for projects, retainers, and teams." },
-      { property: "og:url", content: "/pricing" },
+      { property: "og:url", content: "https://centauri-web-guild.lovable.app/pricing" },
     ],
-    links: [{ rel: "canonical", href: "/pricing" }],
+    links: [{ rel: "canonical", href: "https://centauri-web-guild.lovable.app/pricing" }],
   }),
   component: PricingPage,
 });
