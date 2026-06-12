@@ -80,10 +80,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "WebCentauri Technologies — Reliable Technology & Digital Growth Partner" },
       { name: "description", content: "WebCentauri helps USA & Canada businesses build, maintain, secure, and grow their websites with dedicated developers, SEO, and 24/7 support." },
       { name: "author", content: "WebCentauri Technologies" },
-      { property: "og:title", content: "WebCentauri Technologies" },
-      { property: "og:description", content: "Your reliable technology and digital growth partner across USA & Canada." },
+      { property: "og:title", content: "WebCentauri Technologies — Reliable Technology & Digital Growth Partner" },
+      { property: "og:description", content: "WebCentauri helps USA & Canada businesses build, maintain, secure, and grow their websites with dedicated developers, SEO, and 24/7 support." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
+      { name: "twitter:title", content: "WebCentauri Technologies — Reliable Technology & Digital Growth Partner" },
+      { name: "twitter:description", content: "WebCentauri helps USA & Canada businesses build, maintain, secure, and grow their websites with dedicated developers, SEO, and 24/7 support." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a83a7a95-9e62-4f9a-95cd-5aea71a23d0c/id-preview-b407ac3b--f4883ad5-8b73-41bf-8a8d-c1784616ffd4.lovable.app-1781291709920.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a83a7a95-9e62-4f9a-95cd-5aea71a23d0c/id-preview-b407ac3b--f4883ad5-8b73-41bf-8a8d-c1784616ffd4.lovable.app-1781291709920.png" },
     ],
     links: [
       {
