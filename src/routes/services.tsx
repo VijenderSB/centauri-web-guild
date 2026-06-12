@@ -5,13 +5,30 @@ import { Code2, Wrench, Layers, ShoppingCart, TrendingUp, Gauge, Users2, Siren, 
 export const Route = createFileRoute("/services")({
   head: () => ({
     meta: [
-      { title: "Services — Web Development, SEO, Maintenance & Dedicated Teams | WebCentauri" },
-      { name: "description", content: "Full-service technology partner: website development, maintenance, WordPress, eCommerce, SEO, performance, security, and dedicated developers for USA & Canada businesses." },
-      { property: "og:title", content: "WebCentauri Services" },
+      { title: "Services — Web, SEO & Dedicated Teams | WebCentauri" },
+      { name: "description", content: "Website development, maintenance, WordPress, eCommerce, SEO, performance, and dedicated developers for USA & Canada businesses." },
+      { property: "og:title", content: "WebCentauri Services — Web, SEO & Teams" },
       { property: "og:description", content: "Eight integrated service lines, one accountable partner." },
-      { property: "og:url", content: "/services" },
+      { property: "og:url", content: "https://centauri-web-guild.lovable.app/services" },
     ],
-    links: [{ rel: "canonical", href: "/services" }],
+    links: [{ rel: "canonical", href: "https://centauri-web-guild.lovable.app/services" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          itemListElement: SERVICES.map((s, i) => ({
+            "@type": "Service",
+            position: i + 1,
+            name: s.title,
+            description: s.desc,
+            provider: { "@type": "Organization", name: "WebCentauri Technologies" },
+            areaServed: ["United States", "Canada"],
+          })),
+        }),
+      },
+    ],
   }),
   component: ServicesPage,
 });
@@ -44,7 +61,7 @@ function ServicesPage() {
                   <Icon className="h-6 w-6 text-primary-foreground" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-xl font-semibold">{title}</h3>
+                  <h2 className="text-xl font-semibold">{title}</h2>
                   <p className="mt-1 text-sm text-muted-foreground">{desc}</p>
                 </div>
               </div>

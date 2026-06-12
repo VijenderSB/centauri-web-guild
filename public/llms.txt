@@ -1,0 +1,21 @@
+# WebCentauri Technologies
+
+> Reliable technology and digital growth partner for USA & Canada businesses — web development, maintenance, SEO, dedicated developers, and 24/7 emergency support.
+
+WebCentauri Technologies helps small and mid-sized businesses across the United States and Canada build, maintain, secure, optimize, and grow their digital presence. 15+ years experience, 500+ projects delivered, 95% client retention.
+
+## Pages
+
+- [Home](/): Overview of WebCentauri's services, positioning, and trust signals.
+- [Services](/services): Website development, maintenance, WordPress, eCommerce, SEO, performance & security, dedicated developers, and emergency support.
+- [Industries](/industries): Healthcare, dental, legal, real estate, construction, home services, finance, accounting, manufacturing, eCommerce, professional services, nonprofits.
+- [Pricing](/pricing): Transparent USD pricing for website projects, monthly care plans, SEO retainers, and dedicated developers.
+- [Case Studies](/case-studies): Real client outcomes across multiple verticals.
+- [Resources](/resources): Guides, checklists, and 30 frequently asked questions.
+- [About](/about): Story, mission, vision, values, and team.
+- [Contact](/contact): Book a consultation, request an audit, or get emergency support.
+
+## Optional
+
+- [Sitemap](/sitemap.xml): XML sitemap of all public pages.
+- [Robots](/robots.txt): Crawler directives.

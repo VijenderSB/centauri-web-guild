@@ -10,13 +10,24 @@ import {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "WebCentauri Technologies — Reliable Web, SEO & Support Partner | USA & Canada" },
-      { name: "description", content: "Trusted technology partner for USA & Canada businesses. Web development, maintenance, SEO, dedicated developers, emergency support — built for long-term partnerships." },
-      { property: "og:title", content: "WebCentauri Technologies" },
-      { property: "og:description", content: "Build, maintain, secure, optimize, and grow your digital presence with a reliable USA & Canada-focused technology partner." },
-      { property: "og:url", content: "/" },
+      { title: "WebCentauri — Web, SEO & Support Partner (USA & Canada)" },
+      { name: "description", content: "Trusted USA & Canada technology partner for web development, maintenance, SEO, dedicated developers, and emergency support." },
+      { property: "og:title", content: "WebCentauri — Reliable Technology Partner" },
+      { property: "og:description", content: "Web, SEO, and support built for long-term partnerships across USA & Canada." },
+      { property: "og:url", content: "https://centauri-web-guild.lovable.app/" },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [{ rel: "canonical", href: "https://centauri-web-guild.lovable.app/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "WebCentauri Technologies",
+          url: "https://centauri-web-guild.lovable.app",
+        }),
+      },
+    ],
   }),
   component: Index,
 });
@@ -128,7 +139,7 @@ function Index() {
                 ))}
               </ul>
               <div className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary group-hover:gap-2 transition-all">
-                Learn more <ArrowRight className="h-3.5 w-3.5" />
+                View service details <ArrowRight className="h-3.5 w-3.5" />
               </div>
             </Link>
           ))}
