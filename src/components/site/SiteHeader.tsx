@@ -12,6 +12,7 @@ type Mega =
 
 const SIMPLE_LINKS = [
   { to: "/pricing", label: "Pricing" },
+  { to: "/locations", label: "Locations" },
   { to: "/case-studies", label: "Case Studies" },
 ] as const;
 
