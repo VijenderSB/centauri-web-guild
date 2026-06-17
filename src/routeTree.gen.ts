@@ -18,7 +18,9 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ServicesIndexRouteImport } from './routes/services.index'
 import { Route as IndustriesIndexRouteImport } from './routes/industries.index'
+import { Route as ServicesSlugRouteImport } from './routes/services.$slug'
 import { Route as ResourcesWebsiteMaintenanceChecklistRouteImport } from './routes/resources.website-maintenance-checklist'
+import { Route as IndustriesSlugRouteImport } from './routes/industries.$slug'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -65,12 +67,22 @@ const IndustriesIndexRoute = IndustriesIndexRouteImport.update({
   path: '/industries/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ServicesSlugRoute = ServicesSlugRouteImport.update({
+  id: '/services/$slug',
+  path: '/services/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ResourcesWebsiteMaintenanceChecklistRoute =
   ResourcesWebsiteMaintenanceChecklistRouteImport.update({
     id: '/website-maintenance-checklist',
     path: '/website-maintenance-checklist',
     getParentRoute: () => ResourcesRoute,
   } as any)
+const IndustriesSlugRoute = IndustriesSlugRouteImport.update({
+  id: '/industries/$slug',
+  path: '/industries/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -80,7 +92,9 @@ export interface FileRoutesByFullPath {
   '/pricing': typeof PricingRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/industries/$slug': typeof IndustriesSlugRoute
   '/resources/website-maintenance-checklist': typeof ResourcesWebsiteMaintenanceChecklistRoute
+  '/services/$slug': typeof ServicesSlugRoute
   '/industries/': typeof IndustriesIndexRoute
   '/services/': typeof ServicesIndexRoute
 }
@@ -92,7 +106,9 @@ export interface FileRoutesByTo {
   '/pricing': typeof PricingRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/industries/$slug': typeof IndustriesSlugRoute
   '/resources/website-maintenance-checklist': typeof ResourcesWebsiteMaintenanceChecklistRoute
+  '/services/$slug': typeof ServicesSlugRoute
   '/industries': typeof IndustriesIndexRoute
   '/services': typeof ServicesIndexRoute
 }
@@ -105,7 +121,9 @@ export interface FileRoutesById {
   '/pricing': typeof PricingRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/industries/$slug': typeof IndustriesSlugRoute
   '/resources/website-maintenance-checklist': typeof ResourcesWebsiteMaintenanceChecklistRoute
+  '/services/$slug': typeof ServicesSlugRoute
   '/industries/': typeof IndustriesIndexRoute
   '/services/': typeof ServicesIndexRoute
 }
@@ -119,7 +137,9 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/resources'
     | '/sitemap.xml'
+    | '/industries/$slug'
     | '/resources/website-maintenance-checklist'
+    | '/services/$slug'
     | '/industries/'
     | '/services/'
   fileRoutesByTo: FileRoutesByTo
@@ -131,7 +151,9 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/resources'
     | '/sitemap.xml'
+    | '/industries/$slug'
     | '/resources/website-maintenance-checklist'
+    | '/services/$slug'
     | '/industries'
     | '/services'
   id:
@@ -143,7 +165,9 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/resources'
     | '/sitemap.xml'
+    | '/industries/$slug'
     | '/resources/website-maintenance-checklist'
+    | '/services/$slug'
     | '/industries/'
     | '/services/'
   fileRoutesById: FileRoutesById
@@ -156,6 +180,8 @@ export interface RootRouteChildren {
   PricingRoute: typeof PricingRoute
   ResourcesRoute: typeof ResourcesRouteWithChildren
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  IndustriesSlugRoute: typeof IndustriesSlugRoute
+  ServicesSlugRoute: typeof ServicesSlugRoute
   IndustriesIndexRoute: typeof IndustriesIndexRoute
   ServicesIndexRoute: typeof ServicesIndexRoute
 }
@@ -225,12 +251,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndustriesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/services/$slug': {
+      id: '/services/$slug'
+      path: '/services/$slug'
+      fullPath: '/services/$slug'
+      preLoaderRoute: typeof ServicesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/resources/website-maintenance-checklist': {
       id: '/resources/website-maintenance-checklist'
       path: '/website-maintenance-checklist'
       fullPath: '/resources/website-maintenance-checklist'
       preLoaderRoute: typeof ResourcesWebsiteMaintenanceChecklistRouteImport
       parentRoute: typeof ResourcesRoute
+    }
+    '/industries/$slug': {
+      id: '/industries/$slug'
+      path: '/industries/$slug'
+      fullPath: '/industries/$slug'
+      preLoaderRoute: typeof IndustriesSlugRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
@@ -256,6 +296,8 @@ const rootRouteChildren: RootRouteChildren = {
   PricingRoute: PricingRoute,
   ResourcesRoute: ResourcesRouteWithChildren,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  IndustriesSlugRoute: IndustriesSlugRoute,
+  ServicesSlugRoute: ServicesSlugRoute,
   IndustriesIndexRoute: IndustriesIndexRoute,
   ServicesIndexRoute: ServicesIndexRoute,
 }
