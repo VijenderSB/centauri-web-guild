@@ -3,6 +3,7 @@ import { PageShell, PageHero, Section, CtaBand } from "@/components/site/PageShe
 import { LOCATIONS, findCity } from "@/content/locations";
 import { SERVICES } from "@/content/services";
 import { CheckCircle2, MapPin, ArrowRight, Building2, Clock, ShieldCheck, Search } from "lucide-react";
+import { Siren, Activity, Zap } from "lucide-react";
 
 export const Route = createFileRoute("/locations/$slug")({
   loader: ({ params }) => {
@@ -148,6 +149,46 @@ function CityPage() {
               </Link>
             );
           })}
+        </div>
+      </Section>
+
+      <Section bg="navy">
+        <div className="text-center max-w-3xl mx-auto mb-12">
+          <span className="inline-block text-xs font-semibold uppercase tracking-widest text-cyan-300 mb-3">
+            {c.city} Emergency Response
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-bold text-white">
+            Site down in {c.city}? We're on it within 5 minutes.
+          </h2>
+          <p className="mt-4 text-slate-300">
+            Our senior engineers respond to {c.metro}-area emergencies day or night.
+            From issue reported to site live — here's exactly what happens.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-5 mb-10">
+          {[
+            { t: "00:00", icon: Siren, title: "Issue Reported", body: `${c.city} client triggers emergency via phone, email, or portal. Ticket auto-routes to on-call senior engineer.` },
+            { t: "05:00", icon: Activity, title: "Engineer Responds", body: "Senior engineer acknowledges, opens a war room, and begins live diagnosis — no junior triage layer." },
+            { t: "60:00", icon: Zap, title: "Recovery Underway / Site Live", body: `Most ${c.city} incidents are resolved or mitigated within the hour. You get a full post-incident report.` },
+          ].map((s) => (
+            <div key={s.t} className="relative p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur">
+              <div className="flex items-center justify-between">
+                <span className="text-2xl font-bold text-cyan-300 tabular-nums">{s.t}</span>
+                <s.icon className="h-6 w-6 text-cyan-300" />
+              </div>
+              <div className="mt-3 font-semibold text-white">{s.title}</div>
+              <p className="mt-2 text-sm text-slate-300">{s.body}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-slate-300">
+          <span className="inline-flex items-center gap-2"><Clock className="h-4 w-4 text-cyan-300" /> 24/7 coverage across {c.country}</span>
+          <span className="inline-flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-cyan-300" /> Senior engineers only</span>
+          <Link to="/contact" className="ml-2 px-5 py-2.5 rounded-md font-semibold bg-white text-primary hover:bg-slate-100 transition">
+            Get emergency support
+          </Link>
         </div>
       </Section>
 
