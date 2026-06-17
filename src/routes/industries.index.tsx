@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell, PageHero, Section, SectionHeading, CtaBand } from "@/components/site/PageShell";
 import { Stethoscope, Scale, Building2, Hammer, Calculator, Factory, Briefcase, HomeIcon, ShoppingCart, Heart, Wrench, ArrowRight } from "lucide-react";
 
-export const Route = createFileRoute("/industries")({
+export const Route = createFileRoute("/industries/")({
   head: () => ({
     meta: [
       { title: "Industries — Healthcare, Legal, eCommerce | WebCentauri" },

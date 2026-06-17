@@ -10,24 +10,19 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as PricingRouteImport } from './routes/pricing'
-import { Route as IndustriesRouteImport } from './routes/industries'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CaseStudiesRouteImport } from './routes/case-studies'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ServicesIndexRouteImport } from './routes/services.index'
+import { Route as IndustriesIndexRouteImport } from './routes/industries.index'
 import { Route as ResourcesWebsiteMaintenanceChecklistRouteImport } from './routes/resources.website-maintenance-checklist'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ServicesRoute = ServicesRouteImport.update({
-  id: '/services',
-  path: '/services',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResourcesRoute = ResourcesRouteImport.update({
@@ -38,11 +33,6 @@ const ResourcesRoute = ResourcesRouteImport.update({
 const PricingRoute = PricingRouteImport.update({
   id: '/pricing',
   path: '/pricing',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IndustriesRoute = IndustriesRouteImport.update({
-  id: '/industries',
-  path: '/industries',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -65,6 +55,16 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ServicesIndexRoute = ServicesIndexRouteImport.update({
+  id: '/services/',
+  path: '/services/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndustriesIndexRoute = IndustriesIndexRouteImport.update({
+  id: '/industries/',
+  path: '/industries/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ResourcesWebsiteMaintenanceChecklistRoute =
   ResourcesWebsiteMaintenanceChecklistRouteImport.update({
     id: '/website-maintenance-checklist',
@@ -77,24 +77,24 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/case-studies': typeof CaseStudiesRoute
   '/contact': typeof ContactRoute
-  '/industries': typeof IndustriesRoute
   '/pricing': typeof PricingRoute
   '/resources': typeof ResourcesRouteWithChildren
-  '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/resources/website-maintenance-checklist': typeof ResourcesWebsiteMaintenanceChecklistRoute
+  '/industries/': typeof IndustriesIndexRoute
+  '/services/': typeof ServicesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/case-studies': typeof CaseStudiesRoute
   '/contact': typeof ContactRoute
-  '/industries': typeof IndustriesRoute
   '/pricing': typeof PricingRoute
   '/resources': typeof ResourcesRouteWithChildren
-  '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/resources/website-maintenance-checklist': typeof ResourcesWebsiteMaintenanceChecklistRoute
+  '/industries': typeof IndustriesIndexRoute
+  '/services': typeof ServicesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -102,12 +102,12 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/case-studies': typeof CaseStudiesRoute
   '/contact': typeof ContactRoute
-  '/industries': typeof IndustriesRoute
   '/pricing': typeof PricingRoute
   '/resources': typeof ResourcesRouteWithChildren
-  '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/resources/website-maintenance-checklist': typeof ResourcesWebsiteMaintenanceChecklistRoute
+  '/industries/': typeof IndustriesIndexRoute
+  '/services/': typeof ServicesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -116,36 +116,36 @@ export interface FileRouteTypes {
     | '/about'
     | '/case-studies'
     | '/contact'
-    | '/industries'
     | '/pricing'
     | '/resources'
-    | '/services'
     | '/sitemap.xml'
     | '/resources/website-maintenance-checklist'
+    | '/industries/'
+    | '/services/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/case-studies'
     | '/contact'
-    | '/industries'
     | '/pricing'
     | '/resources'
-    | '/services'
     | '/sitemap.xml'
     | '/resources/website-maintenance-checklist'
+    | '/industries'
+    | '/services'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/case-studies'
     | '/contact'
-    | '/industries'
     | '/pricing'
     | '/resources'
-    | '/services'
     | '/sitemap.xml'
     | '/resources/website-maintenance-checklist'
+    | '/industries/'
+    | '/services/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -153,11 +153,11 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   CaseStudiesRoute: typeof CaseStudiesRoute
   ContactRoute: typeof ContactRoute
-  IndustriesRoute: typeof IndustriesRoute
   PricingRoute: typeof PricingRoute
   ResourcesRoute: typeof ResourcesRouteWithChildren
-  ServicesRoute: typeof ServicesRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  IndustriesIndexRoute: typeof IndustriesIndexRoute
+  ServicesIndexRoute: typeof ServicesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -167,13 +167,6 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/services': {
-      id: '/services'
-      path: '/services'
-      fullPath: '/services'
-      preLoaderRoute: typeof ServicesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/resources': {
@@ -188,13 +181,6 @@ declare module '@tanstack/react-router' {
       path: '/pricing'
       fullPath: '/pricing'
       preLoaderRoute: typeof PricingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/industries': {
-      id: '/industries'
-      path: '/industries'
-      fullPath: '/industries'
-      preLoaderRoute: typeof IndustriesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -225,6 +211,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/services/': {
+      id: '/services/'
+      path: '/services'
+      fullPath: '/services/'
+      preLoaderRoute: typeof ServicesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/industries/': {
+      id: '/industries/'
+      path: '/industries'
+      fullPath: '/industries/'
+      preLoaderRoute: typeof IndustriesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/resources/website-maintenance-checklist': {
       id: '/resources/website-maintenance-checklist'
       path: '/website-maintenance-checklist'
@@ -253,11 +253,11 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   CaseStudiesRoute: CaseStudiesRoute,
   ContactRoute: ContactRoute,
-  IndustriesRoute: IndustriesRoute,
   PricingRoute: PricingRoute,
   ResourcesRoute: ResourcesRouteWithChildren,
-  ServicesRoute: ServicesRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  IndustriesIndexRoute: IndustriesIndexRoute,
+  ServicesIndexRoute: ServicesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
