@@ -7,7 +7,7 @@ import {
   Code2, ShoppingCart, TrendingUp, Gauge, Users2, Siren, CheckCircle2, Star,
   Stethoscope, Scale, Building2, Hammer, Calculator, Factory, Briefcase, HomeIcon,
   AlertTriangle, TrendingDown, ShoppingCart as CartIcon, UserX, AlertOctagon,
-  Mail, MessageCircle, ArrowDown, ChevronDown, Activity,
+  Mail, MessageCircle, ArrowDown, ChevronDown, Activity, Zap,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
