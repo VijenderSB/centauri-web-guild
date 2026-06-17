@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { PageShell, PageHero, Section, CtaBand } from "@/components/site/PageShell";
-import { SERVICES } from "@/content/services";
+import { SERVICES, type ServiceEntry } from "@/content/services";
 import { CheckCircle2, ArrowRight, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/services/$slug")({
@@ -38,7 +38,7 @@ export const Route = createFileRoute("/services/$slug")({
 });
 
 function ServiceDetailPage() {
-  const { service } = Route.useLoaderData();
+  const { service } = Route.useLoaderData() as { service: ServiceEntry };
   const Icon = service.icon;
   const related = SERVICES.filter((s) => s.slug !== service.slug).slice(0, 3);
 

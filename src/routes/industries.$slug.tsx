@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { PageShell, PageHero, Section, CtaBand } from "@/components/site/PageShell";
-import { INDUSTRIES } from "@/content/industries";
+import { INDUSTRIES, type IndustryEntry } from "@/content/industries";
 import { CheckCircle2, AlertTriangle, ArrowRight } from "lucide-react";
 
 export const Route = createFileRoute("/industries/$slug")({
@@ -38,7 +38,7 @@ export const Route = createFileRoute("/industries/$slug")({
 });
 
 function IndustryDetailPage() {
-  const { industry } = Route.useLoaderData();
+  const { industry } = Route.useLoaderData() as { industry: IndustryEntry };
   const Icon = industry.icon;
   const related = INDUSTRIES.filter((i) => i.slug !== industry.slug).slice(0, 3);
 
