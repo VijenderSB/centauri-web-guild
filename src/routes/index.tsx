@@ -257,7 +257,7 @@ function Index() {
                       <div className="pt-0.5">
                         <div className="text-cyan-300 font-bold text-sm">{step.time}</div>
                         <div className="font-semibold text-white">{step.title}</div>
-                        <div className="text-sm text-slate-400 mt-0.5">{step.desc: step.desc}</div>
+                        <div className="text-sm text-slate-400 mt-0.5">{step.desc}</div>
                       </div>
                     </div>
                   ))}
