@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell, Section, SectionHeading, CtaBand } from "@/components/site/PageShell";
+import { CountUp } from "@/components/site/CountUp";
 import heroImg from "@/assets/hero.jpg";
 import {
   ArrowRight, Shield, Clock, MessageSquare, Layers, Wrench, Heart,
@@ -63,20 +64,34 @@ function Index() {
               <Siren className="h-4 w-4" /> Emergency Support
             </Link>
           </div>
-          {/* Trust bar */}
+          {/* Trust bar with animated counters */}
           <div className="mt-14 grid grid-cols-2 md:grid-cols-5 gap-6 max-w-4xl">
-            {[
-              ["15+", "Years Experience"],
-              ["500+", "Projects Delivered"],
-              ["USA / CA", "Focused Coverage"],
-              ["< 1 hr", "Response Time"],
-              ["95%", "Client Retention"],
-            ].map(([n, l]) => (
-              <div key={l}>
-                <div className="text-2xl font-bold text-white">{n}</div>
-                <div className="text-xs uppercase tracking-wide text-slate-400 mt-1">{l}</div>
+            <div>
+              <div className="text-3xl sm:text-4xl font-bold text-white">
+                <CountUp end={15} suffix="+" />
               </div>
-            ))}
+              <div className="text-xs uppercase tracking-wide text-slate-400 mt-1">Years Experience</div>
+            </div>
+            <div>
+              <div className="text-3xl sm:text-4xl font-bold text-white">
+                <CountUp end={500} suffix="+" />
+              </div>
+              <div className="text-xs uppercase tracking-wide text-slate-400 mt-1">Projects Delivered</div>
+            </div>
+            <div>
+              <div className="text-3xl sm:text-4xl font-bold text-white">USA / CA</div>
+              <div className="text-xs uppercase tracking-wide text-slate-400 mt-1">Focused Coverage</div>
+            </div>
+            <div>
+              <div className="text-3xl sm:text-4xl font-bold text-white">&lt; 1 hr</div>
+              <div className="text-xs uppercase tracking-wide text-slate-400 mt-1">Response Time</div>
+            </div>
+            <div>
+              <div className="text-3xl sm:text-4xl font-bold text-white">
+                <CountUp end={95} suffix="%" />
+              </div>
+              <div className="text-xs uppercase tracking-wide text-slate-400 mt-1">Client Retention</div>
+            </div>
           </div>
         </div>
       </section>
