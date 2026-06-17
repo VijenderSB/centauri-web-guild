@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell, Section, SectionHeading, CtaBand } from "@/components/site/PageShell";
+import { CountUp } from "@/components/site/CountUp";
 import heroImg from "@/assets/hero.jpg";
 import {
   ArrowRight, Shield, Clock, MessageSquare, Layers, Wrench, Heart,
