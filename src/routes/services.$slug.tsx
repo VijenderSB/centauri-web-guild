@@ -1,16 +1,16 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { PageShell, PageHero, Section, CtaBand } from "@/components/site/PageShell";
-import { SERVICES, type ServiceEntry } from "@/content/services";
+import { SERVICES } from "@/content/services";
 import { CheckCircle2, ArrowRight, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/services/$slug")({
   loader: ({ params }) => {
     const service = SERVICES.find((s) => s.slug === params.slug);
     if (!service) throw notFound();
-    return { service };
+    return { slug: service.slug };
   },
   head: ({ loaderData }) => {
-    const s = loaderData?.service;
+    const s = loaderData ? SERVICES.find((x) => x.slug === loaderData.slug) : undefined;
     if (!s) return {};
     const url = `https://centauri-web-guild.lovable.app/services/${s.slug}`;
     return {
@@ -38,7 +38,8 @@ export const Route = createFileRoute("/services/$slug")({
 });
 
 function ServiceDetailPage() {
-  const { service } = Route.useLoaderData() as { service: ServiceEntry };
+  const { slug } = Route.useLoaderData();
+  const service = SERVICES.find((s) => s.slug === slug)!;
   const Icon = service.icon;
   const related = SERVICES.filter((s) => s.slug !== service.slug).slice(0, 3);
 
