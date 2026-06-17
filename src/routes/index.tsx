@@ -6,6 +6,8 @@ import {
   ArrowRight, Shield, Clock, MessageSquare, Layers, Wrench, Heart,
   Code2, ShoppingCart, TrendingUp, Gauge, Users2, Siren, CheckCircle2, Star,
   Stethoscope, Scale, Building2, Hammer, Calculator, Factory, Briefcase, HomeIcon,
+  AlertTriangle, TrendingDown, ShoppingCart as CartIcon, UserX, AlertOctagon,
+  Mail, MessageCircle, ArrowDown, ChevronDown, Activity, Zap,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -160,6 +162,143 @@ function Index() {
           ))}
         </div>
       </Section>
+
+      {/* EMERGENCY RESPONSE TIMELINE */}
+      <section className="relative overflow-hidden text-white" style={{ background: "linear-gradient(135deg, oklch(0.12 0.06 260) 0%, oklch(0.18 0.08 258) 50%, oklch(0.25 0.1 255) 100%)" }}>
+        <div className="absolute inset-0 opacity-20" style={{ backgroundImage: "radial-gradient(circle at 80% 20%, rgba(80,160,255,0.3), transparent 45%), radial-gradient(circle at 20% 80%, rgba(60,130,255,0.2), transparent 40%)" }} />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+          {/* Headline */}
+          <div className="max-w-4xl">
+            <span className="inline-flex items-center gap-2 rounded-full border border-red-400/30 bg-red-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-red-300">
+              <Siren className="h-3 w-3" /> 24/7 Emergency Website Support
+            </span>
+            <h2 className="mt-5 text-3xl sm:text-5xl lg:text-6xl font-bold leading-[1.05]">
+              Your business can't afford<br />
+              <span className="text-red-400">downtime.</span>
+            </h2>
+            <p className="mt-4 max-w-xl text-base sm:text-lg text-slate-300 leading-relaxed">
+              When your site goes down, every minute costs you leads, sales, and trust. Our emergency team responds fast and recovers faster.
+            </p>
+          </div>
+
+          {/* Stats row */}
+          <div className="mt-10 grid sm:grid-cols-2 gap-4 max-w-2xl">
+            <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-6">
+              <div className="flex items-center gap-4">
+                <div className="grid h-14 w-14 place-items-center rounded-full bg-cyan-500/20 shrink-0">
+                  <Clock className="h-7 w-7 text-cyan-300" />
+                </div>
+                <div>
+                  <div className="text-4xl sm:text-5xl font-bold text-white">5<span className="text-lg font-semibold text-cyan-300 ml-1">MIN</span></div>
+                  <div className="text-sm font-semibold text-slate-300 mt-0.5">RESPONSE</div>
+                  <div className="text-xs text-slate-400">Chat, email or ticket — we reply within 5 minutes</div>
+                </div>
+              </div>
+            </div>
+            <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-6">
+              <div className="flex items-center gap-4">
+                <div className="grid h-14 w-14 place-items-center rounded-full bg-cyan-500/20 shrink-0">
+                  <Activity className="h-7 w-7 text-cyan-300" />
+                </div>
+                <div>
+                  <div className="text-4xl sm:text-5xl font-bold text-white">60<span className="text-lg font-semibold text-cyan-300 ml-1">MIN</span></div>
+                  <div className="text-sm font-semibold text-slate-300 mt-0.5">RECOVERY</div>
+                  <div className="text-xs text-slate-400">Website recovery initiated within 60 minutes</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-3 inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-cyan-500/15 border border-cyan-400/30 text-cyan-300 text-sm font-semibold">
+            <Zap className="h-4 w-4" /> Fastest TAT in the industry
+          </div>
+
+          {/* Main content grid */}
+          <div className="mt-14 grid lg:grid-cols-2 gap-12 items-start">
+            {/* Left: Downtime costs */}
+            <div>
+              <h3 className="text-xl sm:text-2xl font-bold mb-6">Downtime costs you.</h3>
+              <div className="grid grid-cols-2 gap-4">
+                {[
+                  [TrendingDown, "Lost Leads", "Prospects bounce to competitors when your site is unreachable."],
+                  [CartIcon, "Lost Sales", "Every hour offline is revenue walking out the door."],
+                  [UserX, "Lost Customers", "Broken trust is harder to rebuild than a website."],
+                  [AlertOctagon, "Damaged Reputation", "Search engines and visitors remember downtime."],
+                ].map(([Icon, title, desc]) => (
+                  <div key={title as string} className="p-4 rounded-xl border border-white/10 bg-white/5 backdrop-blur">
+                    <Icon className="h-6 w-6 text-red-400 mb-2" />
+                    <div className="font-semibold text-sm">{title as string}</div>
+                    <div className="text-xs text-slate-400 mt-1 leading-relaxed">{desc as string}</div>
+                  </div>
+                ))}
+              </div>
+              <p className="mt-5 text-sm text-slate-400 leading-relaxed">
+                We act fast so your business stays protected and your revenue keeps flowing.
+              </p>
+            </div>
+
+            {/* Right: Timeline */}
+            <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-6 sm:p-8">
+              <h3 className="text-lg font-bold mb-6 uppercase tracking-wide">Our Emergency Response Process</h3>
+              <div className="relative">
+                {/* Vertical line */}
+                <div className="absolute left-[19px] top-4 bottom-4 w-px bg-cyan-500/30" />
+                <div className="space-y-6">
+                  {[
+                    { time: "00:00", title: "Issue Reported", desc: "You reach out to us via chat, email or ticket.", icon: Mail },
+                    { time: "05:00", title: "We Respond", desc: "Our team responds within 5 minutes, every time.", icon: MessageCircle },
+                    { time: "15:00", title: "Engineer Assigned", desc: "A senior engineer reviews and starts working.", icon: Wrench },
+                    { time: "60:00", title: "Recovery Underway", desc: "We bring your website back up and running.", icon: CheckCircle2 },
+                  ].map((step) => (
+                    <div key={step.title} className="relative flex items-start gap-5">
+                      <div className="relative z-10 grid h-10 w-10 place-items-center rounded-full bg-cyan-500/20 border border-cyan-400/40 shrink-0">
+                        <step.icon className="h-4 w-4 text-cyan-300" />
+                      </div>
+                      <div className="pt-0.5">
+                        <div className="text-cyan-300 font-bold text-sm">{step.time}</div>
+                        <div className="font-semibold text-white">{step.title}</div>
+                        <div className="text-sm text-slate-400 mt-0.5">{step.desc}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Final CTA within timeline card */}
+              <div className="mt-6 rounded-xl bg-cyan-500/15 border border-cyan-400/30 p-4">
+                <div className="flex items-center gap-3">
+                  <div className="grid h-8 w-8 place-items-center rounded-full bg-cyan-500/30 shrink-0">
+                    <CheckCircle2 className="h-4 w-4 text-cyan-300" />
+                  </div>
+                  <div>
+                    <div className="font-bold text-white text-sm">Your site. Live again.</div>
+                    <div className="text-cyan-300 font-semibold text-sm">Within 60 minutes.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom trust bar */}
+          <div className="mt-12 rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-6">
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
+              {[
+                [Mail, "Email Response", "Within 5 minutes"],
+                [MessageCircle, "Live Chat Response", "Within 5 minutes"],
+                [Clock, "Website Recovery", "Started within 60 minutes"],
+                [Users2, "Senior Engineers", "Handle every incident"],
+                [Shield, "USA & Canada", "Full coverage"],
+              ].map(([Icon, title, desc]) => (
+                <div key={title as string}>
+                  <Icon className="h-6 w-6 mx-auto text-slate-400 mb-2" />
+                  <div className="text-xs font-semibold text-white uppercase tracking-wide">{title as string}</div>
+                  <div className="text-xs text-slate-400 mt-0.5">{desc as string}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* PROCESS */}
       <Section>
