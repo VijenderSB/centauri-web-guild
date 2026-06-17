@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
+import { LOCATIONS } from "@/content/locations";
 
 const BASE_URL = "https://centauri-web-guild.lovable.app";
 
@@ -7,7 +8,11 @@ export const Route = createFileRoute("/sitemap.xml")({
   server: {
     handlers: {
       GET: async () => {
-        const paths = ["/", "/services", "/industries", "/pricing", "/case-studies", "/resources", "/about", "/contact"];
+        const paths = [
+          "/", "/services", "/industries", "/locations", "/pricing",
+          "/case-studies", "/resources", "/about", "/contact",
+          ...LOCATIONS.map((c) => `/locations/${c.slug}`),
+        ];
         const urls = paths.map((p) =>
           `  <url>\n    <loc>${BASE_URL}${p}</loc>\n    <changefreq>weekly</changefreq>\n  </url>`
         );
