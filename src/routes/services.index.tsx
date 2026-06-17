@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell, PageHero, Section, SectionHeading, CtaBand } from "@/components/site/PageShell";
 import { Code2, Wrench, Layers, ShoppingCart, TrendingUp, Gauge, Users2, Siren, CheckCircle2, ArrowRight } from "lucide-react";
 
-export const Route = createFileRoute("/services")({
+export const Route = createFileRoute("/services/")({
   head: () => ({
     meta: [
       { title: "Services — Web, SEO & Dedicated Teams | WebCentauri" },
