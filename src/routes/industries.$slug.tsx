@@ -1,16 +1,16 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { PageShell, PageHero, Section, CtaBand } from "@/components/site/PageShell";
-import { INDUSTRIES, type IndustryEntry } from "@/content/industries";
+import { INDUSTRIES } from "@/content/industries";
 import { CheckCircle2, AlertTriangle, ArrowRight } from "lucide-react";
 
 export const Route = createFileRoute("/industries/$slug")({
   loader: ({ params }) => {
     const industry = INDUSTRIES.find((i) => i.slug === params.slug);
     if (!industry) throw notFound();
-    return { industry };
+    return { slug: industry.slug };
   },
   head: ({ loaderData }) => {
-    const i = loaderData?.industry;
+    const i = loaderData ? INDUSTRIES.find((x) => x.slug === loaderData.slug) : undefined;
     if (!i) return {};
     const url = `https://centauri-web-guild.lovable.app/industries/${i.slug}`;
     return {
@@ -38,7 +38,8 @@ export const Route = createFileRoute("/industries/$slug")({
 });
 
 function IndustryDetailPage() {
-  const { industry } = Route.useLoaderData() as { industry: IndustryEntry };
+  const { slug } = Route.useLoaderData();
+  const industry = INDUSTRIES.find((i) => i.slug === slug)!;
   const Icon = industry.icon;
   const related = INDUSTRIES.filter((i) => i.slug !== industry.slug).slice(0, 3);
 

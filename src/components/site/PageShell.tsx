@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { SiteHeader } from "./SiteHeader";
 import { SiteFooter } from "./SiteFooter";
 import { Link } from "@tanstack/react-router";
-import { AlertTriangle } from "lucide-react";
+import { AlertTriangle, ShieldCheck, MapPin, Star, Clock } from "lucide-react";
 
 export function PageShell({ children }: { children: ReactNode }) {
   return (
@@ -41,6 +41,12 @@ export function PageHero({
         )}
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold max-w-4xl leading-[1.05]">{title}</h1>
         {subtitle && <p className="mt-6 max-w-2xl text-lg text-slate-300">{subtitle}</p>}
+        <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-slate-300">
+          <span className="inline-flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5 text-cyan-300" /> US-focused · serving all 50 states & Canada</span>
+          <span className="inline-flex items-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5 text-cyan-300" /> SOC 2-aligned · NDA &amp; MSA ready</span>
+          <span className="inline-flex items-center gap-1.5"><Clock className="h-3.5 w-3.5 text-cyan-300" /> Under-60-min emergency response</span>
+          <span className="inline-flex items-center gap-1.5"><Star className="h-3.5 w-3.5 text-amber-300 fill-amber-300" /> 4.9/5 verified client rating</span>
+        </div>
       </div>
     </section>
   );
