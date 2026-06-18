@@ -62,7 +62,7 @@ function useLiveCounter({
 }
 
 function Index() {
-  const clientCount = useLiveCounter({ start: 500, increment: 6, intervalMs: 3600000 });
+  const clientCount = useLiveCounter({ start: 500, increment: 6, intervalMs: 43200000 });
   return (
     <PageShell>
       {/* HERO */}
