@@ -84,35 +84,12 @@ type Lead = {
   context: string | null;
 };
 
-// Email the lead via SMTP (nodemailer). Configured entirely by env vars so any
-// provider works (Hostinger mailbox, Gmail App Password, etc.). If SMTP isn't
-// configured, this no-ops — the lead is still captured in the server log.
-async function sendLeadEmail(lead: Lead): Promise<void> {
-  const host = process.env.SMTP_HOST;
-  const user = process.env.SMTP_USER;
-  const pass = process.env.SMTP_PASS;
-  const to = process.env.LEAD_NOTIFY_EMAIL || user;
-  if (!host || !user || !pass || !to) {
-    console.warn("[lead] SMTP not configured — email skipped (lead logged above).");
-    return;
-  }
-  const port = Number(process.env.SMTP_PORT) || 587;
-  const secure = process.env.SMTP_SECURE
-    ? process.env.SMTP_SECURE === "true"
-    : port === 465;
-  const from = process.env.MAIL_FROM || `WebCentauri Leads <${user}>`;
+function leadSubject(lead: Lead): string {
+  return `New lead: ${lead.name}${lead.context ? ` — ${lead.context}` : ""}`;
+}
 
-  const transporter = nodemailer.createTransport({
-    host,
-    port,
-    secure,
-    auth: { user, pass },
-    connectionTimeout: 10_000,
-    greetingTimeout: 10_000,
-    socketTimeout: 15_000,
-  });
-
-  const text = [
+function leadBody(lead: Lead): string {
+  return [
     `Name:    ${lead.name}`,
     `Email:   ${lead.email}`,
     `Phone:   ${lead.phone}`,
@@ -124,14 +101,120 @@ async function sendLeadEmail(lead: Lead): Promise<void> {
     `Message:`,
     lead.message,
   ].join("\n");
+}
 
+// RFC 2047 encoded-word for header values that contain non-ASCII characters.
+function encodeHeader(s: string): string {
+  return /^[\x00-\x7F]*$/.test(s)
+    ? s
+    : `=?UTF-8?B?${Buffer.from(s, "utf-8").toString("base64")}?=`;
+}
+
+// Send via the Gmail API over HTTPS (port 443). Works on hosts that block
+// outbound SMTP (e.g. Hostinger/LiteSpeed), and Google trusts its own API.
+// Needs a one-time OAuth2 setup: GMAIL_CLIENT_ID / GMAIL_CLIENT_SECRET /
+// GMAIL_REFRESH_TOKEN (scope gmail.send) + GMAIL_SENDER (the gmail address).
+async function sendViaGmailApi(lead: Lead): Promise<void> {
+  const clientId = process.env.GMAIL_CLIENT_ID!;
+  const clientSecret = process.env.GMAIL_CLIENT_SECRET!;
+  const refreshToken = process.env.GMAIL_REFRESH_TOKEN!;
+  const sender = process.env.GMAIL_SENDER || process.env.SMTP_USER || "";
+  const to = process.env.LEAD_NOTIFY_EMAIL || sender;
+
+  // 1) Exchange the refresh token for a short-lived access token.
+  const tokenRes = await fetch("https://oauth2.googleapis.com/token", {
+    method: "POST",
+    headers: { "content-type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      client_id: clientId,
+      client_secret: clientSecret,
+      refresh_token: refreshToken,
+      grant_type: "refresh_token",
+    }).toString(),
+  });
+  const tok = (await tokenRes.json()) as {
+    access_token?: string;
+    error?: string;
+    error_description?: string;
+  };
+  if (!tok.access_token) {
+    throw new Error(`Gmail OAuth failed: ${tok.error ?? ""} ${tok.error_description ?? ""}`.trim());
+  }
+
+  // 2) Build the RFC822 message and base64url-encode it.
+  const rfc822 = [
+    `From: "WebCentauri Leads" <${sender}>`,
+    `To: ${to}`,
+    `Reply-To: ${lead.email}`,
+    `Subject: ${encodeHeader(leadSubject(lead))}`,
+    "MIME-Version: 1.0",
+    'Content-Type: text/plain; charset="UTF-8"',
+    "",
+    leadBody(lead),
+  ].join("\r\n");
+  const raw = Buffer.from(rfc822, "utf-8")
+    .toString("base64")
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=+$/, "");
+
+  // 3) Send via the Gmail API.
+  const sendRes = await fetch(
+    "https://gmail.googleapis.com/gmail/v1/users/me/messages/send",
+    {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${tok.access_token}`,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ raw }),
+    },
+  );
+  if (!sendRes.ok) {
+    throw new Error(`Gmail API send failed (${sendRes.status}): ${await sendRes.text()}`);
+  }
+}
+
+// SMTP fallback (nodemailer). Kept for hosts that don't block outbound SMTP.
+async function sendViaSmtp(lead: Lead): Promise<void> {
+  const host = process.env.SMTP_HOST!;
+  const user = process.env.SMTP_USER!;
+  const pass = process.env.SMTP_PASS!;
+  const to = process.env.LEAD_NOTIFY_EMAIL || user;
+  const port = Number(process.env.SMTP_PORT) || 587;
+  const secure = process.env.SMTP_SECURE ? process.env.SMTP_SECURE === "true" : port === 465;
+  const from = process.env.MAIL_FROM || `WebCentauri Leads <${user}>`;
+
+  const transporter = nodemailer.createTransport({
+    host,
+    port,
+    secure,
+    auth: { user, pass },
+    connectionTimeout: 10_000,
+    greetingTimeout: 10_000,
+    socketTimeout: 15_000,
+  });
   await transporter.sendMail({
     from,
     to,
     replyTo: lead.email,
-    subject: `New lead: ${lead.name}${lead.context ? ` — ${lead.context}` : ""}`,
-    text,
+    subject: leadSubject(lead),
+    text: leadBody(lead),
   });
+}
+
+// Deliver the lead. Prefers the Gmail HTTP API (works through SMTP-port blocks),
+// falls back to SMTP, and no-ops if neither is configured (lead still logged).
+async function sendLeadEmail(lead: Lead): Promise<void> {
+  if (process.env.GMAIL_CLIENT_ID && process.env.GMAIL_CLIENT_SECRET && process.env.GMAIL_REFRESH_TOKEN) {
+    await sendViaGmailApi(lead);
+    return;
+  }
+  if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
+    await sendViaSmtp(lead);
+    return;
+  }
+  console.warn("[lead] email not configured — skipped (lead logged above).");
 }
 
 // Verify a reCAPTCHA v3 token with Google. Returns true if it passes OR if
