@@ -25,6 +25,7 @@ import { Route as ServicesSlugRouteImport } from './routes/services.$slug'
 import { Route as ResourcesWebsiteMaintenanceChecklistRouteImport } from './routes/resources.website-maintenance-checklist'
 import { Route as LocationsSlugRouteImport } from './routes/locations.$slug'
 import { Route as IndustriesSlugRouteImport } from './routes/industries.$slug'
+import { Route as KeywordCityRouteImport } from './routes/$keyword.$city'
 import { Route as ServicesSlugIndexRouteImport } from './routes/services.$slug.index'
 import { Route as ServicesSlugChildRouteImport } from './routes/services.$slug.$child'
 
@@ -109,6 +110,11 @@ const IndustriesSlugRoute = IndustriesSlugRouteImport.update({
   path: '/industries/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const KeywordCityRoute = KeywordCityRouteImport.update({
+  id: '/$city',
+  path: '/$city',
+  getParentRoute: () => KeywordRoute,
+} as any)
 const ServicesSlugIndexRoute = ServicesSlugIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -129,6 +135,7 @@ export interface FileRoutesByFullPath {
   '/pricing': typeof PricingRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/$keyword/$city': typeof KeywordCityRoute
   '/industries/$slug': typeof IndustriesSlugRoute
   '/locations/$slug': typeof LocationsSlugRoute
   '/resources/website-maintenance-checklist': typeof ResourcesWebsiteMaintenanceChecklistRoute
@@ -148,6 +155,7 @@ export interface FileRoutesByTo {
   '/pricing': typeof PricingRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/$keyword/$city': typeof KeywordCityRoute
   '/industries/$slug': typeof IndustriesSlugRoute
   '/locations/$slug': typeof LocationsSlugRoute
   '/resources/website-maintenance-checklist': typeof ResourcesWebsiteMaintenanceChecklistRoute
@@ -168,6 +176,7 @@ export interface FileRoutesById {
   '/pricing': typeof PricingRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/$keyword/$city': typeof KeywordCityRoute
   '/industries/$slug': typeof IndustriesSlugRoute
   '/locations/$slug': typeof LocationsSlugRoute
   '/resources/website-maintenance-checklist': typeof ResourcesWebsiteMaintenanceChecklistRoute
@@ -190,6 +199,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/resources'
     | '/sitemap.xml'
+    | '/$keyword/$city'
     | '/industries/$slug'
     | '/locations/$slug'
     | '/resources/website-maintenance-checklist'
@@ -209,6 +219,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/resources'
     | '/sitemap.xml'
+    | '/$keyword/$city'
     | '/industries/$slug'
     | '/locations/$slug'
     | '/resources/website-maintenance-checklist'
@@ -228,6 +239,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/resources'
     | '/sitemap.xml'
+    | '/$keyword/$city'
     | '/industries/$slug'
     | '/locations/$slug'
     | '/resources/website-maintenance-checklist'
@@ -371,6 +383,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndustriesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/$keyword/$city': {
+      id: '/$keyword/$city'
+      path: '/$city'
+      fullPath: '/$keyword/$city'
+      preLoaderRoute: typeof KeywordCityRouteImport
+      parentRoute: typeof KeywordRoute
+    }
     '/services/$slug/': {
       id: '/services/$slug/'
       path: '/'
@@ -389,10 +408,12 @@ declare module '@tanstack/react-router' {
 }
 
 interface KeywordRouteChildren {
+  KeywordCityRoute: typeof KeywordCityRoute
   KeywordIndexRoute: typeof KeywordIndexRoute
 }
 
 const KeywordRouteChildren: KeywordRouteChildren = {
+  KeywordCityRoute: KeywordCityRoute,
   KeywordIndexRoute: KeywordIndexRoute,
 }
 
