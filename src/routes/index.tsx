@@ -35,7 +35,33 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
+function useLiveCounter({
+  start,
+  increment,
+  intervalMs,
+}: {
+  start: number;
+  increment: number;
+  intervalMs: number;
+}) {
+  const [count, setCount] = useState(start);
+  useEffect(() => {
+    const tick = () => {
+      const now = Date.now();
+      const elapsed = now - startTimeRef;
+      const ticks = Math.floor(elapsed / intervalMs);
+      setCount(start + ticks * increment);
+    };
+    const startTimeRef = Date.now();
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, [start, increment, intervalMs]);
+  return count;
+}
+
 function Index() {
+  const clientCount = useLiveCounter({ start: 500, increment: 6, intervalMs: 3600000 });
   return (
     <PageShell>
       {/* HERO */}
