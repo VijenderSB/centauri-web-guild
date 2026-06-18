@@ -444,7 +444,8 @@ export function LeadPopup() {
                   </>
                 ) : (
                   <>
-                    <Send className="h-4 w-4" /> Get expert help
+                    <Send className="h-4 w-4" />{" "}
+                    {stage === 2 ? "Claim my 60-min resolution" : "Get expert help"}
                   </>
                 )}
               </button>
