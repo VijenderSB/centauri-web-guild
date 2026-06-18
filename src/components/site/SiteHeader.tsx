@@ -7,25 +7,17 @@ import { INDUSTRIES } from "@/content/industries";
 type Mega =
   | { kind: "services" }
   | { kind: "industries" }
-  | { kind: "resources" }
   | { kind: "company" };
 
 const SIMPLE_LINKS = [
   { to: "/pricing", label: "Pricing" },
   { to: "/locations", label: "Locations" },
-  { to: "/case-studies", label: "Case Studies" },
-] as const;
-
-const RESOURCES = [
-  { to: "/resources", title: "Resource Hub", desc: "All guides, blog posts, and tools." },
-  { to: "/resources/website-maintenance-checklist", title: "Maintenance Checklist", desc: "Daily, weekly, monthly playbook." },
-  { to: "/resources", title: "Blog & Insights", desc: "Web, SEO, security perspectives." },
-  { to: "/resources", title: "FAQ", desc: "30 questions we're asked the most." },
 ] as const;
 
 const COMPANY = [
   { to: "/about", title: "About WebCentauri", desc: "Who we are and what we stand for." },
   { to: "/case-studies", title: "Case Studies", desc: "Real outcomes for real clients." },
+  { to: "/resources", title: "Resources", desc: "Guides, blog posts, checklists, and FAQs." },
   { to: "/contact", title: "Contact", desc: "Talk to a senior strategist." },
   { to: "/contact", title: "Careers", desc: "Join the team." },
 ] as const;
@@ -60,7 +52,7 @@ export function SiteHeader() {
             alt="WebCentauri — Keeping your business online"
             width={600}
             height={125}
-            className="h-9 w-auto sm:h-10"
+            className="h-[41px] w-auto sm:h-[46px]"
           />
         </Link>
 
@@ -75,7 +67,6 @@ export function SiteHeader() {
               {l.label}
             </Link>
           ))}
-          <TopButton label="Resources" active={open === "resources"} onEnter={() => setOpen("resources")} />
           <TopButton label="Company" active={open === "company"} onEnter={() => setOpen("company")} />
         </nav>
 
@@ -99,7 +90,6 @@ export function SiteHeader() {
           <div className="mx-auto max-w-7xl px-6 py-8">
             {open === "services" && <ServicesMega close={() => setOpen(null)} />}
             {open === "industries" && <IndustriesMega close={() => setOpen(null)} />}
-            {open === "resources" && <SimpleMega items={RESOURCES} close={() => setOpen(null)} title="Resources" />}
             {open === "company" && <SimpleMega items={COMPANY} close={() => setOpen(null)} title="Company" />}
           </div>
         </div>
