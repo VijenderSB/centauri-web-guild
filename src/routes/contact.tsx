@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { PageShell, PageHero, Section } from "@/components/site/PageShell";
-import { Mail, Phone, MessageSquare, Siren, Calendar, CheckCircle2 } from "lucide-react";
+import { Mail, Phone, MessageSquare, Siren, Calendar, CheckCircle2, MapPin } from "lucide-react";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -67,8 +67,8 @@ function ContactPage() {
             {[
               [Calendar, "Book Consultation", "Free 30-minute strategy call.", "Schedule"],
               [Siren, "Emergency Support", "Site down, hacked, or broken?", "Request now"],
-              [Mail, "Email", "hello@webcentauri.com"],
-              [Phone, "Phone", "+1 (000) 000-0000"],
+              [Mail, "Email", "support@webcentauri.com"],
+              [Phone, "Phone", "+1 (888) 555-0123"],
               [MessageSquare, "Live Chat / WhatsApp", "Mon–Fri, 9am–7pm ET"],
             ].map(([Icon, t, d, cta]) => (
               <div key={t as string} className="p-5 rounded-xl border border-border bg-card">
@@ -85,6 +85,18 @@ function ContactPage() {
                 </div>
               </div>
             ))}
+            <div className="p-5 rounded-xl border border-border bg-card">
+              <div className="flex items-start gap-3">
+                <div className="grid h-10 w-10 place-items-center rounded-lg bg-primary/10 shrink-0">
+                  <MapPin className="h-5 w-5 text-primary" />
+                </div>
+                <div className="flex-1">
+                  <div className="font-semibold">Development Centres</div>
+                  <div className="text-sm text-muted-foreground mt-1">Centre 1: A 78, Sector 4, Noida 201301</div>
+                  <div className="text-sm text-muted-foreground">Centre 2: Suite 2303, Sector 110, Noida 201304</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </Section>
