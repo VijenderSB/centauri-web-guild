@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell, Section, SectionHeading, CtaBand } from "@/components/site/PageShell";
 import { CountUp } from "@/components/site/CountUp";
