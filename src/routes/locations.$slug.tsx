@@ -252,7 +252,7 @@ function CityPage() {
         </div>
       </Section>
 
-      <Section bg="muted">
+      <Section>
         <h2 className="text-2xl font-bold mb-2">All services available in {c.city}</h2>
         <p className="text-muted-foreground mb-6 max-w-3xl">Every WebCentauri service is delivered in {c.city}, {c.regionCode} by the same senior team — emergency response, recovery, development, and ongoing support.</p>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
