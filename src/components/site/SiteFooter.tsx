@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Zap, Mail, Phone, MapPin, ShieldCheck, Lock, Award, Clock, Star, Users, Linkedin, Twitter, Facebook, Github } from "lucide-react";
+import { Mail, Phone, MapPin, ShieldCheck, Lock, Award, Clock, Star, Users, Linkedin, Twitter, Facebook, Github } from "lucide-react";
 
 export function SiteFooter() {
   return (
@@ -29,10 +29,15 @@ export function SiteFooter() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-6">
           <div className="lg:col-span-2">
-            <div className="flex items-center gap-2 text-white font-bold text-lg">
-              <span className="grid h-9 w-9 place-items-center rounded-lg" style={{ background: "var(--gradient-primary)" }}>
-                <Zap className="h-5 w-5" />
-              </span>
+            <div className="flex items-center gap-2.5 text-white font-bold text-lg">
+              <img
+                src="/icon-192.png"
+                alt=""
+                aria-hidden="true"
+                width={192}
+                height={192}
+                className="h-9 w-9 rounded-lg"
+              />
               WebCentauri Technologies
             </div>
             <p className="mt-4 text-sm text-slate-400 max-w-sm">

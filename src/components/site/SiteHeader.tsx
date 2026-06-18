@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Menu, X, Zap, ChevronDown, Siren, Phone, Mail } from "lucide-react";
+import { Menu, X, ChevronDown, Siren, Phone, Mail } from "lucide-react";
 import { SERVICES } from "@/content/services";
 import { INDUSTRIES } from "@/content/industries";
 
@@ -54,11 +54,14 @@ export function SiteHeader() {
       </div>
 
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link to="/" className="flex items-center gap-2 font-bold text-lg tracking-tight text-foreground">
-          <span className="grid h-9 w-9 place-items-center rounded-lg" style={{ background: "var(--gradient-primary)" }}>
-            <Zap className="h-5 w-5 text-primary-foreground" />
-          </span>
-          <span>WebCentauri</span>
+        <Link to="/" className="flex items-center" aria-label="WebCentauri — home">
+          <img
+            src="/logo-webcentauri.png"
+            alt="WebCentauri — Keeping your business online"
+            width={600}
+            height={125}
+            className="h-9 w-auto sm:h-10"
+          />
         </Link>
 
         <nav className="hidden lg:flex items-center gap-1">
