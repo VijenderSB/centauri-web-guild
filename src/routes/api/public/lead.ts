@@ -151,9 +151,20 @@ async function verifyRecaptcha(token: unknown, ip: string): Promise<boolean> {
       headers: { "content-type": "application/x-www-form-urlencoded" },
       body: params.toString(),
     });
-    const data = (await res.json()) as { success?: boolean; score?: number };
-    if (!data.success) return false;
-    if (typeof data.score === "number" && data.score < minScore) return false;
+    const data = (await res.json()) as {
+      success?: boolean;
+      score?: number;
+      hostname?: string;
+      "error-codes"?: string[];
+    };
+    if (!data.success) {
+      console.warn("[lead] recaptcha verification failed:", JSON.stringify(data));
+      return false;
+    }
+    if (typeof data.score === "number" && data.score < minScore) {
+      console.warn(`[lead] recaptcha low score: ${data.score} (min ${minScore}) host=${data.hostname ?? "?"}`);
+      return false;
+    }
     return true;
   } catch {
     return true; // fail open on infrastructure error
