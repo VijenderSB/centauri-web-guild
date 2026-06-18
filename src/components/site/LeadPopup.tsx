@@ -257,7 +257,7 @@ export function LeadPopup() {
       role="dialog"
       aria-modal="true"
       aria-labelledby="lead-popup-title"
-      onClick={() => setOpen(false)}
+      onClick={dismiss}
     >
       <div
         className="relative w-full sm:max-w-lg bg-card border border-border rounded-t-2xl sm:rounded-2xl shadow-2xl overflow-hidden animate-in slide-in-from-bottom-4 sm:zoom-in-95 duration-300"
@@ -265,7 +265,7 @@ export function LeadPopup() {
       >
         <button
           type="button"
-          onClick={() => setOpen(false)}
+          onClick={dismiss}
           className="absolute right-3 top-3 z-10 rounded-full p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground transition"
           aria-label="Close"
         >
@@ -289,7 +289,7 @@ export function LeadPopup() {
             </p>
             <button
               type="button"
-              onClick={() => setOpen(false)}
+              onClick={dismiss}
               className="mt-6 inline-flex items-center justify-center rounded-md px-5 py-2.5 text-sm font-semibold text-primary-foreground"
               style={{ background: "var(--gradient-primary)" }}
             >
@@ -298,7 +298,53 @@ export function LeadPopup() {
           </div>
         ) : (
           <>
-            <div
+            {stage === 2 ? (
+              <div
+                className="px-6 pt-6 pb-5 text-white"
+                style={{
+                  background:
+                    "linear-gradient(135deg, hsl(0 72% 45%) 0%, hsl(14 80% 48%) 55%, hsl(28 90% 52%) 100%)",
+                }}
+              >
+                <div className="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide animate-pulse">
+                  <Flame className="h-3 w-3" /> Last chance — don't lose another hour
+                </div>
+                <h2
+                  id="lead-popup-title"
+                  className="mt-3 text-xl sm:text-2xl font-bold leading-tight"
+                >
+                  Wait — every minute your{" "}
+                  {ctx.service ? ctx.service.toLowerCase() : "website"} issue stays unresolved
+                  costs you real money{ctx.city ? ` in ${ctx.city.split(",")[0]}` : ""}.
+                </h2>
+                <p className="mt-2 text-sm text-white/95 leading-relaxed">
+                  We hear you — you've seen too many agencies overpromise and disappear. So here's
+                  our word: share your details now and a senior engineer will reach out personally.
+                </p>
+                <div className="mt-4 grid grid-cols-3 gap-2 text-[11px]">
+                  <div className="rounded-lg bg-white/15 backdrop-blur p-2 flex flex-col items-center text-center">
+                    <Clock className="h-4 w-4 mb-1" />
+                    <span className="font-bold">60-min</span>
+                    <span className="opacity-90">resolution guarantee*</span>
+                  </div>
+                  <div className="rounded-lg bg-white/15 backdrop-blur p-2 flex flex-col items-center text-center">
+                    <BadgeCheck className="h-4 w-4 mb-1" />
+                    <span className="font-bold">No-fix,</span>
+                    <span className="opacity-90">no-fee promise</span>
+                  </div>
+                  <div className="rounded-lg bg-white/15 backdrop-blur p-2 flex flex-col items-center text-center">
+                    <ShieldCheck className="h-4 w-4 mb-1" />
+                    <span className="font-bold">100%</span>
+                    <span className="opacity-90">confidential</span>
+                  </div>
+                </div>
+                <p className="mt-3 text-[10px] text-white/80 leading-snug">
+                  *We commit to a senior engineer on a call within 60 minutes and a clear
+                  resolution path the same hour for in-scope emergencies.
+                </p>
+              </div>
+            ) : (
+              <div
               className="px-6 pt-6 pb-5 text-primary-foreground"
               style={{ background: "var(--gradient-primary)" }}
             >
@@ -311,6 +357,7 @@ export function LeadPopup() {
               </h2>
               <p className="mt-2 text-sm text-white/90 leading-relaxed">{ctx.subtitle}</p>
             </div>
+            )}
 
             <form onSubmit={handleSubmit} className="p-6 space-y-3">
               <div className="grid sm:grid-cols-2 gap-3">
