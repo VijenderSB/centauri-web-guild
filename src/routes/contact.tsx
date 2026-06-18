@@ -19,6 +19,64 @@ export const Route = createFileRoute("/contact")({
 
 function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [formStartedAt] = useState(() => Date.now());
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setError(null);
+    const fd = new FormData(e.currentTarget);
+    const name = String(fd.get("name") || "").trim();
+    const business = String(fd.get("business") || "").trim();
+    const email = String(fd.get("email") || "").trim();
+    const phone = String(fd.get("phone") || "").trim();
+    const websiteUrl = String(fd.get("websiteUrl") || "").trim();
+    const priority = String(fd.get("priority") || "standard");
+    const details = String(fd.get("message") || "").trim();
+
+    if (!name) return setError("Please enter your name.");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return setError("Please enter a valid email address.");
+    if (phone.replace(/\D/g, "").length < 7) return setError("Please enter a valid phone number.");
+    if (!details) return setError("Please tell us how we can help.");
+
+    const message = [
+      details,
+      "",
+      business ? `Business: ${business}` : "",
+      websiteUrl ? `Website: ${websiteUrl}` : "",
+      `Priority: ${priority}`,
+    ]
+      .filter(Boolean)
+      .join("\n");
+
+    setSubmitting(true);
+    try {
+      const res = await fetch("/api/public/lead", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+          message,
+          website: "", // honeypot — real users leave it empty
+          formStartedAt,
+          pageUrl: typeof window !== "undefined" ? window.location.href : "",
+          pageTitle: typeof document !== "undefined" ? document.title : "",
+          context: "contact-page",
+        }),
+      });
+      const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
+      if (!res.ok || !data.ok) throw new Error(data.error || "Submission failed");
+      setSubmitted(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
   return (
     <PageShell>
       <PageHero eyebrow="Contact" title="Let's talk about your project." subtitle="Free 30-minute consultation. Emergency support available 24/7." />
@@ -32,32 +90,30 @@ function ContactPage() {
                 <p className="mt-2 text-muted-foreground">A senior team member will respond within 1 business hour.</p>
               </div>
             ) : (
-              <form
-                onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}
-                className="grid gap-4"
-              >
+              <form onSubmit={handleSubmit} className="grid gap-4">
                 <h2 className="text-2xl font-bold">Tell us about your project</h2>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <Field label="Your Name" name="name" required />
                   <Field label="Business Name" name="business" />
                   <Field label="Email" name="email" type="email" required />
-                  <Field label="Phone" name="phone" type="tel" />
-                  <Field label="Website URL" name="website" type="url" className="sm:col-span-2" />
+                  <Field label="Phone" name="phone" type="tel" required />
+                  <Field label="Website URL" name="websiteUrl" type="url" className="sm:col-span-2" />
                 </div>
                 <div>
-                  <label className="text-sm font-medium">Priority</label>
-                  <select className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm" defaultValue="standard">
+                  <label htmlFor="priority" className="text-sm font-medium">Priority</label>
+                  <select id="priority" name="priority" className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm" defaultValue="standard">
                     <option value="standard">Standard — general inquiry</option>
                     <option value="high">High — start within 2 weeks</option>
                     <option value="urgent">Urgent — site down / emergency</option>
                   </select>
                 </div>
                 <div>
-                  <label className="text-sm font-medium">How can we help?</label>
-                  <textarea required rows={5} className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm" placeholder="Describe your project, issue, or goals…" />
+                  <label htmlFor="message" className="text-sm font-medium">How can we help?</label>
+                  <textarea id="message" name="message" required rows={5} className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm" placeholder="Describe your project, issue, or goals…" />
                 </div>
-                <button type="submit" className="mt-2 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md text-primary-foreground font-semibold hover:opacity-90 transition" style={{ background: "var(--gradient-primary)" }}>
-                  Send Message
+                {error && <p className="text-sm text-destructive">{error}</p>}
+                <button type="submit" disabled={submitting} className="mt-2 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md text-primary-foreground font-semibold hover:opacity-90 transition disabled:opacity-60" style={{ background: "var(--gradient-primary)" }}>
+                  {submitting ? "Sending…" : "Send Message"}
                 </button>
                 <p className="text-xs text-muted-foreground">We respond within 1 business hour. Emergency requests are routed 24/7.</p>
               </form>

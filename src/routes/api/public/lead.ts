@@ -1,4 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
+import process from "node:process";
+import nodemailer from "nodemailer";
 
 type LeadPayload = {
   name?: unknown;
@@ -68,6 +70,68 @@ function clientIp(request: Request): string {
     request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
     "unknown"
   );
+}
+
+type Lead = {
+  ts: string;
+  ip: string;
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+  pageUrl: string | null;
+  pageTitle: string | null;
+  context: string | null;
+};
+
+// Email the lead via SMTP (nodemailer). Configured entirely by env vars so any
+// provider works (Hostinger mailbox, Gmail App Password, etc.). If SMTP isn't
+// configured, this no-ops — the lead is still captured in the server log.
+async function sendLeadEmail(lead: Lead): Promise<void> {
+  const host = process.env.SMTP_HOST;
+  const user = process.env.SMTP_USER;
+  const pass = process.env.SMTP_PASS;
+  const to = process.env.LEAD_NOTIFY_EMAIL || user;
+  if (!host || !user || !pass || !to) {
+    console.warn("[lead] SMTP not configured — email skipped (lead logged above).");
+    return;
+  }
+  const port = Number(process.env.SMTP_PORT) || 587;
+  const secure = process.env.SMTP_SECURE
+    ? process.env.SMTP_SECURE === "true"
+    : port === 465;
+  const from = process.env.MAIL_FROM || `WebCentauri Leads <${user}>`;
+
+  const transporter = nodemailer.createTransport({
+    host,
+    port,
+    secure,
+    auth: { user, pass },
+    connectionTimeout: 10_000,
+    greetingTimeout: 10_000,
+    socketTimeout: 15_000,
+  });
+
+  const text = [
+    `Name:    ${lead.name}`,
+    `Email:   ${lead.email}`,
+    `Phone:   ${lead.phone}`,
+    `Context: ${lead.context ?? "-"}`,
+    `Page:    ${lead.pageTitle ?? "-"}${lead.pageUrl ? ` (${lead.pageUrl})` : ""}`,
+    `IP:      ${lead.ip}`,
+    `Time:    ${lead.ts}`,
+    ``,
+    `Message:`,
+    lead.message,
+  ].join("\n");
+
+  await transporter.sendMail({
+    from,
+    to,
+    replyTo: lead.email,
+    subject: `New lead: ${lead.name}${lead.context ? ` — ${lead.context}` : ""}`,
+    text,
+  });
 }
 
 export const Route = createFileRoute("/api/public/lead")({
@@ -185,19 +249,26 @@ export const Route = createFileRoute("/api/public/lead")({
           });
         }
 
-        // Log the lead. Wire up storage + email (e.g. Postgres + SMTP/Resend)
-        // here to persist and notify automatically.
-        console.log("[lead]", {
+        const lead: Lead = {
           ts: new Date().toISOString(),
           ip,
           name,
-          email,
-          phone,
+          email: email as string,
+          phone: phone as string,
           message,
           pageUrl: typeof body.pageUrl === "string" ? body.pageUrl : null,
           pageTitle: typeof body.pageTitle === "string" ? body.pageTitle : null,
           context: typeof body.context === "string" ? body.context : null,
-        });
+        };
+        // Audit log — recoverable even if email delivery hiccups.
+        console.log("[lead]", lead);
+        // Deliver by email. Never fail the visitor's submission on a mail error;
+        // the lead is already in the log above and can be recovered.
+        try {
+          await sendLeadEmail(lead);
+        } catch (err) {
+          console.error("[lead] email delivery failed:", err);
+        }
 
         return new Response(JSON.stringify({ ok: true }), {
           status: 200,
