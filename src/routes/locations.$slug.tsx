@@ -3,7 +3,8 @@ import { PageShell, PageHero, Section, CtaBand } from "@/components/site/PageShe
 import { LOCATIONS, findCity } from "@/content/locations";
 import { SERVICES } from "@/content/services";
 import { KEYWORDS } from "@/content/keywords";
-import { CheckCircle2, MapPin, ArrowRight, Building2, Clock, ShieldCheck, Search } from "lucide-react";
+import { generateCityTestimonials, generateCityOnlyFaqs } from "@/lib/page-content";
+import { CheckCircle2, MapPin, ArrowRight, Building2, Clock, ShieldCheck, Search, Quote, Star, HelpCircle } from "lucide-react";
 import { Siren, Activity, Zap } from "lucide-react";
 
 export const Route = createFileRoute("/locations/$slug")({
@@ -46,6 +47,8 @@ function CityPage() {
   const { slug } = Route.useLoaderData();
   const c = findCity(slug)!;
   const nearby = LOCATIONS.filter((x) => x.country === c.country && x.slug !== c.slug).slice(0, 6);
+  const testimonials = generateCityTestimonials(c, 3);
+  const cityFaqs = generateCityOnlyFaqs(c, 4);
 
   return (
     <PageShell>
