@@ -185,7 +185,8 @@ export const Route = createFileRoute("/api/public/lead")({
           });
         }
 
-        // Log the lead. Enable Lovable Cloud + Resend to persist and email automatically.
+        // Log the lead. Wire up storage + email (e.g. Postgres + SMTP/Resend)
+        // here to persist and notify automatically.
         console.log("[lead]", {
           ts: new Date().toISOString(),
           ip,
