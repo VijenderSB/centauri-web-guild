@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import process from "node:process";
 import nodemailer from "nodemailer";
 
 type LeadPayload = {

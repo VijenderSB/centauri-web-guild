@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import process from "node:process";
 
 // Serves the PUBLIC reCAPTCHA v3 site key to the browser at runtime, so the key
 // is env-driven (RECAPTCHA_SITE_KEY) and needs no rebuild to change or disable.
