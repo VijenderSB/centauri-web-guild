@@ -309,6 +309,11 @@ export function LeadPopup() {
                 <div className="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide animate-pulse">
                   <Flame className="h-3 w-3" /> Last chance — don't lose another hour
                 </div>
+                <div className="mt-3 inline-flex items-center gap-2 rounded-lg bg-white/25 backdrop-blur px-3 py-1.5 border border-white/30">
+                  <BadgeCheck className="h-5 w-5 text-white" />
+                  <span className="text-sm font-extrabold tracking-wide">70% DISCOUNT</span>
+                  <span className="text-[11px] font-medium opacity-90">on first rescue fix</span>
+                </div>
                 <h2
                   id="lead-popup-title"
                   className="mt-3 text-xl sm:text-2xl font-bold leading-tight"
