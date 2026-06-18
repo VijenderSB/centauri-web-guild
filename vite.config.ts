@@ -12,4 +12,10 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  // Force Nitro on with the standalone Node-server preset so a normal
+  // `npm run build` (locally, in CI, and on Hostinger) emits a runnable Node
+  // server at .output/server/index.mjs (listens on $PORT). Without this, the
+  // Lovable wrapper skips Nitro outside its own sandbox and only dist/ is
+  // produced. Inside a Lovable sandbox this override is ignored (stays Cloudflare).
+  nitro: { preset: "node-server" },
 });
