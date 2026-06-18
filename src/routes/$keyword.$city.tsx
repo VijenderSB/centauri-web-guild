@@ -21,6 +21,8 @@ export const Route = createFileRoute("/$keyword/$city")({
     const url = `https://centauri-web-guild.lovable.app/${kw.slug}/${city.slug}`;
     const title = `${kw.title} in ${city.city}, ${city.regionCode} | WebCentauri`;
     const desc = generateMetaDesc(kw, city);
+    const baseFaq = kw.faqs[(city.slug.length + kw.slug.length) % kw.faqs.length]!;
+    const faqs = [baseFaq, ...generateCityFaqs(kw, city, 3)];
     return {
       meta: [
         { title },
@@ -53,6 +55,18 @@ export const Route = createFileRoute("/$keyword/$city")({
                 addressCountry: city.country === "USA" ? "US" : "CA",
               },
             },
+          }),
+        },
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faqs.map((f) => ({
+              "@type": "Question",
+              name: f.q,
+              acceptedAnswer: { "@type": "Answer", text: f.a },
+            })),
           }),
         },
       ],
