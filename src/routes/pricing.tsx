@@ -9,9 +9,9 @@ export const Route = createFileRoute("/pricing")({
       { name: "description", content: "Transparent USD pricing for website development, maintenance, SEO retainers, and dedicated developers. No hidden fees." },
       { property: "og:title", content: "Pricing — WebCentauri" },
       { property: "og:description", content: "Predictable USD pricing for projects, retainers, and teams." },
-      { property: "og:url", content: "https://centauri-web-guild.lovable.app/pricing" },
+      { property: "og:url", content: "https://www.webcentauri.com/pricing" },
     ],
-    links: [{ rel: "canonical", href: "https://centauri-web-guild.lovable.app/pricing" }],
+    links: [{ rel: "canonical", href: "https://www.webcentauri.com/pricing" }],
   }),
   component: PricingPage,
 });

@@ -9,9 +9,9 @@ export const Route = createFileRoute("/about")({
       { name: "description", content: "WebCentauri is a long-term technology partner — not a web agency. Learn our mission, values, and why clients stay for years." },
       { property: "og:title", content: "About WebCentauri" },
       { property: "og:description", content: "A reliable, accountable technology partner — not a freelance shop." },
-      { property: "og:url", content: "https://centauri-web-guild.lovable.app/about" },
+      { property: "og:url", content: "https://www.webcentauri.com/about" },
     ],
-    links: [{ rel: "canonical", href: "https://centauri-web-guild.lovable.app/about" }],
+    links: [{ rel: "canonical", href: "https://www.webcentauri.com/about" }],
   }),
   component: AboutPage,
 });

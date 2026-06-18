@@ -15,7 +15,7 @@ export const Route = createFileRoute("/$keyword/")({
   head: ({ loaderData }) => {
     const kw = loaderData ? findKeyword(loaderData.keyword) : undefined;
     if (!kw) return {};
-    const url = `https://centauri-web-guild.lovable.app/${kw.slug}`;
+    const url = `https://www.webcentauri.com/${kw.slug}`;
     const title = `${kw.title} in USA & Canada — WebCentauri`;
     const desc = `${kw.short} Trusted ${kw.label} provider serving businesses across the United States and Canada.`;
     return {

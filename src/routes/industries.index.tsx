@@ -10,9 +10,9 @@ export const Route = createFileRoute("/industries/")({
       { name: "description", content: "Full directory of 70+ industries we serve — healthcare, legal, SaaS, eCommerce, manufacturing, real estate, hospitality, education and more across USA & Canada." },
       { property: "og:title", content: "Industries We Serve — Full Directory | WebCentauri" },
       { property: "og:description", content: "70+ industries served across USA & Canada." },
-      { property: "og:url", content: "https://centauri-web-guild.lovable.app/industries" },
+      { property: "og:url", content: "https://www.webcentauri.com/industries" },
     ],
-    links: [{ rel: "canonical", href: "https://centauri-web-guild.lovable.app/industries" }],
+    links: [{ rel: "canonical", href: "https://www.webcentauri.com/industries" }],
   }),
   component: IndustriesPage,
 });

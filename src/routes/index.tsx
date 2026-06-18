@@ -18,9 +18,9 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "Trusted USA & Canada technology partner for web development, maintenance, SEO, dedicated developers, and emergency support." },
       { property: "og:title", content: "WebCentauri — Reliable Technology Partner" },
       { property: "og:description", content: "Web, SEO, and support built for long-term partnerships across USA & Canada." },
-      { property: "og:url", content: "https://centauri-web-guild.lovable.app/" },
+      { property: "og:url", content: "https://www.webcentauri.com/" },
     ],
-    links: [{ rel: "canonical", href: "https://centauri-web-guild.lovable.app/" }],
+    links: [{ rel: "canonical", href: "https://www.webcentauri.com/" }],
     scripts: [
       {
         type: "application/ld+json",
@@ -28,7 +28,7 @@ export const Route = createFileRoute("/")({
           "@context": "https://schema.org",
           "@type": "WebSite",
           name: "WebCentauri Technologies",
-          url: "https://centauri-web-guild.lovable.app",
+          url: "https://www.webcentauri.com",
         }),
       },
     ],

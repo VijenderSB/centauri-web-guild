@@ -4,7 +4,7 @@ import { LOCATIONS } from "@/content/locations";
 import { SERVICES } from "@/content/services";
 import { KEYWORDS } from "@/content/keywords";
 
-const BASE_URL = "https://centauri-web-guild.lovable.app";
+const BASE_URL = "https://www.webcentauri.com";
 
 export const Route = createFileRoute("/sitemap.xml")({
   server: {

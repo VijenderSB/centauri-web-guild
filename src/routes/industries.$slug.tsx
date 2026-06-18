@@ -12,7 +12,7 @@ export const Route = createFileRoute("/industries/$slug")({
   head: ({ loaderData }) => {
     const i = loaderData ? INDUSTRIES.find((x) => x.slug === loaderData.slug) : undefined;
     if (!i) return {};
-    const url = `https://centauri-web-guild.lovable.app/industries/${i.slug}`;
+    const url = `https://www.webcentauri.com/industries/${i.slug}`;
     return {
       meta: [
         { title: i.metaTitle },

@@ -18,7 +18,7 @@ export const Route = createFileRoute("/locations/$slug")({
     if (!c) return {};
     const title = `${c.city} Web Design, SEO & Website Support | WebCentauri`;
     const desc = `Trusted web design, SEO, and ongoing technical support for ${c.city}, ${c.regionCode} businesses. Senior team. ${c.country === "USA" ? "US-based" : "Canadian"} delivery. Free audit.`;
-    const url = `https://centauri-web-guild.lovable.app/locations/${c.slug}`;
+    const url = `https://www.webcentauri.com/locations/${c.slug}`;
     const cityFaqs = generateCityOnlyFaqs(c, 4);
     return {
       meta: [

@@ -13,7 +13,7 @@ export const Route = createFileRoute("/services/$slug/$child")({
     if (!loaderData) return {};
     const found = findChild(loaderData.slug, loaderData.child);
     if (!found) return {};
-    const url = `https://centauri-web-guild.lovable.app/services/${loaderData.slug}/${loaderData.child}`;
+    const url = `https://www.webcentauri.com/services/${loaderData.slug}/${loaderData.child}`;
     return {
       meta: [
         { title: found.child.metaTitle },
@@ -53,9 +53,9 @@ export const Route = createFileRoute("/services/$slug/$child")({
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
             itemListElement: [
-              { "@type": "ListItem", position: 1, name: "Home", item: "https://centauri-web-guild.lovable.app/" },
-              { "@type": "ListItem", position: 2, name: "Services", item: "https://centauri-web-guild.lovable.app/services" },
-              { "@type": "ListItem", position: 3, name: found.hub.title, item: `https://centauri-web-guild.lovable.app/services/${loaderData.slug}` },
+              { "@type": "ListItem", position: 1, name: "Home", item: "https://www.webcentauri.com/" },
+              { "@type": "ListItem", position: 2, name: "Services", item: "https://www.webcentauri.com/services" },
+              { "@type": "ListItem", position: 3, name: found.hub.title, item: `https://www.webcentauri.com/services/${loaderData.slug}` },
               { "@type": "ListItem", position: 4, name: found.child.title, item: url },
             ],
           }),

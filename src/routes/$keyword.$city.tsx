@@ -18,7 +18,7 @@ export const Route = createFileRoute("/$keyword/$city")({
     const kw = findKeyword(loaderData.keyword);
     const city = findCity(loaderData.city);
     if (!kw || !city) return {};
-    const url = `https://centauri-web-guild.lovable.app/${kw.slug}/${city.slug}`;
+    const url = `https://www.webcentauri.com/${kw.slug}/${city.slug}`;
     const title = `${kw.title} in ${city.city}, ${city.regionCode} | WebCentauri`;
     const desc = generateMetaDesc(kw, city);
     const baseFaq = kw.faqs[(city.slug.length + kw.slug.length) % kw.faqs.length]!;
@@ -75,8 +75,8 @@ export const Route = createFileRoute("/$keyword/$city")({
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
             itemListElement: [
-              { "@type": "ListItem", position: 1, name: "Home", item: "https://centauri-web-guild.lovable.app/" },
-              { "@type": "ListItem", position: 2, name: kw.title, item: `https://centauri-web-guild.lovable.app/${kw.slug}` },
+              { "@type": "ListItem", position: 1, name: "Home", item: "https://www.webcentauri.com/" },
+              { "@type": "ListItem", position: 2, name: kw.title, item: `https://www.webcentauri.com/${kw.slug}` },
               { "@type": "ListItem", position: 3, name: `${city.city}, ${city.regionCode}`, item: url },
             ],
           }),

@@ -9,9 +9,9 @@ export const Route = createFileRoute("/resources")({
       { name: "description", content: "Practical guides, checklists, and insights on website maintenance, SEO, security, performance, and growth." },
       { property: "og:title", content: "Resources — WebCentauri" },
       { property: "og:description", content: "Guides, checklists, and insights for growing businesses." },
-      { property: "og:url", content: "https://centauri-web-guild.lovable.app/resources" },
+      { property: "og:url", content: "https://www.webcentauri.com/resources" },
     ],
-    links: [{ rel: "canonical", href: "https://centauri-web-guild.lovable.app/resources" }],
+    links: [{ rel: "canonical", href: "https://www.webcentauri.com/resources" }],
     scripts: [
       {
         type: "application/ld+json",

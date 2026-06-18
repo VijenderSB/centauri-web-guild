@@ -9,9 +9,9 @@ export const Route = createFileRoute("/case-studies")({
       { name: "description", content: "Real projects, real results. See how WebCentauri delivers measurable outcomes across healthcare, eCommerce, legal, and more." },
       { property: "og:title", content: "Case Studies — WebCentauri" },
       { property: "og:description", content: "Outcome-driven case studies from across USA & Canada." },
-      { property: "og:url", content: "https://centauri-web-guild.lovable.app/case-studies" },
+      { property: "og:url", content: "https://www.webcentauri.com/case-studies" },
     ],
-    links: [{ rel: "canonical", href: "https://centauri-web-guild.lovable.app/case-studies" }],
+    links: [{ rel: "canonical", href: "https://www.webcentauri.com/case-studies" }],
   }),
   component: CaseStudiesPage,
 });
