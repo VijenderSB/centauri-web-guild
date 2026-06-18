@@ -106,9 +106,6 @@ function Index() {
                 {clientCount}+
               </div>
               <div className="text-xs uppercase tracking-wide text-slate-400 mt-1">Clients Served</div>
-              <div className="inline-flex items-center gap-1 mt-1 text-[10px] font-semibold text-emerald-300 bg-emerald-500/15 border border-emerald-400/20 px-2 py-0.5 rounded-full">
-                <TrendingUp className="h-3 w-3" /> +6 every hour
-              </div>
             </div>
             <div>
               <div className="text-3xl sm:text-4xl font-bold text-white">USA / CA</div>
