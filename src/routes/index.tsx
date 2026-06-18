@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell, Section, SectionHeading, CtaBand } from "@/components/site/PageShell";
 import { CountUp } from "@/components/site/CountUp";
@@ -35,7 +36,33 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
+function useLiveCounter({
+  start,
+  increment,
+  intervalMs,
+}: {
+  start: number;
+  increment: number;
+  intervalMs: number;
+}) {
+  const [count, setCount] = useState(start);
+  useEffect(() => {
+    const tick = () => {
+      const now = Date.now();
+      const elapsed = now - startTimeRef;
+      const ticks = Math.floor(elapsed / intervalMs);
+      setCount(start + ticks * increment);
+    };
+    const startTimeRef = Date.now();
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, [start, increment, intervalMs]);
+  return count;
+}
+
 function Index() {
+  const clientCount = useLiveCounter({ start: 500, increment: 6, intervalMs: 3600000 });
   return (
     <PageShell>
       {/* HERO */}
@@ -76,9 +103,12 @@ function Index() {
             </div>
             <div>
               <div className="text-3xl sm:text-4xl font-bold text-white">
-                <CountUp end={500} suffix="+" />
+                {clientCount}+
               </div>
-              <div className="text-xs uppercase tracking-wide text-slate-400 mt-1">Projects Delivered</div>
+              <div className="text-xs uppercase tracking-wide text-slate-400 mt-1">Clients Served</div>
+              <div className="inline-flex items-center gap-1 mt-1 text-[10px] font-semibold text-emerald-300 bg-emerald-500/15 border border-emerald-400/20 px-2 py-0.5 rounded-full">
+                <TrendingUp className="h-3 w-3" /> +6 every hour
+              </div>
             </div>
             <div>
               <div className="text-3xl sm:text-4xl font-bold text-white">USA / CA</div>
