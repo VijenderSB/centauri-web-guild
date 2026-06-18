@@ -3,7 +3,8 @@ import { PageShell, PageHero, Section, CtaBand } from "@/components/site/PageShe
 import { LOCATIONS, findCity } from "@/content/locations";
 import { SERVICES } from "@/content/services";
 import { KEYWORDS } from "@/content/keywords";
-import { CheckCircle2, MapPin, ArrowRight, Building2, Clock, ShieldCheck, Search } from "lucide-react";
+import { generateCityTestimonials, generateCityOnlyFaqs } from "@/lib/page-content";
+import { CheckCircle2, MapPin, ArrowRight, Building2, Clock, ShieldCheck, Search, Quote, Star, HelpCircle } from "lucide-react";
 import { Siren, Activity, Zap } from "lucide-react";
 
 export const Route = createFileRoute("/locations/$slug")({
@@ -18,6 +19,7 @@ export const Route = createFileRoute("/locations/$slug")({
     const title = `${c.city} Web Design, SEO & Website Support | WebCentauri`;
     const desc = `Trusted web design, SEO, and ongoing technical support for ${c.city}, ${c.regionCode} businesses. Senior team. ${c.country === "USA" ? "US-based" : "Canadian"} delivery. Free audit.`;
     const url = `https://centauri-web-guild.lovable.app/locations/${c.slug}`;
+    const cityFaqs = generateCityOnlyFaqs(c, 4);
     return {
       meta: [
         { title },
@@ -27,6 +29,20 @@ export const Route = createFileRoute("/locations/$slug")({
         { property: "og:url", content: url },
       ],
       links: [{ rel: "canonical", href: url }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: cityFaqs.map((f) => ({
+              "@type": "Question",
+              name: f.q,
+              acceptedAnswer: { "@type": "Answer", text: f.a },
+            })),
+          }),
+        },
+      ],
     };
   },
   notFoundComponent: () => (
@@ -46,6 +62,8 @@ function CityPage() {
   const { slug } = Route.useLoaderData();
   const c = findCity(slug)!;
   const nearby = LOCATIONS.filter((x) => x.country === c.country && x.slug !== c.slug).slice(0, 6);
+  const testimonials = generateCityTestimonials(c, 3);
+  const cityFaqs = generateCityOnlyFaqs(c, 4);
 
   return (
     <PageShell>
@@ -211,7 +229,45 @@ function CityPage() {
         </div>
       </Section>
 
+      {/* City-specific testimonials */}
+      <Section>
+        <h2 className="text-2xl font-bold mb-2">What {c.city} clients say</h2>
+        <p className="text-muted-foreground mb-6 max-w-3xl">Real feedback from {c.city} and {c.region} businesses we've delivered for. Names abbreviated for client privacy.</p>
+        <div className="grid md:grid-cols-3 gap-5">
+          {testimonials.map((t) => (
+            <figure key={t.name + t.company} className="p-6 rounded-2xl border border-border bg-card flex flex-col">
+              <Quote className="h-6 w-6 text-primary/40" />
+              <blockquote className="mt-3 text-sm text-foreground/90 leading-relaxed flex-1">"{t.quote}"</blockquote>
+              <div className="mt-4 flex items-center gap-1 text-amber-500">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Star key={i} className="h-3.5 w-3.5 fill-current" />
+                ))}
+              </div>
+              <figcaption className="mt-3 text-xs">
+                <div className="font-semibold text-foreground">{t.name}</div>
+                <div className="text-muted-foreground">{t.role}, {t.company}</div>
+                <div className="text-muted-foreground">{c.city}, {c.regionCode}</div>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </Section>
+
+      {/* City-specific FAQs */}
       <Section bg="muted">
+        <h2 className="text-2xl font-bold mb-2">FAQs from {c.city} buyers</h2>
+        <p className="text-muted-foreground mb-6 max-w-3xl">Questions we hear most often from {c.city} and {c.metro ?? c.region} businesses before they engage.</p>
+        <div className="grid md:grid-cols-2 gap-5 max-w-5xl">
+          {cityFaqs.map((f) => (
+            <div key={f.q} className="p-6 rounded-2xl border border-border bg-card">
+              <h3 className="font-semibold flex gap-2"><HelpCircle className="h-5 w-5 text-primary shrink-0" /> {f.q}</h3>
+              <p className="text-sm text-muted-foreground mt-2">{f.a}</p>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section>
         <h2 className="text-2xl font-bold mb-2">All services available in {c.city}</h2>
         <p className="text-muted-foreground mb-6 max-w-3xl">Every WebCentauri service is delivered in {c.city}, {c.regionCode} by the same senior team — emergency response, recovery, development, and ongoing support.</p>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
