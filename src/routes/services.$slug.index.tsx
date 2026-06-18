@@ -22,6 +22,31 @@ export const Route = createFileRoute("/services/$slug/")({
         { property: "og:url", content: url },
       ],
       links: [{ rel: "canonical", href: url }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Service",
+            name: s.title,
+            description: s.metaDesc,
+            provider: { "@type": "Organization", name: "WebCentauri Technologies" },
+            areaServed: ["United States", "Canada"],
+          }),
+        },
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: s.faqs.map((f) => ({
+              "@type": "Question",
+              name: f.q,
+              acceptedAnswer: { "@type": "Answer", text: f.a },
+            })),
+          }),
+        },
+      ],
     };
   },
   notFoundComponent: () => (

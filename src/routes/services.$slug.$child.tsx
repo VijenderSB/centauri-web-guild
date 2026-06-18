@@ -35,6 +35,31 @@ export const Route = createFileRoute("/services/$slug/$child")({
             areaServed: ["United States", "Canada"],
           }),
         },
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: found.child.faqs.map((f) => ({
+              "@type": "Question",
+              name: f.q,
+              acceptedAnswer: { "@type": "Answer", text: f.a },
+            })),
+          }),
+        },
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: "https://centauri-web-guild.lovable.app/" },
+              { "@type": "ListItem", position: 2, name: "Services", item: "https://centauri-web-guild.lovable.app/services" },
+              { "@type": "ListItem", position: 3, name: found.hub.title, item: `https://centauri-web-guild.lovable.app/services/${loaderData.slug}` },
+              { "@type": "ListItem", position: 4, name: found.child.title, item: url },
+            ],
+          }),
+        },
       ],
     };
   },

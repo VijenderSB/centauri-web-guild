@@ -69,6 +69,18 @@ export const Route = createFileRoute("/$keyword/$city")({
             })),
           }),
         },
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: "https://centauri-web-guild.lovable.app/" },
+              { "@type": "ListItem", position: 2, name: kw.title, item: `https://centauri-web-guild.lovable.app/${kw.slug}` },
+              { "@type": "ListItem", position: 3, name: `${city.city}, ${city.regionCode}`, item: url },
+            ],
+          }),
+        },
       ],
     };
   },
