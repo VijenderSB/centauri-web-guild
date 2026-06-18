@@ -60,14 +60,15 @@ export function SiteFooter() {
             </div>
           </div>
           <FooterCol title="Services" links={[
-            ["/services/web-development", "Website Development"],
-            ["/services/website-care-plans", "Website Care Plans"],
-            ["/services/wordpress", "WordPress Services"],
-            ["/services/seo", "SEO & Growth"],
-            ["/services/ecommerce", "eCommerce"],
-            ["/services/performance-security", "Performance & Security"],
-            ["/services/dedicated-teams", "Dedicated Developers"],
-            ["/services/emergency-support", "Emergency Support"],
+            ["/services/website-development", "Website Development"],
+            ["/services/emergency-website-support", "Emergency Support"],
+            ["/services/wordpress-support", "WordPress Support"],
+            ["/services/hacked-website-recovery", "Hacked Site Recovery"],
+            ["/services/database-server-recovery", "Database & Server"],
+            ["/services/business-email-support", "Business Email"],
+            ["/services/api-development", "API Development"],
+            ["/services/odoo-erp-crm", "Odoo ERP & CRM"],
+            ["/services/no-code-platforms", "No-Code Platforms"],
           ]} />
           <FooterCol title="Industries" links={[
             ["/industries/healthcare", "Healthcare"],
