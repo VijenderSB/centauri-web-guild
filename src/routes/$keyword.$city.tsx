@@ -111,12 +111,9 @@ function KeywordCityPage() {
       <Section>
         <div className="grid lg:grid-cols-3 gap-10">
           <div className="lg:col-span-2 space-y-6">
-            <p className="text-lg leading-relaxed text-muted-foreground">
-              {c.city} businesses come to WebCentauri for {kw.label} when downtime, slow response, or junior teams stop being an option. {kw.intro}
-            </p>
-            <p className="text-base leading-relaxed text-muted-foreground">
-              {c.blurb}
-            </p>
+            <p className="text-lg leading-relaxed text-muted-foreground">{intro.opener} {kw.intro}</p>
+            <p className="text-base leading-relaxed text-muted-foreground">{intro.reason} {c.blurb}</p>
+            <p className="text-base leading-relaxed text-muted-foreground">{intro.closer}</p>
             {kw.responseSLA && (
               <div className="p-4 rounded-xl border border-primary/30 bg-primary/5 flex items-start gap-3">
                 <Zap className="h-5 w-5 text-primary mt-0.5 shrink-0" />
@@ -205,7 +202,7 @@ function KeywordCityPage() {
       <Section>
         <SectionHeading eyebrow="FAQs" title={`${kw.title} questions from ${c.city}`} />
         <div className="grid md:grid-cols-2 gap-5 max-w-5xl mx-auto">
-          {kw.faqs.map((f) => (
+          {faqs.map((f) => (
             <div key={f.q} className="p-6 rounded-2xl border border-border bg-card">
               <h3 className="font-semibold flex gap-2"><HelpCircle className="h-5 w-5 text-primary shrink-0" /> {f.q}</h3>
               <p className="text-sm text-muted-foreground mt-2">{f.a}</p>
@@ -214,8 +211,36 @@ function KeywordCityPage() {
         </div>
       </Section>
 
-      {/* Other services in this city */}
+      {/* Testimonials (distinct per city + keyword) */}
       <Section bg="muted">
+        <SectionHeading
+          eyebrow="Local proof"
+          title={`What ${c.city} clients say about our ${kw.title.toLowerCase()}`}
+        />
+        <div className="grid md:grid-cols-3 gap-5 max-w-6xl mx-auto">
+          {testimonials.map((t) => (
+            <figure key={t.name + t.company} className="p-6 rounded-2xl border border-border bg-card flex flex-col">
+              <Quote className="h-6 w-6 text-primary/40" />
+              <blockquote className="mt-3 text-sm text-foreground/90 leading-relaxed flex-1">
+                "{t.quote}"
+              </blockquote>
+              <div className="mt-4 flex items-center gap-1 text-amber-500">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Star key={i} className="h-3.5 w-3.5 fill-current" />
+                ))}
+              </div>
+              <figcaption className="mt-3 text-xs">
+                <div className="font-semibold text-foreground">{t.name}</div>
+                <div className="text-muted-foreground">{t.role}, {t.company}</div>
+                <div className="text-muted-foreground">{c.city}, {c.regionCode}</div>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </Section>
+
+      {/* Other services in this city */}
+      <Section>
         <SectionHeading
           eyebrow={c.city}
           title={`Other services we deliver in ${c.city}`}
