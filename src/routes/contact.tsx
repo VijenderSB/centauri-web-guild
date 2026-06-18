@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { PageShell, PageHero, Section } from "@/components/site/PageShell";
-import { Mail, Phone, MessageSquare, Siren, Calendar, CheckCircle2 } from "lucide-react";
+import { Mail, Phone, MessageSquare, Siren, Calendar, CheckCircle2, MapPin } from "lucide-react";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
