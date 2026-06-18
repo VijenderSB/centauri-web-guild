@@ -2,6 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { PageShell, PageHero, Section, CtaBand } from "@/components/site/PageShell";
 import { LOCATIONS, findCity } from "@/content/locations";
 import { SERVICES } from "@/content/services";
+import { KEYWORDS } from "@/content/keywords";
 import { CheckCircle2, MapPin, ArrowRight, Building2, Clock, ShieldCheck, Search } from "lucide-react";
 import { Siren, Activity, Zap } from "lucide-react";
 
@@ -207,6 +208,27 @@ function CityPage() {
         </div>
         <div className="mt-6">
           <Link to="/locations" className="inline-flex items-center gap-1 text-sm font-semibold text-primary">View all locations <ArrowRight className="h-4 w-4" /></Link>
+        </div>
+      </Section>
+
+      <Section bg="muted">
+        <h2 className="text-2xl font-bold mb-2">All services available in {c.city}</h2>
+        <p className="text-muted-foreground mb-6 max-w-3xl">Every WebCentauri service is delivered in {c.city}, {c.regionCode} by the same senior team — emergency response, recovery, development, and ongoing support.</p>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+          {KEYWORDS.map((k) => (
+            <Link
+              key={k.slug}
+              to="/$keyword/$city"
+              params={{ keyword: k.slug, city: c.slug }}
+              className="group p-4 rounded-xl border border-border bg-card hover:border-primary/50 transition flex items-start justify-between gap-3"
+            >
+              <div className="min-w-0">
+                <div className="text-[10px] font-semibold text-primary uppercase tracking-wide">{k.category}</div>
+                <h3 className="font-semibold text-sm group-hover:text-primary mt-0.5">{k.title} in {c.city}</h3>
+              </div>
+              <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition shrink-0 mt-0.5" />
+            </Link>
+          ))}
         </div>
       </Section>
 
