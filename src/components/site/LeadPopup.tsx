@@ -369,6 +369,28 @@ export function LeadPopup() {
             )}
 
             <form onSubmit={handleSubmit} className="p-6 space-y-3">
+              {/* Honeypot — hidden from humans, irresistible to bots. */}
+              <div
+                aria-hidden="true"
+                style={{
+                  position: "absolute",
+                  left: "-10000px",
+                  top: "auto",
+                  width: 1,
+                  height: 1,
+                  overflow: "hidden",
+                }}
+              >
+                <label htmlFor="lp-website">Website</label>
+                <input
+                  id="lp-website"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={website}
+                  onChange={(e) => setWebsite(e.target.value)}
+                />
+              </div>
               <div className="grid sm:grid-cols-2 gap-3">
                 <div>
                   <label htmlFor="lp-name" className="text-xs font-semibold text-foreground">
