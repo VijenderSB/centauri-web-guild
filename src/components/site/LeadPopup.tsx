@@ -1,6 +1,17 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRouterState } from "@tanstack/react-router";
-import { X, ShieldCheck, Send, Loader2, CheckCircle2, Sparkles, MapPin } from "lucide-react";
+import {
+  X,
+  ShieldCheck,
+  Send,
+  Loader2,
+  CheckCircle2,
+  Sparkles,
+  MapPin,
+  Clock,
+  Flame,
+  BadgeCheck,
+} from "lucide-react";
 import { findKeyword } from "@/content/keywords";
 import { findCity } from "@/content/locations";
 import { findHub, findChild } from "@/content/services";
@@ -115,30 +126,66 @@ export function LeadPopup() {
   const ctx = useMemo(() => detectContext(pathname), [pathname]);
 
   const [open, setOpen] = useState(false);
+  const [stage, setStage] = useState<1 | 2>(1);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
 
-  // Trigger after 5s — once per session
+  // Stage 1: trigger after 5s. Stage 2 (FOMO): trigger 30s after stage 1 is dismissed without submitting.
   useEffect(() => {
     if (typeof window === "undefined") return;
+    let state: string | null = null;
     try {
-      const state = sessionStorage.getItem(STORAGE_KEY);
-      if (state === "shown" || state === "submitted") return;
+      state = sessionStorage.getItem(STORAGE_KEY);
     } catch {
       /* ignore */
     }
+    if (state === "submitted" || state === "stage2-shown") return;
+
+    const delay = state === "stage1-dismissed" ? 30000 : 5000;
+    const nextStage: 1 | 2 = state === "stage1-dismissed" ? 2 : 1;
+
     const t = window.setTimeout(() => {
+      setStage(nextStage);
       setOpen(true);
       try {
-        sessionStorage.setItem(STORAGE_KEY, "shown");
+        sessionStorage.setItem(
+          STORAGE_KEY,
+          nextStage === 2 ? "stage2-shown" : "stage1-shown",
+        );
       } catch {
         /* ignore */
       }
-    }, 5000);
+    }, delay);
     return () => window.clearTimeout(t);
   }, []);
+
+  function dismiss() {
+    setOpen(false);
+    if (submitted) return;
+    try {
+      const state = sessionStorage.getItem(STORAGE_KEY);
+      if (state === "stage1-shown") {
+        sessionStorage.setItem(STORAGE_KEY, "stage1-dismissed");
+        // Schedule the FOMO follow-up popup in 30s
+        window.setTimeout(() => {
+          try {
+            if (sessionStorage.getItem(STORAGE_KEY) !== "stage1-dismissed") return;
+            sessionStorage.setItem(STORAGE_KEY, "stage2-shown");
+          } catch {
+            /* ignore */
+          }
+          setStage(2);
+          setOpen(true);
+        }, 30000);
+      } else if (state === "stage2-shown") {
+        sessionStorage.setItem(STORAGE_KEY, "stage2-dismissed");
+      }
+    } catch {
+      /* ignore */
+    }
+  }
 
   // Lock scroll while open
   useEffect(() => {
@@ -146,7 +193,7 @@ export function LeadPopup() {
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") dismiss();
     };
     window.addEventListener("keydown", onKey);
     return () => {
@@ -210,7 +257,7 @@ export function LeadPopup() {
       role="dialog"
       aria-modal="true"
       aria-labelledby="lead-popup-title"
-      onClick={() => setOpen(false)}
+      onClick={dismiss}
     >
       <div
         className="relative w-full sm:max-w-lg bg-card border border-border rounded-t-2xl sm:rounded-2xl shadow-2xl overflow-hidden animate-in slide-in-from-bottom-4 sm:zoom-in-95 duration-300"
@@ -218,7 +265,7 @@ export function LeadPopup() {
       >
         <button
           type="button"
-          onClick={() => setOpen(false)}
+          onClick={dismiss}
           className="absolute right-3 top-3 z-10 rounded-full p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground transition"
           aria-label="Close"
         >
@@ -242,7 +289,7 @@ export function LeadPopup() {
             </p>
             <button
               type="button"
-              onClick={() => setOpen(false)}
+              onClick={dismiss}
               className="mt-6 inline-flex items-center justify-center rounded-md px-5 py-2.5 text-sm font-semibold text-primary-foreground"
               style={{ background: "var(--gradient-primary)" }}
             >
@@ -251,7 +298,53 @@ export function LeadPopup() {
           </div>
         ) : (
           <>
-            <div
+            {stage === 2 ? (
+              <div
+                className="px-6 pt-6 pb-5 text-white"
+                style={{
+                  background:
+                    "linear-gradient(135deg, hsl(0 72% 45%) 0%, hsl(14 80% 48%) 55%, hsl(28 90% 52%) 100%)",
+                }}
+              >
+                <div className="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide animate-pulse">
+                  <Flame className="h-3 w-3" /> Last chance — don't lose another hour
+                </div>
+                <h2
+                  id="lead-popup-title"
+                  className="mt-3 text-xl sm:text-2xl font-bold leading-tight"
+                >
+                  Wait — every minute your{" "}
+                  {ctx.service ? ctx.service.toLowerCase() : "website"} issue stays unresolved
+                  costs you real money{ctx.city ? ` in ${ctx.city.split(",")[0]}` : ""}.
+                </h2>
+                <p className="mt-2 text-sm text-white/95 leading-relaxed">
+                  We hear you — you've seen too many agencies overpromise and disappear. So here's
+                  our word: share your details now and a senior engineer will reach out personally.
+                </p>
+                <div className="mt-4 grid grid-cols-3 gap-2 text-[11px]">
+                  <div className="rounded-lg bg-white/15 backdrop-blur p-2 flex flex-col items-center text-center">
+                    <Clock className="h-4 w-4 mb-1" />
+                    <span className="font-bold">60-min</span>
+                    <span className="opacity-90">resolution guarantee*</span>
+                  </div>
+                  <div className="rounded-lg bg-white/15 backdrop-blur p-2 flex flex-col items-center text-center">
+                    <BadgeCheck className="h-4 w-4 mb-1" />
+                    <span className="font-bold">No-fix,</span>
+                    <span className="opacity-90">no-fee promise</span>
+                  </div>
+                  <div className="rounded-lg bg-white/15 backdrop-blur p-2 flex flex-col items-center text-center">
+                    <ShieldCheck className="h-4 w-4 mb-1" />
+                    <span className="font-bold">100%</span>
+                    <span className="opacity-90">confidential</span>
+                  </div>
+                </div>
+                <p className="mt-3 text-[10px] text-white/80 leading-snug">
+                  *We commit to a senior engineer on a call within 60 minutes and a clear
+                  resolution path the same hour for in-scope emergencies.
+                </p>
+              </div>
+            ) : (
+              <div
               className="px-6 pt-6 pb-5 text-primary-foreground"
               style={{ background: "var(--gradient-primary)" }}
             >
@@ -264,6 +357,7 @@ export function LeadPopup() {
               </h2>
               <p className="mt-2 text-sm text-white/90 leading-relaxed">{ctx.subtitle}</p>
             </div>
+            )}
 
             <form onSubmit={handleSubmit} className="p-6 space-y-3">
               <div className="grid sm:grid-cols-2 gap-3">
@@ -350,7 +444,8 @@ export function LeadPopup() {
                   </>
                 ) : (
                   <>
-                    <Send className="h-4 w-4" /> Get expert help
+                    <Send className="h-4 w-4" />{" "}
+                    {stage === 2 ? "Claim my 60-min resolution" : "Get expert help"}
                   </>
                 )}
               </button>
