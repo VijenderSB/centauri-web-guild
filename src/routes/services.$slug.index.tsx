@@ -61,14 +61,14 @@ function HubPage() {
           </div>
           <aside className="space-y-6">
             <div className="p-6 rounded-2xl border border-border bg-card" style={{ boxShadow: "var(--shadow-card)" }}>
-              <h3 className="font-semibold">Talk to a specialist</h3>
+              <h2 className="font-semibold">Talk to a specialist</h2>
               <p className="text-sm text-muted-foreground mt-2">Free 30-minute scoping call. No pressure, no sales script.</p>
               <Link to="/contact" className="mt-4 inline-flex w-full justify-center px-4 py-3 rounded-md font-semibold text-primary-foreground" style={{ background: "var(--gradient-primary)" }}>
                 Book consultation
               </Link>
             </div>
             <div className="p-6 rounded-2xl border border-border bg-card">
-              <h3 className="font-semibold">Industries we serve here</h3>
+              <h2 className="font-semibold">Industries we serve here</h2>
               <ul className="mt-3 space-y-2 text-sm">
                 {hub.industries.map((ind) => (
                   <li key={ind} className="flex gap-2"><ArrowRight className="h-4 w-4 text-primary mt-0.5" />{ind}</li>
@@ -90,7 +90,7 @@ function HubPage() {
               params={{ slug: hub.slug, child: c.slug }}
               className="group p-6 rounded-2xl border border-border bg-card hover:border-primary/40 transition flex flex-col"
             >
-              <h3 className="font-semibold group-hover:text-primary">{c.title}</h3>
+              <h2 className="font-semibold group-hover:text-primary">{c.title}</h2>
               <p className="text-sm text-muted-foreground mt-2 flex-1">{c.short}</p>
               <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary">
                 View details <ChevronRight className="h-4 w-4 group-hover:translate-x-1 transition" />
@@ -159,7 +159,7 @@ function HubPage() {
         <div className="grid md:grid-cols-2 gap-5 max-w-5xl mx-auto">
           {hub.faqs.map((f) => (
             <div key={f.q} className="p-6 rounded-2xl border border-border bg-card">
-              <h3 className="font-semibold flex gap-2"><HelpCircle className="h-5 w-5 text-primary shrink-0" /> {f.q}</h3>
+              <h2 className="font-semibold flex gap-2"><HelpCircle className="h-5 w-5 text-primary shrink-0" /> {f.q}</h2>
               <p className="text-sm text-muted-foreground mt-2">{f.a}</p>
             </div>
           ))}
@@ -175,7 +175,7 @@ function HubPage() {
             return (
               <Link key={r.slug} to="/services/$slug" params={{ slug: r.slug }} className="p-6 rounded-2xl border border-border bg-card hover:border-primary/40 transition">
                 <RI className="h-6 w-6 text-primary" />
-                <h3 className="font-semibold mt-3">{r.title}</h3>
+                <h2 className="font-semibold mt-3">{r.title}</h2>
                 <p className="text-sm text-muted-foreground mt-1">{r.short}</p>
               </Link>
             );
