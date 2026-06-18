@@ -52,9 +52,13 @@ export async function getRecaptchaToken(action: string): Promise<string | null> 
     if (!siteKey) return null;
     await loadScript(siteKey);
     const grecaptcha = window.grecaptcha;
-    if (!grecaptcha?.execute) return null;
+    // Wait for grecaptcha.ready() rather than checking .execute up front — right
+    // after the script's onload, .execute isn't defined yet, which made the
+    // first submit fail and only the second succeed.
+    if (typeof grecaptcha?.ready !== "function") return null;
     return await new Promise<string | null>((resolve) => {
       grecaptcha.ready(() => {
+        if (typeof grecaptcha.execute !== "function") return resolve(null);
         grecaptcha.execute(siteKey, { action }).then(
           (token) => resolve(token),
           () => resolve(null),
