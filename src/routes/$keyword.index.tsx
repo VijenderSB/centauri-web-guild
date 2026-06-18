@@ -3,7 +3,8 @@ import { PageShell, PageHero, Section, SectionHeading, CtaBand } from "@/compone
 import { findKeyword, KEYWORDS } from "@/content/keywords";
 import { US_CITIES, CA_CITIES } from "@/content/locations";
 import { findHub } from "@/content/services";
-import { ArrowRight, MapPin, CheckCircle2, AlertTriangle, Sparkles, HelpCircle, Flag, Zap } from "lucide-react";
+import { generateKeywordTestimonials } from "@/lib/page-content";
+import { ArrowRight, MapPin, CheckCircle2, AlertTriangle, Sparkles, HelpCircle, Flag, Zap, Quote, Star } from "lucide-react";
 
 export const Route = createFileRoute("/$keyword/")({
   loader: ({ params }) => {
@@ -54,6 +55,7 @@ function KeywordHub() {
   const kw = findKeyword(keyword)!;
   const hub = kw.relatedServiceHub ? findHub(kw.relatedServiceHub) : undefined;
   const related = KEYWORDS.filter((k) => k.slug !== kw.slug).slice(0, 6);
+  const testimonials = generateKeywordTestimonials(kw, 3);
 
   return (
     <PageShell>
@@ -213,8 +215,30 @@ function KeywordHub() {
         </div>
       </Section>
 
-      {/* Related keywords */}
+      {/* Testimonials */}
       <Section bg="muted">
+        <SectionHeading eyebrow="Client proof" title={`What clients say about our ${kw.title.toLowerCase()}`} />
+        <div className="grid md:grid-cols-3 gap-5 max-w-6xl mx-auto">
+          {testimonials.map((t) => (
+            <figure key={t.name + t.company} className="p-6 rounded-2xl border border-border bg-card flex flex-col">
+              <Quote className="h-6 w-6 text-primary/40" />
+              <blockquote className="mt-3 text-sm text-foreground/90 leading-relaxed flex-1">"{t.quote}"</blockquote>
+              <div className="mt-4 flex items-center gap-1 text-amber-500">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Star key={i} className="h-3.5 w-3.5 fill-current" />
+                ))}
+              </div>
+              <figcaption className="mt-3 text-xs">
+                <div className="font-semibold text-foreground">{t.name}</div>
+                <div className="text-muted-foreground">{t.role}, {t.company}</div>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </Section>
+
+      {/* Related keywords */}
+      <Section>
         <h2 className="text-2xl font-bold mb-6">Related services</h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {related.map((r) => (
