@@ -20,6 +20,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ServicesIndexRouteImport } from './routes/services.index'
 import { Route as LocationsIndexRouteImport } from './routes/locations.index'
 import { Route as IndustriesIndexRouteImport } from './routes/industries.index'
+import { Route as KeywordIndexRouteImport } from './routes/$keyword.index'
 import { Route as ServicesSlugRouteImport } from './routes/services.$slug'
 import { Route as ResourcesWebsiteMaintenanceChecklistRouteImport } from './routes/resources.website-maintenance-checklist'
 import { Route as LocationsSlugRouteImport } from './routes/locations.$slug'
@@ -82,6 +83,11 @@ const IndustriesIndexRoute = IndustriesIndexRouteImport.update({
   path: '/industries/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const KeywordIndexRoute = KeywordIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => KeywordRoute,
+} as any)
 const ServicesSlugRoute = ServicesSlugRouteImport.update({
   id: '/services/$slug',
   path: '/services/$slug',
@@ -116,7 +122,7 @@ const ServicesSlugChildRoute = ServicesSlugChildRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/$keyword': typeof KeywordRoute
+  '/$keyword': typeof KeywordRouteWithChildren
   '/about': typeof AboutRoute
   '/case-studies': typeof CaseStudiesRoute
   '/contact': typeof ContactRoute
@@ -127,6 +133,7 @@ export interface FileRoutesByFullPath {
   '/locations/$slug': typeof LocationsSlugRoute
   '/resources/website-maintenance-checklist': typeof ResourcesWebsiteMaintenanceChecklistRoute
   '/services/$slug': typeof ServicesSlugRouteWithChildren
+  '/$keyword/': typeof KeywordIndexRoute
   '/industries/': typeof IndustriesIndexRoute
   '/locations/': typeof LocationsIndexRoute
   '/services/': typeof ServicesIndexRoute
@@ -135,7 +142,6 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/$keyword': typeof KeywordRoute
   '/about': typeof AboutRoute
   '/case-studies': typeof CaseStudiesRoute
   '/contact': typeof ContactRoute
@@ -145,6 +151,7 @@ export interface FileRoutesByTo {
   '/industries/$slug': typeof IndustriesSlugRoute
   '/locations/$slug': typeof LocationsSlugRoute
   '/resources/website-maintenance-checklist': typeof ResourcesWebsiteMaintenanceChecklistRoute
+  '/$keyword': typeof KeywordIndexRoute
   '/industries': typeof IndustriesIndexRoute
   '/locations': typeof LocationsIndexRoute
   '/services': typeof ServicesIndexRoute
@@ -154,7 +161,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/$keyword': typeof KeywordRoute
+  '/$keyword': typeof KeywordRouteWithChildren
   '/about': typeof AboutRoute
   '/case-studies': typeof CaseStudiesRoute
   '/contact': typeof ContactRoute
@@ -165,6 +172,7 @@ export interface FileRoutesById {
   '/locations/$slug': typeof LocationsSlugRoute
   '/resources/website-maintenance-checklist': typeof ResourcesWebsiteMaintenanceChecklistRoute
   '/services/$slug': typeof ServicesSlugRouteWithChildren
+  '/$keyword/': typeof KeywordIndexRoute
   '/industries/': typeof IndustriesIndexRoute
   '/locations/': typeof LocationsIndexRoute
   '/services/': typeof ServicesIndexRoute
@@ -186,6 +194,7 @@ export interface FileRouteTypes {
     | '/locations/$slug'
     | '/resources/website-maintenance-checklist'
     | '/services/$slug'
+    | '/$keyword/'
     | '/industries/'
     | '/locations/'
     | '/services/'
@@ -194,7 +203,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/$keyword'
     | '/about'
     | '/case-studies'
     | '/contact'
@@ -204,6 +212,7 @@ export interface FileRouteTypes {
     | '/industries/$slug'
     | '/locations/$slug'
     | '/resources/website-maintenance-checklist'
+    | '/$keyword'
     | '/industries'
     | '/locations'
     | '/services'
@@ -223,6 +232,7 @@ export interface FileRouteTypes {
     | '/locations/$slug'
     | '/resources/website-maintenance-checklist'
     | '/services/$slug'
+    | '/$keyword/'
     | '/industries/'
     | '/locations/'
     | '/services/'
@@ -232,7 +242,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  KeywordRoute: typeof KeywordRoute
+  KeywordRoute: typeof KeywordRouteWithChildren
   AboutRoute: typeof AboutRoute
   CaseStudiesRoute: typeof CaseStudiesRoute
   ContactRoute: typeof ContactRoute
@@ -326,6 +336,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndustriesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/$keyword/': {
+      id: '/$keyword/'
+      path: '/'
+      fullPath: '/$keyword/'
+      preLoaderRoute: typeof KeywordIndexRouteImport
+      parentRoute: typeof KeywordRoute
+    }
     '/services/$slug': {
       id: '/services/$slug'
       path: '/services/$slug'
@@ -371,6 +388,17 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface KeywordRouteChildren {
+  KeywordIndexRoute: typeof KeywordIndexRoute
+}
+
+const KeywordRouteChildren: KeywordRouteChildren = {
+  KeywordIndexRoute: KeywordIndexRoute,
+}
+
+const KeywordRouteWithChildren =
+  KeywordRoute._addFileChildren(KeywordRouteChildren)
+
 interface ResourcesRouteChildren {
   ResourcesWebsiteMaintenanceChecklistRoute: typeof ResourcesWebsiteMaintenanceChecklistRoute
 }
@@ -400,7 +428,7 @@ const ServicesSlugRouteWithChildren = ServicesSlugRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  KeywordRoute: KeywordRoute,
+  KeywordRoute: KeywordRouteWithChildren,
   AboutRoute: AboutRoute,
   CaseStudiesRoute: CaseStudiesRoute,
   ContactRoute: ContactRoute,
