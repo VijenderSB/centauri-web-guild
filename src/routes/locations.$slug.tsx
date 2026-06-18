@@ -19,6 +19,7 @@ export const Route = createFileRoute("/locations/$slug")({
     const title = `${c.city} Web Design, SEO & Website Support | WebCentauri`;
     const desc = `Trusted web design, SEO, and ongoing technical support for ${c.city}, ${c.regionCode} businesses. Senior team. ${c.country === "USA" ? "US-based" : "Canadian"} delivery. Free audit.`;
     const url = `https://centauri-web-guild.lovable.app/locations/${c.slug}`;
+    const cityFaqs = generateCityOnlyFaqs(c, 4);
     return {
       meta: [
         { title },
@@ -28,6 +29,20 @@ export const Route = createFileRoute("/locations/$slug")({
         { property: "og:url", content: url },
       ],
       links: [{ rel: "canonical", href: url }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: cityFaqs.map((f) => ({
+              "@type": "Question",
+              name: f.q,
+              acceptedAnswer: { "@type": "Answer", text: f.a },
+            })),
+          }),
+        },
+      ],
     };
   },
   notFoundComponent: () => (
