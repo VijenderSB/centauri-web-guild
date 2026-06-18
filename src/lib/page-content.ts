@@ -252,3 +252,100 @@ export function generateMetaDesc(kw: Keyword, city: City): string {
   const rng = mulberry32(hashString(`m:${kw.slug}:${city.slug}`));
   return pick(rng, META_TEMPLATES)(kw, city);
 }
+
+// --- City-only helpers (used by /locations/$slug) ---------------------------
+const CITY_QUOTES = [
+  (c: string) => `We needed a web partner who actually understood ${c}'s market. WebCentauri's recommendations were sharper than the three local agencies we interviewed first.`,
+  (c: string) => `Two redesigns ago we lost half our search traffic. This team rebuilt the site in ${c} without losing a single ranking.`,
+  (c: string) => `Senior people on every call, written follow-ups after every meeting. That's not normal in ${c}, and it's why we stayed.`,
+  (c: string) => `Our ${c} team can finally edit the site without breaking it. That alone paid for the engagement.`,
+  (c: string) => `When our store crashed during a launch, they were on it before our own team finished triaging. We're in ${c}; they answered like they were down the street.`,
+  (c: string) => `Pricing was transparent from day one. No surprise change orders, no ${c}-tax — just honest scoping.`,
+  (c: string) => `The build felt custom, not templated. Visitors in ${c} actually comment on the site, which is a first.`,
+  (c: string) => `We've worked with bigger agencies and felt like a small account. With WebCentauri, our ${c} business gets senior attention every week.`,
+];
+
+export function generateCityTestimonials(city: City, count = 3): Testimonial[] {
+  const rng = mulberry32(hashString(`ct:${city.slug}`));
+  const inds = pickN(rng, city.industries, Math.min(count, city.industries.length));
+  while (inds.length < count) inds.push(pick(rng, city.industries));
+  const quotes = pickN(rng, CITY_QUOTES, count);
+  return inds.map((ind, i) => {
+    const first = pick(rng, FIRST_NAMES);
+    const last = pick(rng, LAST_INITIALS);
+    return {
+      name: `${first} ${last}`,
+      role: roleForIndustry(ind),
+      company: companyForIndustry(ind, city.city, rng),
+      quote: quotes[i]!(city.city),
+    };
+  });
+}
+
+const CITY_FAQ_TEMPLATES: Array<{ q: (c: City) => string; a: (c: City) => string }> = [
+  {
+    q: (c) => `Do you have a physical office in ${c.city}?`,
+    a: (c) => `Our delivery team works remotely across North America. Most ${c.city} clients prefer it — faster response than driving to an office, and we'll travel in for high-stakes meetings when it helps.`,
+  },
+  {
+    q: (c) => `Which ${c.city} industries do you work with most?`,
+    a: (c) => `Across ${c.city} and ${c.metro ?? c.region} we see a lot of ${c.industries.slice(0, 3).join(", ")} work. Our senior team adapts the playbook to your sector — we don't force a template.`,
+  },
+  {
+    q: (c) => `Can you take over an existing ${c.city} website?`,
+    a: (c) => `Yes — handovers from local ${c.city} agencies and freelancers are routine. We run a structured audit, document everything, and inherit cleanly so your team is never locked out.`,
+  },
+  {
+    q: (c) => `How quickly can you start on a ${c.city} project?`,
+    a: (c) => `Emergencies trigger same-day senior response. New build engagements typically kick off within 1–2 weeks of scoping in ${c.city}, depending on team availability and discovery scope.`,
+  },
+  {
+    q: (c) => `Do you handle ${c.country === "USA" ? "US" : "Canadian"} accessibility and privacy requirements?`,
+    a: (c) => `Yes. We build to ${c.country === "USA" ? "ADA / WCAG 2.2 AA standards and respect US state privacy laws (CCPA and the rest)" : "WCAG 2.2 AA, AODA, and PIPEDA / Quebec Law 25 where applicable"} as a default, not an upsell.`,
+  },
+  {
+    q: (c) => `What does pricing look like for ${c.city} clients?`,
+    a: (c) => `Fixed-scope for clearly defined work, hourly-with-cap for investigative work. Every quote is written, every change order is approved before work continues. No ${c.city}-specific markup.`,
+  },
+  {
+    q: (c) => `Will the same team stay on our ${c.city} account long-term?`,
+    a: (c) => `Yes. The senior who scopes your project is one of the people delivering it, and they stay on the account for ongoing support. That continuity is a core reason ${c.city} clients renew.`,
+  },
+];
+
+export function generateCityOnlyFaqs(city: City, count = 4) {
+  const rng = mulberry32(hashString(`cf:${city.slug}`));
+  return pickN(rng, CITY_FAQ_TEMPLATES, count).map((t) => ({
+    q: t.q(city),
+    a: t.a(city),
+  }));
+}
+
+// --- Keyword-only helpers (used by /$keyword hub) --------------------------
+const KW_QUOTES = [
+  (kw: string) => `We compared four providers for ${kw.toLowerCase()}. WebCentauri was the only one who diagnosed the root cause before quoting.`,
+  (kw: string) => `Senior-only delivery is real here. Every ${kw.toLowerCase()} engagement has a decision-maker engineer on the call.`,
+  (kw: string) => `The fastest ${kw.toLowerCase()} response we've ever had. Documented, billed honestly, and resolved cleanly.`,
+  (kw: string) => `We've stayed on retainer because the work keeps paying for itself. ${kw} is just one of the engagements we've expanded into.`,
+  (kw: string) => `Their ${kw.toLowerCase()} playbook saved us a rebuild. Two other vendors recommended starting over from scratch.`,
+  (kw: string) => `Communication is the differentiator. Written summaries after every call, no surprises on the invoice.`,
+];
+
+export function generateKeywordTestimonials(kw: Keyword, count = 3): Testimonial[] {
+  const rng = mulberry32(hashString(`kt:${kw.slug}`));
+  const inds = ["Tech", "Healthcare", "Ecommerce", "Manufacturing", "Finance", "Real Estate", "Hospitality"];
+  const picked = pickN(rng, inds, count);
+  const quotes = pickN(rng, KW_QUOTES, count);
+  const cityNames = ["Austin", "Toronto", "Boston", "Denver", "Vancouver", "Atlanta", "Calgary", "Chicago"];
+  return picked.map((ind, i) => {
+    const first = pick(rng, FIRST_NAMES);
+    const last = pick(rng, LAST_INITIALS);
+    const city = pick(rng, cityNames);
+    return {
+      name: `${first} ${last}`,
+      role: roleForIndustry(ind),
+      company: companyForIndustry(ind, city, rng),
+      quote: quotes[i]!(kw.title),
+    };
+  });
+}
