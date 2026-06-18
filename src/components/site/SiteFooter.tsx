@@ -36,14 +36,15 @@ export function SiteFooter() {
               WebCentauri Technologies
             </div>
             <p className="mt-4 text-sm text-slate-400 max-w-sm">
-              A US-focused technology partner trusted by founders, marketing leaders, and
-              IT teams across all 50 states and Canada to build, secure, and grow
+              A trusted technology partner for founders, marketing leaders, and
+              IT teams across the USA, UK, Australia, Canada, and India to build, secure, and grow
               business-critical websites.
             </p>
             <div className="mt-6 space-y-2 text-sm">
-              <a href="mailto:hello@webcentauri.com" className="flex items-center gap-2 hover:text-white"><Mail className="h-4 w-4 text-cyan-300" /> hello@webcentauri.com</a>
+              <a href="mailto:support@webcentauri.com" className="flex items-center gap-2 hover:text-white"><Mail className="h-4 w-4 text-cyan-300" /> support@webcentauri.com</a>
               <a href="tel:+18885550123" className="flex items-center gap-2 hover:text-white"><Phone className="h-4 w-4 text-cyan-300" /> +1 (888) 555-0123 · Mon–Fri 8am–8pm ET</a>
-              <div className="flex items-center gap-2"><MapPin className="h-4 w-4 text-cyan-300" /> Headquartered in the US · Serving USA & Canada</div>
+              <div className="flex items-center gap-2"><MapPin className="h-4 w-4 text-cyan-300" /> Development Centre 1: A 78, Sector 4, Noida 201301</div>
+              <div className="flex items-center gap-2"><MapPin className="h-4 w-4 text-cyan-300" /> Development Centre 2: Suite 2303, Sector 110, Noida 201304</div>
             </div>
             <div className="mt-6 flex items-center gap-3">
               <div className="flex items-center gap-1 text-amber-300 text-sm">

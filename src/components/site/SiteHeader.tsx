@@ -44,8 +44,8 @@ export function SiteHeader() {
         <div className="mx-auto max-w-7xl px-6 h-9 flex items-center justify-between">
           <div className="flex items-center gap-5">
             <span className="inline-flex items-center gap-1.5"><Phone className="h-3 w-3" /> +1 (888) 555-0123</span>
-            <span className="inline-flex items-center gap-1.5"><Mail className="h-3 w-3" /> hello@webcentauri.com</span>
-            <span>Serving USA & Canada — Mon–Fri 8am–8pm ET</span>
+            <span className="inline-flex items-center gap-1.5"><Mail className="h-3 w-3" /> support@webcentauri.com</span>
+            <span>USA · UK · Australia · Canada · India</span>
           </div>
           <Link to="/contact" className="inline-flex items-center gap-1 font-semibold text-primary hover:underline">
             <Siren className="h-3 w-3" /> 24/7 Emergency Support
