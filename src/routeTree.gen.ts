@@ -23,6 +23,8 @@ import { Route as ServicesSlugRouteImport } from './routes/services.$slug'
 import { Route as ResourcesWebsiteMaintenanceChecklistRouteImport } from './routes/resources.website-maintenance-checklist'
 import { Route as LocationsSlugRouteImport } from './routes/locations.$slug'
 import { Route as IndustriesSlugRouteImport } from './routes/industries.$slug'
+import { Route as ServicesSlugIndexRouteImport } from './routes/services.$slug.index'
+import { Route as ServicesSlugChildRouteImport } from './routes/services.$slug.$child'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -95,6 +97,16 @@ const IndustriesSlugRoute = IndustriesSlugRouteImport.update({
   path: '/industries/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ServicesSlugIndexRoute = ServicesSlugIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ServicesSlugRoute,
+} as any)
+const ServicesSlugChildRoute = ServicesSlugChildRouteImport.update({
+  id: '/$child',
+  path: '/$child',
+  getParentRoute: () => ServicesSlugRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -107,10 +119,12 @@ export interface FileRoutesByFullPath {
   '/industries/$slug': typeof IndustriesSlugRoute
   '/locations/$slug': typeof LocationsSlugRoute
   '/resources/website-maintenance-checklist': typeof ResourcesWebsiteMaintenanceChecklistRoute
-  '/services/$slug': typeof ServicesSlugRoute
+  '/services/$slug': typeof ServicesSlugRouteWithChildren
   '/industries/': typeof IndustriesIndexRoute
   '/locations/': typeof LocationsIndexRoute
   '/services/': typeof ServicesIndexRoute
+  '/services/$slug/$child': typeof ServicesSlugChildRoute
+  '/services/$slug/': typeof ServicesSlugIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -123,10 +137,11 @@ export interface FileRoutesByTo {
   '/industries/$slug': typeof IndustriesSlugRoute
   '/locations/$slug': typeof LocationsSlugRoute
   '/resources/website-maintenance-checklist': typeof ResourcesWebsiteMaintenanceChecklistRoute
-  '/services/$slug': typeof ServicesSlugRoute
   '/industries': typeof IndustriesIndexRoute
   '/locations': typeof LocationsIndexRoute
   '/services': typeof ServicesIndexRoute
+  '/services/$slug/$child': typeof ServicesSlugChildRoute
+  '/services/$slug': typeof ServicesSlugIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -140,10 +155,12 @@ export interface FileRoutesById {
   '/industries/$slug': typeof IndustriesSlugRoute
   '/locations/$slug': typeof LocationsSlugRoute
   '/resources/website-maintenance-checklist': typeof ResourcesWebsiteMaintenanceChecklistRoute
-  '/services/$slug': typeof ServicesSlugRoute
+  '/services/$slug': typeof ServicesSlugRouteWithChildren
   '/industries/': typeof IndustriesIndexRoute
   '/locations/': typeof LocationsIndexRoute
   '/services/': typeof ServicesIndexRoute
+  '/services/$slug/$child': typeof ServicesSlugChildRoute
+  '/services/$slug/': typeof ServicesSlugIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -162,6 +179,8 @@ export interface FileRouteTypes {
     | '/industries/'
     | '/locations/'
     | '/services/'
+    | '/services/$slug/$child'
+    | '/services/$slug/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -174,10 +193,11 @@ export interface FileRouteTypes {
     | '/industries/$slug'
     | '/locations/$slug'
     | '/resources/website-maintenance-checklist'
-    | '/services/$slug'
     | '/industries'
     | '/locations'
     | '/services'
+    | '/services/$slug/$child'
+    | '/services/$slug'
   id:
     | '__root__'
     | '/'
@@ -194,6 +214,8 @@ export interface FileRouteTypes {
     | '/industries/'
     | '/locations/'
     | '/services/'
+    | '/services/$slug/$child'
+    | '/services/$slug/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -206,7 +228,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   IndustriesSlugRoute: typeof IndustriesSlugRoute
   LocationsSlugRoute: typeof LocationsSlugRoute
-  ServicesSlugRoute: typeof ServicesSlugRoute
+  ServicesSlugRoute: typeof ServicesSlugRouteWithChildren
   IndustriesIndexRoute: typeof IndustriesIndexRoute
   LocationsIndexRoute: typeof LocationsIndexRoute
   ServicesIndexRoute: typeof ServicesIndexRoute
@@ -312,6 +334,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndustriesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/services/$slug/': {
+      id: '/services/$slug/'
+      path: '/'
+      fullPath: '/services/$slug/'
+      preLoaderRoute: typeof ServicesSlugIndexRouteImport
+      parentRoute: typeof ServicesSlugRoute
+    }
+    '/services/$slug/$child': {
+      id: '/services/$slug/$child'
+      path: '/$child'
+      fullPath: '/services/$slug/$child'
+      preLoaderRoute: typeof ServicesSlugChildRouteImport
+      parentRoute: typeof ServicesSlugRoute
+    }
   }
 }
 
@@ -328,6 +364,20 @@ const ResourcesRouteWithChildren = ResourcesRoute._addFileChildren(
   ResourcesRouteChildren,
 )
 
+interface ServicesSlugRouteChildren {
+  ServicesSlugChildRoute: typeof ServicesSlugChildRoute
+  ServicesSlugIndexRoute: typeof ServicesSlugIndexRoute
+}
+
+const ServicesSlugRouteChildren: ServicesSlugRouteChildren = {
+  ServicesSlugChildRoute: ServicesSlugChildRoute,
+  ServicesSlugIndexRoute: ServicesSlugIndexRoute,
+}
+
+const ServicesSlugRouteWithChildren = ServicesSlugRoute._addFileChildren(
+  ServicesSlugRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
@@ -338,7 +388,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   IndustriesSlugRoute: IndustriesSlugRoute,
   LocationsSlugRoute: LocationsSlugRoute,
-  ServicesSlugRoute: ServicesSlugRoute,
+  ServicesSlugRoute: ServicesSlugRouteWithChildren,
   IndustriesIndexRoute: IndustriesIndexRoute,
   LocationsIndexRoute: LocationsIndexRoute,
   ServicesIndexRoute: ServicesIndexRoute,
