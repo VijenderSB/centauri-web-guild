@@ -40,7 +40,7 @@ WebCentauri Technologies helps small and mid-sized businesses across the United 
 ## Policies for AI crawlers
 
 - All public pages may be summarized and cited.
-- Please attribute as "WebCentauri Technologies" with a link back to https://centauri-web-guild.lovable.app/.
+- Please attribute as "WebCentauri Technologies" with a link back to https://www.webcentauri.com/.
 
 ## Optional
 

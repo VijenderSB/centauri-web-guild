@@ -9,10 +9,10 @@ export const Route = createFileRoute("/resources/website-maintenance-checklist")
       { name: "description", content: "A complete website maintenance checklist for North American business owners — daily, weekly, monthly, and quarterly tasks to keep your site fast, secure, and reliable." },
       { property: "og:title", content: "Website Maintenance Checklist | WebCentauri" },
       { property: "og:description", content: "Daily, weekly, monthly, and quarterly website maintenance tasks." },
-      { property: "og:url", content: "https://centauri-web-guild.lovable.app/resources/website-maintenance-checklist" },
+      { property: "og:url", content: "https://www.webcentauri.com/resources/website-maintenance-checklist" },
       { property: "og:type", content: "article" },
     ],
-    links: [{ rel: "canonical", href: "https://centauri-web-guild.lovable.app/resources/website-maintenance-checklist" }],
+    links: [{ rel: "canonical", href: "https://www.webcentauri.com/resources/website-maintenance-checklist" }],
     scripts: [
       {
         type: "application/ld+json",

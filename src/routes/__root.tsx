@@ -104,11 +104,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": ["Organization", "ProfessionalService"],
-          "@id": "https://centauri-web-guild.lovable.app/#organization",
+          "@id": "https://www.webcentauri.com/#organization",
           name: "WebCentauri Technologies",
           alternateName: "WebCentauri",
-          url: "https://centauri-web-guild.lovable.app",
-          logo: "https://centauri-web-guild.lovable.app/favicon.ico",
+          url: "https://www.webcentauri.com",
+          logo: "https://www.webcentauri.com/favicon.ico",
           description: "Reliable technology and digital growth partner for USA & Canada businesses.",
           areaServed: [
             { "@type": "Country", name: "United States" },

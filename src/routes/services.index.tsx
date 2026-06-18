@@ -10,9 +10,9 @@ export const Route = createFileRoute("/services/")({
       { name: "description", content: "Website development, maintenance, WordPress, eCommerce, SEO, performance, and dedicated developers for USA & Canada businesses." },
       { property: "og:title", content: "WebCentauri Services — Web, SEO & Teams" },
       { property: "og:description", content: "Eight integrated service lines, one accountable partner." },
-      { property: "og:url", content: "https://centauri-web-guild.lovable.app/services" },
+      { property: "og:url", content: "https://www.webcentauri.com/services" },
     ],
-    links: [{ rel: "canonical", href: "https://centauri-web-guild.lovable.app/services" }],
+    links: [{ rel: "canonical", href: "https://www.webcentauri.com/services" }],
     scripts: [
       {
         type: "application/ld+json",

@@ -10,9 +10,9 @@ export const Route = createFileRoute("/contact")({
       { name: "description", content: "Book a free consultation, request a website audit, or get 24/7 emergency support for downtime, hacks, or critical bugs." },
       { property: "og:title", content: "Contact WebCentauri" },
       { property: "og:description", content: "Book a consultation, request an audit, or get emergency support." },
-      { property: "og:url", content: "https://centauri-web-guild.lovable.app/contact" },
+      { property: "og:url", content: "https://www.webcentauri.com/contact" },
     ],
-    links: [{ rel: "canonical", href: "https://centauri-web-guild.lovable.app/contact" }],
+    links: [{ rel: "canonical", href: "https://www.webcentauri.com/contact" }],
   }),
   component: ContactPage,
 });

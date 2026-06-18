@@ -5,7 +5,7 @@ import { MapPin, ArrowRight, Flag } from "lucide-react";
 
 const TITLE = "Web Design, SEO & Support Across USA & Canada | WebCentauri";
 const DESC = "Local website design, SEO, and ongoing technical support for businesses in every major US state and Canadian province. Find your city.";
-const URL = "https://centauri-web-guild.lovable.app/locations";
+const URL = "https://www.webcentauri.com/locations";
 
 export const Route = createFileRoute("/locations/")({
   head: () => ({
