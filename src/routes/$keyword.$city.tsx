@@ -3,7 +3,8 @@ import { PageShell, PageHero, Section, SectionHeading, CtaBand } from "@/compone
 import { findKeyword, KEYWORDS } from "@/content/keywords";
 import { findCity, LOCATIONS } from "@/content/locations";
 import { findHub } from "@/content/services";
-import { ArrowRight, MapPin, CheckCircle2, AlertTriangle, Sparkles, HelpCircle, ChevronRight, Home, Zap, Building2 } from "lucide-react";
+import { generateTestimonials, generateCityFaqs, generateIntro, generateMetaDesc } from "@/lib/page-content";
+import { ArrowRight, MapPin, CheckCircle2, AlertTriangle, Sparkles, HelpCircle, ChevronRight, Home, Zap, Building2, Quote, Star } from "lucide-react";
 
 export const Route = createFileRoute("/$keyword/$city")({
   loader: ({ params }) => {
@@ -19,7 +20,7 @@ export const Route = createFileRoute("/$keyword/$city")({
     if (!kw || !city) return {};
     const url = `https://centauri-web-guild.lovable.app/${kw.slug}/${city.slug}`;
     const title = `${kw.title} in ${city.city}, ${city.regionCode} | WebCentauri`;
-    const desc = `${kw.short} Trusted ${kw.label} for ${city.city}, ${city.region} businesses across ${city.metro ?? city.region}.`;
+    const desc = generateMetaDesc(kw, city);
     return {
       meta: [
         { title },
@@ -78,6 +79,14 @@ function KeywordCityPage() {
   const nearby = LOCATIONS
     .filter((other) => other.regionCode === c.regionCode && other.slug !== c.slug)
     .slice(0, 6);
+
+  // Distinct per-page content
+  const intro = generateIntro(kw, c);
+  const testimonials = generateTestimonials(kw, c, 3);
+  const cityFaqs = generateCityFaqs(kw, c, 3);
+  // Mix one base service FAQ with three city-specific FAQs so the set is unique per page
+  const baseFaq = kw.faqs[(c.slug.length + kw.slug.length) % kw.faqs.length]!;
+  const faqs = [baseFaq, ...cityFaqs];
 
   return (
     <PageShell>
