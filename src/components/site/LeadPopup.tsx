@@ -131,6 +131,8 @@ export function LeadPopup() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
+  const [website, setWebsite] = useState(""); // honeypot
+  const [formStartedAt] = useState(() => Date.now());
 
   // Stage 1: trigger after 5s. Stage 2 (FOMO): trigger 30s after stage 1 is dismissed without submitting.
   useEffect(() => {
@@ -229,6 +231,8 @@ export function LeadPopup() {
           email: form.email.trim(),
           phone: form.phone.trim(),
           message: form.message.trim(),
+          website, // honeypot
+          formStartedAt,
           pageUrl: typeof window !== "undefined" ? window.location.href : "",
           pageTitle: typeof document !== "undefined" ? document.title : "",
           context: ctx.contextKey,
@@ -365,6 +369,28 @@ export function LeadPopup() {
             )}
 
             <form onSubmit={handleSubmit} className="p-6 space-y-3">
+              {/* Honeypot — hidden from humans, irresistible to bots. */}
+              <div
+                aria-hidden="true"
+                style={{
+                  position: "absolute",
+                  left: "-10000px",
+                  top: "auto",
+                  width: 1,
+                  height: 1,
+                  overflow: "hidden",
+                }}
+              >
+                <label htmlFor="lp-website">Website</label>
+                <input
+                  id="lp-website"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={website}
+                  onChange={(e) => setWebsite(e.target.value)}
+                />
+              </div>
               <div className="grid sm:grid-cols-2 gap-3">
                 <div>
                   <label htmlFor="lp-name" className="text-xs font-semibold text-foreground">
