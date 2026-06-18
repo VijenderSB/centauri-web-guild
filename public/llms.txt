@@ -1,6 +1,6 @@
 # WebCentauri Technologies
 
-> Reliable technology and digital growth partner for USA & Canada businesses — emergency website support, WordPress, Shopify, website recovery, SEO, dedicated developers, and 24/7 support.
+> Reliable technology and digital growth partner for USA, UK, Australia, Canada, and India — emergency website support, WordPress, Shopify, website recovery, SEO, dedicated developers, and 24/7 support.
 
 WebCentauri Technologies helps small and mid-sized businesses across the United States and Canada build, maintain, secure, optimize, and grow their digital presence. 15+ years experience, 500+ projects delivered, 95% client retention, 4+ year average client tenure.
 
@@ -13,7 +13,8 @@ WebCentauri Technologies helps small and mid-sized businesses across the United 
 - **Industries served:** 70+ verticals including healthcare, dental, legal, SaaS, eCommerce, manufacturing, real estate, hospitality, finance, accounting, home services, nonprofits, education
 - **Pricing model:** Fixed-scope projects, monthly retainers, dedicated developers, and emergency support (USD)
 - **Compliance:** SOC 2-aligned, HIPAA-aware, PIPEDA-aware, WCAG 2.2 AA, NDA & MSA ready
-- **Contact:** hello@webcentauri.com · +1 (888) 555-0123
+- **Contact:** support@webcentauri.com · +1 (888) 555-0123
+- **Development Centres:** A 78, Sector 4, Noida 201301 | Suite 2303, Sector 110, Noida 201304
 
 ## Common questions
 

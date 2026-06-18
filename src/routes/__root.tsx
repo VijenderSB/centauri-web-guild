@@ -112,7 +112,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           description: "Reliable technology and digital growth partner for USA & Canada businesses.",
           areaServed: [
             { "@type": "Country", name: "United States" },
+            { "@type": "Country", name: "United Kingdom" },
+            { "@type": "Country", name: "Australia" },
             { "@type": "Country", name: "Canada" },
+            { "@type": "Country", name: "India" },
           ],
           knowsAbout: [
             "Emergency website support", "WordPress development", "Shopify development",
@@ -123,9 +126,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           contactPoint: [{
             "@type": "ContactPoint",
             telephone: "+1-888-555-0123",
+            email: "support@webcentauri.com",
             contactType: "customer support",
             availableLanguage: ["English", "French"],
-            areaServed: ["US", "CA"],
+            areaServed: ["US", "GB", "AU", "CA", "IN"],
             hoursAvailable: "Mo-Su 00:00-23:59",
           }],
           slogan: "Your reliable technology & digital growth partner.",
