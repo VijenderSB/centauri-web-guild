@@ -106,9 +106,9 @@ export function CtaBand() {
     <section className="text-white" style={{ background: "var(--gradient-hero)" }}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 lg:py-20 flex flex-col lg:flex-row items-center justify-between gap-8">
         <div>
-          <h3 className="text-3xl lg:text-4xl font-bold max-w-2xl">
+          <h2 className="text-3xl lg:text-4xl font-bold max-w-2xl">
             Ready to make your website a reliable growth engine?
-          </h3>
+          </h2>
           <p className="mt-3 text-slate-300 max-w-2xl">
             Book a free 30-minute consultation. We'll audit your site, identify wins, and map out a clear plan.
           </p>

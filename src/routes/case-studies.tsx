@@ -48,7 +48,7 @@ function CaseStudiesPage() {
                 <span className="font-semibold uppercase tracking-wide text-primary">{tag}</span>
                 <span className="text-muted-foreground">{loc}</span>
               </div>
-              <h3 className="mt-3 text-xl font-semibold">{title}</h3>
+              <h2 className="mt-3 text-xl font-semibold">{title}</h2>
               <div className="mt-3 inline-flex items-center gap-2 text-emerald-600 font-semibold">
                 <TrendingUp className="h-4 w-4" /> {metric}
               </div>

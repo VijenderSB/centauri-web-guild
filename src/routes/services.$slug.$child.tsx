@@ -35,6 +35,31 @@ export const Route = createFileRoute("/services/$slug/$child")({
             areaServed: ["United States", "Canada"],
           }),
         },
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: found.child.faqs.map((f) => ({
+              "@type": "Question",
+              name: f.q,
+              acceptedAnswer: { "@type": "Answer", text: f.a },
+            })),
+          }),
+        },
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: "https://centauri-web-guild.lovable.app/" },
+              { "@type": "ListItem", position: 2, name: "Services", item: "https://centauri-web-guild.lovable.app/services" },
+              { "@type": "ListItem", position: 3, name: found.hub.title, item: `https://centauri-web-guild.lovable.app/services/${loaderData.slug}` },
+              { "@type": "ListItem", position: 4, name: found.child.title, item: url },
+            ],
+          }),
+        },
       ],
     };
   },
@@ -83,7 +108,7 @@ function ChildPageView() {
           </div>
           <aside className="space-y-6">
             <div className="p-6 rounded-2xl border border-border bg-card" style={{ boxShadow: "var(--shadow-card)" }}>
-              <h3 className="font-semibold">Get this on your roadmap</h3>
+              <h2 className="font-semibold">Get this on your roadmap</h2>
               <p className="text-sm text-muted-foreground mt-2">Free 30-minute scoping call — senior engineer, not a sales rep.</p>
               <Link to="/contact" className="mt-4 inline-flex w-full justify-center px-4 py-3 rounded-md font-semibold text-primary-foreground" style={{ background: "var(--gradient-primary)" }}>
                 Book consultation
@@ -93,7 +118,7 @@ function ChildPageView() {
               </Link>
             </div>
             <div className="p-6 rounded-2xl border border-border bg-card">
-              <h3 className="font-semibold text-sm">Part of</h3>
+              <h2 className="font-semibold text-sm">Part of</h2>
               <Link to="/services/$slug" params={{ slug: hub.slug }} className="block mt-2 text-primary font-semibold hover:underline">
                 {hub.title} →
               </Link>
@@ -162,7 +187,7 @@ function ChildPageView() {
         <div className="grid md:grid-cols-2 gap-5 max-w-5xl mx-auto">
           {page.faqs.map((f) => (
             <div key={f.q} className="p-6 rounded-2xl border border-border bg-card">
-              <h3 className="font-semibold flex gap-2"><HelpCircle className="h-5 w-5 text-primary shrink-0" /> {f.q}</h3>
+              <h2 className="font-semibold flex gap-2"><HelpCircle className="h-5 w-5 text-primary shrink-0" /> {f.q}</h2>
               <p className="text-sm text-muted-foreground mt-2">{f.a}</p>
             </div>
           ))}
@@ -181,7 +206,7 @@ function ChildPageView() {
                 params={{ slug: hub.slug, child: s.slug }}
                 className="group p-5 rounded-2xl border border-border bg-card hover:border-primary/40 transition"
               >
-                <h3 className="font-semibold text-sm group-hover:text-primary">{s.title}</h3>
+                <h2 className="font-semibold text-sm group-hover:text-primary">{s.title}</h2>
                 <p className="text-xs text-muted-foreground mt-2">{s.short}</p>
                 <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-primary">
                   View <ArrowRight className="h-3 w-3" />

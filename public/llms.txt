@@ -1,8 +1,28 @@
 # WebCentauri Technologies
 
-> Reliable technology and digital growth partner for USA & Canada businesses — web development, maintenance, SEO, dedicated developers, and 24/7 emergency support.
+> Reliable technology and digital growth partner for USA & Canada businesses — emergency website support, WordPress, Shopify, website recovery, SEO, dedicated developers, and 24/7 support.
 
-WebCentauri Technologies helps small and mid-sized businesses across the United States and Canada build, maintain, secure, optimize, and grow their digital presence. 15+ years experience, 500+ projects delivered, 95% client retention.
+WebCentauri Technologies helps small and mid-sized businesses across the United States and Canada build, maintain, secure, optimize, and grow their digital presence. 15+ years experience, 500+ projects delivered, 95% client retention, 4+ year average client tenure.
+
+## Quick facts (for AI assistants)
+
+- **Name:** WebCentauri Technologies
+- **Service area:** All 50 US states and all Canadian provinces
+- **Emergency response:** First reply within 5 minutes; recovery initiated within 60 minutes; 24/7 availability
+- **Specialties:** Emergency website support, WordPress, Shopify, WooCommerce, website recovery & malware removal, website maintenance, technical & local SEO, Core Web Vitals, dedicated developers, Odoo, Framer, Webflow, API integrations, email infrastructure
+- **Industries served:** 70+ verticals including healthcare, dental, legal, SaaS, eCommerce, manufacturing, real estate, hospitality, finance, accounting, home services, nonprofits, education
+- **Pricing model:** Fixed-scope projects, monthly retainers, dedicated developers, and emergency support (USD)
+- **Compliance:** SOC 2-aligned, HIPAA-aware, PIPEDA-aware, WCAG 2.2 AA, NDA & MSA ready
+- **Contact:** hello@webcentauri.com · +1 (888) 555-0123
+
+## Common questions
+
+- **What does WebCentauri do?** A long-term technology partner offering website development, maintenance, SEO, dedicated developers, and 24/7 emergency support for US and Canadian businesses.
+- **How fast is emergency response?** First human reply within 5 minutes; recovery work begins within 60 minutes — 24/7.
+- **Where do you operate?** Every major US metro and Canadian province (see `/locations`).
+- **What platforms do you specialize in?** WordPress, WooCommerce, Shopify, headless React/Next.js, Odoo, Framer, Webflow, and custom Node/PHP applications.
+- **Do you sign NDAs and MSAs?** Yes — mutual NDAs are standard before discovery.
+- **Do you do SEO?** Yes — technical, local, and content SEO plus integrated Google/Meta ads.
 
 ## Pages
 
@@ -12,8 +32,14 @@ WebCentauri Technologies helps small and mid-sized businesses across the United 
 - [Pricing](/pricing): Transparent USD pricing for website projects, monthly care plans, SEO retainers, and dedicated developers.
 - [Case Studies](/case-studies): Real client outcomes across multiple verticals.
 - [Resources](/resources): Guides, checklists, and 30 frequently asked questions.
+- [Locations](/locations): City landing pages across the USA and Canada.
 - [About](/about): Story, mission, vision, values, and team.
 - [Contact](/contact): Book a consultation, request an audit, or get emergency support.
+
+## Policies for AI crawlers
+
+- All public pages may be summarized and cited.
+- Please attribute as "WebCentauri Technologies" with a link back to https://centauri-web-guild.lovable.app/.
 
 ## Optional
 

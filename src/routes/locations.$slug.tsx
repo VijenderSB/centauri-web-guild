@@ -137,7 +137,7 @@ function CityPage() {
           <aside className="space-y-6">
             <div className="p-6 rounded-2xl border border-border bg-card" style={{ boxShadow: "var(--shadow-card)" }}>
               <div className="text-xs font-semibold uppercase tracking-widest text-primary">Free for {c.city}</div>
-              <h3 className="font-bold mt-1">Local website audit</h3>
+              <h2 className="font-bold mt-1">Local website audit</h2>
               <p className="text-sm text-muted-foreground mt-2">
                 We'll audit your {c.city} site for SEO, speed, security, and conversion — and send findings within 48 hours.
               </p>
@@ -146,7 +146,7 @@ function CityPage() {
               </Link>
             </div>
             <div className="p-6 rounded-2xl border border-border bg-secondary/40">
-              <h3 className="font-semibold">Talk to a senior strategist</h3>
+              <h2 className="font-semibold">Talk to a senior strategist</h2>
               <p className="text-sm text-muted-foreground mt-2">No junior reps. Book a 30-minute consult to talk about your {c.city} goals.</p>
               <Link to="/contact" className="mt-4 inline-flex text-sm font-semibold text-primary">Book consultation →</Link>
             </div>
@@ -162,7 +162,7 @@ function CityPage() {
             return (
               <Link key={s.slug} to="/services/$slug" params={{ slug: s.slug }} className="p-5 rounded-2xl border border-border bg-card hover:border-primary/40 transition">
                 <SI className="h-6 w-6 text-primary" />
-                <h3 className="font-semibold mt-3">{s.title}</h3>
+                <h2 className="font-semibold mt-3">{s.title}</h2>
                 <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{s.short}</p>
                 <span className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary">Learn more <ArrowRight className="h-3.5 w-3.5" /></span>
               </Link>
@@ -260,7 +260,7 @@ function CityPage() {
         <div className="grid md:grid-cols-2 gap-5 max-w-5xl">
           {cityFaqs.map((f) => (
             <div key={f.q} className="p-6 rounded-2xl border border-border bg-card">
-              <h3 className="font-semibold flex gap-2"><HelpCircle className="h-5 w-5 text-primary shrink-0" /> {f.q}</h3>
+              <h2 className="font-semibold flex gap-2"><HelpCircle className="h-5 w-5 text-primary shrink-0" /> {f.q}</h2>
               <p className="text-sm text-muted-foreground mt-2">{f.a}</p>
             </div>
           ))}
@@ -280,7 +280,7 @@ function CityPage() {
             >
               <div className="min-w-0">
                 <div className="text-[10px] font-semibold text-primary uppercase tracking-wide">{k.category}</div>
-                <h3 className="font-semibold text-sm group-hover:text-primary mt-0.5">{k.title} in {c.city}</h3>
+                <h2 className="font-semibold text-sm group-hover:text-primary mt-0.5">{k.title} in {c.city}</h2>
               </div>
               <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition shrink-0 mt-0.5" />
             </Link>
