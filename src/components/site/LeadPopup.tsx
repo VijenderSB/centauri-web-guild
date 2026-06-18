@@ -1,6 +1,17 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRouterState } from "@tanstack/react-router";
-import { X, ShieldCheck, Send, Loader2, CheckCircle2, Sparkles, MapPin } from "lucide-react";
+import {
+  X,
+  ShieldCheck,
+  Send,
+  Loader2,
+  CheckCircle2,
+  Sparkles,
+  MapPin,
+  Clock,
+  Flame,
+  BadgeCheck,
+} from "lucide-react";
 import { findKeyword } from "@/content/keywords";
 import { findCity } from "@/content/locations";
 import { findHub, findChild } from "@/content/services";
@@ -115,30 +126,66 @@ export function LeadPopup() {
   const ctx = useMemo(() => detectContext(pathname), [pathname]);
 
   const [open, setOpen] = useState(false);
+  const [stage, setStage] = useState<1 | 2>(1);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
 
-  // Trigger after 5s — once per session
+  // Stage 1: trigger after 5s. Stage 2 (FOMO): trigger 30s after stage 1 is dismissed without submitting.
   useEffect(() => {
     if (typeof window === "undefined") return;
+    let state: string | null = null;
     try {
-      const state = sessionStorage.getItem(STORAGE_KEY);
-      if (state === "shown" || state === "submitted") return;
+      state = sessionStorage.getItem(STORAGE_KEY);
     } catch {
       /* ignore */
     }
+    if (state === "submitted" || state === "stage2-shown") return;
+
+    const delay = state === "stage1-dismissed" ? 30000 : 5000;
+    const nextStage: 1 | 2 = state === "stage1-dismissed" ? 2 : 1;
+
     const t = window.setTimeout(() => {
+      setStage(nextStage);
       setOpen(true);
       try {
-        sessionStorage.setItem(STORAGE_KEY, "shown");
+        sessionStorage.setItem(
+          STORAGE_KEY,
+          nextStage === 2 ? "stage2-shown" : "stage1-shown",
+        );
       } catch {
         /* ignore */
       }
-    }, 5000);
+    }, delay);
     return () => window.clearTimeout(t);
   }, []);
+
+  function dismiss() {
+    setOpen(false);
+    if (submitted) return;
+    try {
+      const state = sessionStorage.getItem(STORAGE_KEY);
+      if (state === "stage1-shown") {
+        sessionStorage.setItem(STORAGE_KEY, "stage1-dismissed");
+        // Schedule the FOMO follow-up popup in 30s
+        window.setTimeout(() => {
+          try {
+            if (sessionStorage.getItem(STORAGE_KEY) !== "stage1-dismissed") return;
+            sessionStorage.setItem(STORAGE_KEY, "stage2-shown");
+          } catch {
+            /* ignore */
+          }
+          setStage(2);
+          setOpen(true);
+        }, 30000);
+      } else if (state === "stage2-shown") {
+        sessionStorage.setItem(STORAGE_KEY, "stage2-dismissed");
+      }
+    } catch {
+      /* ignore */
+    }
+  }
 
   // Lock scroll while open
   useEffect(() => {
@@ -146,7 +193,7 @@ export function LeadPopup() {
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") dismiss();
     };
     window.addEventListener("keydown", onKey);
     return () => {
