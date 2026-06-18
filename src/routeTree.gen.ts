@@ -19,7 +19,6 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ServicesIndexRouteImport } from './routes/services.index'
 import { Route as LocationsIndexRouteImport } from './routes/locations.index'
 import { Route as IndustriesIndexRouteImport } from './routes/industries.index'
-import { Route as ServicesSlugRouteImport } from './routes/services.$slug'
 import { Route as ResourcesWebsiteMaintenanceChecklistRouteImport } from './routes/resources.website-maintenance-checklist'
 import { Route as LocationsSlugRouteImport } from './routes/locations.$slug'
 import { Route as IndustriesSlugRouteImport } from './routes/industries.$slug'
@@ -74,11 +73,6 @@ const IndustriesIndexRoute = IndustriesIndexRouteImport.update({
   path: '/industries/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ServicesSlugRoute = ServicesSlugRouteImport.update({
-  id: '/services/$slug',
-  path: '/services/$slug',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ResourcesWebsiteMaintenanceChecklistRoute =
   ResourcesWebsiteMaintenanceChecklistRouteImport.update({
     id: '/website-maintenance-checklist',
@@ -107,7 +101,6 @@ export interface FileRoutesByFullPath {
   '/industries/$slug': typeof IndustriesSlugRoute
   '/locations/$slug': typeof LocationsSlugRoute
   '/resources/website-maintenance-checklist': typeof ResourcesWebsiteMaintenanceChecklistRoute
-  '/services/$slug': typeof ServicesSlugRoute
   '/industries/': typeof IndustriesIndexRoute
   '/locations/': typeof LocationsIndexRoute
   '/services/': typeof ServicesIndexRoute
@@ -123,7 +116,6 @@ export interface FileRoutesByTo {
   '/industries/$slug': typeof IndustriesSlugRoute
   '/locations/$slug': typeof LocationsSlugRoute
   '/resources/website-maintenance-checklist': typeof ResourcesWebsiteMaintenanceChecklistRoute
-  '/services/$slug': typeof ServicesSlugRoute
   '/industries': typeof IndustriesIndexRoute
   '/locations': typeof LocationsIndexRoute
   '/services': typeof ServicesIndexRoute
@@ -140,7 +132,6 @@ export interface FileRoutesById {
   '/industries/$slug': typeof IndustriesSlugRoute
   '/locations/$slug': typeof LocationsSlugRoute
   '/resources/website-maintenance-checklist': typeof ResourcesWebsiteMaintenanceChecklistRoute
-  '/services/$slug': typeof ServicesSlugRoute
   '/industries/': typeof IndustriesIndexRoute
   '/locations/': typeof LocationsIndexRoute
   '/services/': typeof ServicesIndexRoute
@@ -158,7 +149,6 @@ export interface FileRouteTypes {
     | '/industries/$slug'
     | '/locations/$slug'
     | '/resources/website-maintenance-checklist'
-    | '/services/$slug'
     | '/industries/'
     | '/locations/'
     | '/services/'
@@ -174,7 +164,6 @@ export interface FileRouteTypes {
     | '/industries/$slug'
     | '/locations/$slug'
     | '/resources/website-maintenance-checklist'
-    | '/services/$slug'
     | '/industries'
     | '/locations'
     | '/services'
@@ -190,7 +179,6 @@ export interface FileRouteTypes {
     | '/industries/$slug'
     | '/locations/$slug'
     | '/resources/website-maintenance-checklist'
-    | '/services/$slug'
     | '/industries/'
     | '/locations/'
     | '/services/'
@@ -206,7 +194,6 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   IndustriesSlugRoute: typeof IndustriesSlugRoute
   LocationsSlugRoute: typeof LocationsSlugRoute
-  ServicesSlugRoute: typeof ServicesSlugRoute
   IndustriesIndexRoute: typeof IndustriesIndexRoute
   LocationsIndexRoute: typeof LocationsIndexRoute
   ServicesIndexRoute: typeof ServicesIndexRoute
@@ -284,13 +271,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndustriesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/services/$slug': {
-      id: '/services/$slug'
-      path: '/services/$slug'
-      fullPath: '/services/$slug'
-      preLoaderRoute: typeof ServicesSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/resources/website-maintenance-checklist': {
       id: '/resources/website-maintenance-checklist'
       path: '/website-maintenance-checklist'
@@ -338,7 +318,6 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   IndustriesSlugRoute: IndustriesSlugRoute,
   LocationsSlugRoute: LocationsSlugRoute,
-  ServicesSlugRoute: ServicesSlugRoute,
   IndustriesIndexRoute: IndustriesIndexRoute,
   LocationsIndexRoute: LocationsIndexRoute,
   ServicesIndexRoute: ServicesIndexRoute,
