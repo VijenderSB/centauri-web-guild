@@ -22,8 +22,9 @@ function detectContext(pathname: string): PageContext {
   // /services/:hub or /services/:hub/:child
   if (parts[0] === "services" && parts[1]) {
     const hub = findHub(parts[1]);
-    const child = parts[2] ? findChild(parts[1], parts[2]) : undefined;
-    if (child && hub) {
+    const found = parts[2] ? findChild(parts[1], parts[2]) : undefined;
+    if (found && hub) {
+      const child = found.child;
       return {
         eyebrow: `${hub.title}`,
         title: `Need help with ${child.title.toLowerCase()}?`,
