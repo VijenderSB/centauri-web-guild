@@ -82,7 +82,7 @@ function KeywordHub() {
           </div>
           <aside className="space-y-6">
             <div className="p-6 rounded-2xl border border-border bg-card" style={{ boxShadow: "var(--shadow-card)" }}>
-              <h3 className="font-semibold">Need this now?</h3>
+              <h2 className="font-semibold">Need this now?</h2>
               <p className="text-sm text-muted-foreground mt-2">Free 30-minute consult with a senior engineer.</p>
               <Link to="/contact" className="mt-4 inline-flex w-full justify-center px-4 py-3 rounded-md font-semibold text-primary-foreground" style={{ background: "var(--gradient-primary)" }}>
                 Get help now
@@ -90,7 +90,7 @@ function KeywordHub() {
             </div>
             {hub && (
               <div className="p-6 rounded-2xl border border-border bg-card">
-                <h3 className="font-semibold text-sm">Full service hub</h3>
+                <h2 className="font-semibold text-sm">Full service hub</h2>
                 <Link to="/services/$slug" params={{ slug: hub.slug }} className="block mt-2 text-primary font-semibold hover:underline">
                   {hub.title} →
                 </Link>
@@ -161,7 +161,7 @@ function KeywordHub() {
               <div className="min-w-0">
                 <div className="flex items-center gap-2">
                   <MapPin className="h-4 w-4 text-primary shrink-0" />
-                  <h3 className="font-semibold text-sm truncate group-hover:text-primary">{c.city}, {c.regionCode}</h3>
+                  <h2 className="font-semibold text-sm truncate group-hover:text-primary">{c.city}, {c.regionCode}</h2>
                 </div>
                 <p className="text-xs text-muted-foreground mt-1 truncate">{kw.title} in {c.city}</p>
               </div>
@@ -192,7 +192,7 @@ function KeywordHub() {
               <div className="min-w-0">
                 <div className="flex items-center gap-2">
                   <MapPin className="h-4 w-4 text-primary shrink-0" />
-                  <h3 className="font-semibold text-sm truncate group-hover:text-primary">{c.city}, {c.regionCode}</h3>
+                  <h2 className="font-semibold text-sm truncate group-hover:text-primary">{c.city}, {c.regionCode}</h2>
                 </div>
                 <p className="text-xs text-muted-foreground mt-1 truncate">{kw.title} in {c.city}</p>
               </div>
@@ -208,7 +208,7 @@ function KeywordHub() {
         <div className="grid md:grid-cols-2 gap-5 max-w-5xl mx-auto">
           {kw.faqs.map((f) => (
             <div key={f.q} className="p-6 rounded-2xl border border-border bg-card">
-              <h3 className="font-semibold flex gap-2"><HelpCircle className="h-5 w-5 text-primary shrink-0" /> {f.q}</h3>
+              <h2 className="font-semibold flex gap-2"><HelpCircle className="h-5 w-5 text-primary shrink-0" /> {f.q}</h2>
               <p className="text-sm text-muted-foreground mt-2">{f.a}</p>
             </div>
           ))}
@@ -249,7 +249,7 @@ function KeywordHub() {
               className="p-5 rounded-2xl border border-border bg-card hover:border-primary/40 transition"
             >
               <div className="text-xs font-semibold text-primary uppercase tracking-wide">{r.category}</div>
-              <h3 className="font-semibold mt-1">{r.title}</h3>
+              <h2 className="font-semibold mt-1">{r.title}</h2>
               <p className="text-sm text-muted-foreground mt-2">{r.short}</p>
             </Link>
           ))}

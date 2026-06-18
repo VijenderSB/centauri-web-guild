@@ -70,7 +70,7 @@ function IndustryDetailPage() {
           <aside className="space-y-6">
             <div className="p-6 rounded-2xl border border-border bg-card" style={{ boxShadow: "var(--shadow-card)" }}>
               <div className="grid h-12 w-12 place-items-center rounded-xl bg-primary/10 mb-3"><Icon className="h-6 w-6 text-primary" /></div>
-              <h3 className="font-semibold">Get an industry-specific plan</h3>
+              <h2 className="font-semibold">Get an industry-specific plan</h2>
               <p className="text-sm text-muted-foreground mt-2">Tell us about your {industry.name.toLowerCase()} business — we'll send a tailored plan within 24 hours.</p>
               <Link to="/contact" className="mt-4 inline-flex w-full justify-center px-4 py-3 rounded-md font-semibold text-primary-foreground" style={{ background: "var(--gradient-primary)" }}>
                 Request a plan
@@ -87,7 +87,7 @@ function IndustryDetailPage() {
             return (
               <Link key={r.slug} to="/industries/$slug" params={{ slug: r.slug }} className="p-6 rounded-2xl border border-border bg-card hover:border-primary/40 transition">
                 <RI className="h-6 w-6 text-primary" />
-                <h3 className="font-semibold mt-3">{r.name}</h3>
+                <h2 className="font-semibold mt-3">{r.name}</h2>
                 <p className="text-sm text-muted-foreground mt-1">{r.tagline}</p>
                 <span className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary">View industry <ArrowRight className="h-3.5 w-3.5" /></span>
               </Link>

@@ -75,7 +75,7 @@ function AboutPage() {
                 {/* @ts-ignore */}
                 <Icon className="h-5 w-5 text-primary-foreground" />
               </div>
-              <h3 className="text-lg font-semibold">{t as string}</h3>
+              <h2 className="text-lg font-semibold">{t as string}</h2>
               <p className="text-sm text-muted-foreground mt-1">{d as string}</p>
             </div>
           ))}

@@ -70,7 +70,7 @@ function IndustriesPage() {
                       <div className="grid h-12 w-12 place-items-center rounded-xl mb-4 bg-primary/10">
                         <Icon className="h-6 w-6 text-primary" />
                       </div>
-                      <h3 className="text-lg font-semibold">{name}</h3>
+                      <h2 className="text-lg font-semibold">{name}</h2>
                       <p className="mt-1 text-sm text-muted-foreground">{tagline}</p>
                       <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary group-hover:gap-2 transition-all">
                         Explore solutions <ArrowRight className="h-3.5 w-3.5" />

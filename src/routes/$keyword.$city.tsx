@@ -138,10 +138,10 @@ function KeywordCityPage() {
               </div>
             )}
             <div className="p-5 rounded-2xl border border-border bg-card">
-              <h3 className="font-semibold text-sm flex items-center gap-2">
+              <h2 className="font-semibold text-sm flex items-center gap-2">
                 <Building2 className="h-4 w-4 text-primary" />
                 Industries we serve in {c.city}
-              </h3>
+              </h2>
               <div className="mt-3 flex flex-wrap gap-2">
                 {c.industries.map((ind) => (
                   <span key={ind} className="px-3 py-1 rounded-full bg-secondary text-xs font-medium">{ind}</span>
@@ -151,7 +151,7 @@ function KeywordCityPage() {
           </div>
           <aside className="space-y-6">
             <div className="p-6 rounded-2xl border border-border bg-card" style={{ boxShadow: "var(--shadow-card)" }}>
-              <h3 className="font-semibold">Talk to {c.city}'s {kw.title} team</h3>
+              <h2 className="font-semibold">Talk to {c.city}'s {kw.title} team</h2>
               <p className="text-sm text-muted-foreground mt-2">Free 30-minute consult with a senior engineer — same day for emergencies.</p>
               <Link to="/contact" className="mt-4 inline-flex w-full justify-center px-4 py-3 rounded-md font-semibold text-primary-foreground" style={{ background: "var(--gradient-primary)" }}>
                 Get help now
@@ -162,7 +162,7 @@ function KeywordCityPage() {
             </div>
             {hub && (
               <div className="p-6 rounded-2xl border border-border bg-card">
-                <h3 className="font-semibold text-sm">Full service detail</h3>
+                <h2 className="font-semibold text-sm">Full service detail</h2>
                 <Link to="/services/$slug" params={{ slug: hub.slug }} className="block mt-2 text-primary font-semibold hover:underline">
                   {hub.title} →
                 </Link>
@@ -218,7 +218,7 @@ function KeywordCityPage() {
         <div className="grid md:grid-cols-2 gap-5 max-w-5xl mx-auto">
           {faqs.map((f) => (
             <div key={f.q} className="p-6 rounded-2xl border border-border bg-card">
-              <h3 className="font-semibold flex gap-2"><HelpCircle className="h-5 w-5 text-primary shrink-0" /> {f.q}</h3>
+              <h2 className="font-semibold flex gap-2"><HelpCircle className="h-5 w-5 text-primary shrink-0" /> {f.q}</h2>
               <p className="text-sm text-muted-foreground mt-2">{f.a}</p>
             </div>
           ))}
@@ -269,7 +269,7 @@ function KeywordCityPage() {
               className="group p-5 rounded-2xl border border-border bg-card hover:border-primary/40 transition"
             >
               <div className="text-xs font-semibold text-primary uppercase tracking-wide">{k.category}</div>
-              <h3 className="font-semibold mt-1 group-hover:text-primary text-sm">{k.title} in {c.city}</h3>
+              <h2 className="font-semibold mt-1 group-hover:text-primary text-sm">{k.title} in {c.city}</h2>
               <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-primary">
                 View <ArrowRight className="h-3 w-3" />
               </span>
@@ -296,7 +296,7 @@ function KeywordCityPage() {
                 <div>
                   <div className="flex items-center gap-2">
                     <MapPin className="h-4 w-4 text-primary" />
-                    <h3 className="font-semibold text-sm group-hover:text-primary">{other.city}, {other.regionCode}</h3>
+                    <h2 className="font-semibold text-sm group-hover:text-primary">{other.city}, {other.regionCode}</h2>
                   </div>
                   <p className="text-xs text-muted-foreground mt-1">{kw.title} in {other.city}</p>
                 </div>

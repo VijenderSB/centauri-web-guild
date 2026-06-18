@@ -146,7 +146,7 @@ function Index() {
                 {/* @ts-ignore */}
                 <Icon className="h-6 w-6 text-primary-foreground" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">{title as string}</h3>
+              <h2 className="text-lg font-semibold mb-2">{title as string}</h2>
               <p className="text-sm text-muted-foreground leading-relaxed">{desc as string}</p>
             </div>
           ))}
@@ -176,7 +176,7 @@ function Index() {
                 {/* @ts-ignore */}
                 <Icon className="h-5 w-5 text-primary" />
               </div>
-              <h3 className="font-semibold text-base mb-3">{title as string}</h3>
+              <h2 className="font-semibold text-base mb-3">{title as string}</h2>
               <ul className="space-y-1.5 text-sm text-muted-foreground">
                 {(items as string[]).map((i) => (
                   <li key={i} className="flex items-center gap-2"><CheckCircle2 className="h-3.5 w-3.5 text-primary/70" />{i}</li>
@@ -244,7 +244,7 @@ function Index() {
           <div className="mt-14 grid lg:grid-cols-2 gap-12 items-start">
             {/* Left: Downtime costs */}
             <div>
-              <h3 className="text-xl sm:text-2xl font-bold mb-6">Downtime costs you.</h3>
+              <h2 className="text-xl sm:text-2xl font-bold mb-6">Downtime costs you.</h2>
               <div className="grid grid-cols-2 gap-4">
                 {[
                   [TrendingDown, "Lost Leads", "Prospects bounce to competitors when your site is unreachable."],
@@ -266,7 +266,7 @@ function Index() {
 
             {/* Right: Timeline */}
             <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-6 sm:p-8">
-              <h3 className="text-lg font-bold mb-6 uppercase tracking-wide">Our Emergency Response Process</h3>
+              <h2 className="text-lg font-bold mb-6 uppercase tracking-wide">Our Emergency Response Process</h2>
               <div className="relative">
                 {/* Vertical line */}
                 <div className="absolute left-[19px] top-4 bottom-4 w-px bg-cyan-500/30" />
