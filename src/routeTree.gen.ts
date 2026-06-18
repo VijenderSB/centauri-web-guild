@@ -28,6 +28,7 @@ import { Route as IndustriesSlugRouteImport } from './routes/industries.$slug'
 import { Route as KeywordCityRouteImport } from './routes/$keyword.$city'
 import { Route as ServicesSlugIndexRouteImport } from './routes/services.$slug.index'
 import { Route as ServicesSlugChildRouteImport } from './routes/services.$slug.$child'
+import { Route as ApiPublicLeadRouteImport } from './routes/api/public/lead'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -125,6 +126,11 @@ const ServicesSlugChildRoute = ServicesSlugChildRouteImport.update({
   path: '/$child',
   getParentRoute: () => ServicesSlugRoute,
 } as any)
+const ApiPublicLeadRoute = ApiPublicLeadRouteImport.update({
+  id: '/api/public/lead',
+  path: '/api/public/lead',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -144,6 +150,7 @@ export interface FileRoutesByFullPath {
   '/industries/': typeof IndustriesIndexRoute
   '/locations/': typeof LocationsIndexRoute
   '/services/': typeof ServicesIndexRoute
+  '/api/public/lead': typeof ApiPublicLeadRoute
   '/services/$slug/$child': typeof ServicesSlugChildRoute
   '/services/$slug/': typeof ServicesSlugIndexRoute
 }
@@ -163,6 +170,7 @@ export interface FileRoutesByTo {
   '/industries': typeof IndustriesIndexRoute
   '/locations': typeof LocationsIndexRoute
   '/services': typeof ServicesIndexRoute
+  '/api/public/lead': typeof ApiPublicLeadRoute
   '/services/$slug/$child': typeof ServicesSlugChildRoute
   '/services/$slug': typeof ServicesSlugIndexRoute
 }
@@ -185,6 +193,7 @@ export interface FileRoutesById {
   '/industries/': typeof IndustriesIndexRoute
   '/locations/': typeof LocationsIndexRoute
   '/services/': typeof ServicesIndexRoute
+  '/api/public/lead': typeof ApiPublicLeadRoute
   '/services/$slug/$child': typeof ServicesSlugChildRoute
   '/services/$slug/': typeof ServicesSlugIndexRoute
 }
@@ -208,6 +217,7 @@ export interface FileRouteTypes {
     | '/industries/'
     | '/locations/'
     | '/services/'
+    | '/api/public/lead'
     | '/services/$slug/$child'
     | '/services/$slug/'
   fileRoutesByTo: FileRoutesByTo
@@ -227,6 +237,7 @@ export interface FileRouteTypes {
     | '/industries'
     | '/locations'
     | '/services'
+    | '/api/public/lead'
     | '/services/$slug/$child'
     | '/services/$slug'
   id:
@@ -248,6 +259,7 @@ export interface FileRouteTypes {
     | '/industries/'
     | '/locations/'
     | '/services/'
+    | '/api/public/lead'
     | '/services/$slug/$child'
     | '/services/$slug/'
   fileRoutesById: FileRoutesById
@@ -267,6 +279,7 @@ export interface RootRouteChildren {
   IndustriesIndexRoute: typeof IndustriesIndexRoute
   LocationsIndexRoute: typeof LocationsIndexRoute
   ServicesIndexRoute: typeof ServicesIndexRoute
+  ApiPublicLeadRoute: typeof ApiPublicLeadRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -404,6 +417,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesSlugChildRouteImport
       parentRoute: typeof ServicesSlugRoute
     }
+    '/api/public/lead': {
+      id: '/api/public/lead'
+      path: '/api/public/lead'
+      fullPath: '/api/public/lead'
+      preLoaderRoute: typeof ApiPublicLeadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -462,6 +482,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndustriesIndexRoute: IndustriesIndexRoute,
   LocationsIndexRoute: LocationsIndexRoute,
   ServicesIndexRoute: ServicesIndexRoute,
+  ApiPublicLeadRoute: ApiPublicLeadRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
