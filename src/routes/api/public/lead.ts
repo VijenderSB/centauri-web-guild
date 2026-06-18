@@ -12,6 +12,7 @@ type LeadPayload = {
   context?: unknown;
   website?: unknown; // honeypot — must stay empty
   formStartedAt?: unknown; // client timestamp ms
+  recaptchaToken?: unknown; // reCAPTCHA v3 token
 };
 
 function isNonEmptyString(v: unknown, max = 2000): v is string {
@@ -134,6 +135,32 @@ async function sendLeadEmail(lead: Lead): Promise<void> {
   });
 }
 
+// Verify a reCAPTCHA v3 token with Google. Returns true if it passes OR if
+// reCAPTCHA isn't configured (RECAPTCHA_SECRET_KEY unset). Fails OPEN on a
+// network/Google error so an outage never blocks real leads; fails CLOSED on an
+// explicit low score or invalid token.
+async function verifyRecaptcha(token: unknown, ip: string): Promise<boolean> {
+  const secret = process.env.RECAPTCHA_SECRET_KEY;
+  if (!secret) return true; // not configured — skip
+  if (typeof token !== "string" || token.length === 0) return false;
+  const minScore = Number(process.env.RECAPTCHA_MIN_SCORE) || 0.5;
+  try {
+    const params = new URLSearchParams({ secret, response: token });
+    if (ip && ip !== "unknown") params.set("remoteip", ip);
+    const res = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+      method: "POST",
+      headers: { "content-type": "application/x-www-form-urlencoded" },
+      body: params.toString(),
+    });
+    const data = (await res.json()) as { success?: boolean; score?: number };
+    if (!data.success) return false;
+    if (typeof data.score === "number" && data.score < minScore) return false;
+    return true;
+  } catch {
+    return true; // fail open on infrastructure error
+  }
+}
+
 export const Route = createFileRoute("/api/public/lead")({
   server: {
     handlers: {
@@ -247,6 +274,15 @@ export const Route = createFileRoute("/api/public/lead")({
             status: 200,
             headers: { "content-type": "application/json" },
           });
+        }
+
+        // ---- 8. reCAPTCHA v3 (skipped if RECAPTCHA_SECRET_KEY is unset)
+        const captchaOk = await verifyRecaptcha(body.recaptchaToken, ip);
+        if (!captchaOk) {
+          return new Response(
+            JSON.stringify({ ok: false, error: "Verification failed. Please refresh and try again." }),
+            { status: 400, headers: { "content-type": "application/json" } },
+          );
         }
 
         const lead: Lead = {

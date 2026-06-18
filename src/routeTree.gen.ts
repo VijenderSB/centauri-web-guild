@@ -28,6 +28,7 @@ import { Route as IndustriesSlugRouteImport } from './routes/industries.$slug'
 import { Route as KeywordCityRouteImport } from './routes/$keyword.$city'
 import { Route as ServicesSlugIndexRouteImport } from './routes/services.$slug.index'
 import { Route as ServicesSlugChildRouteImport } from './routes/services.$slug.$child'
+import { Route as ApiPublicRecaptchaKeyRouteImport } from './routes/api/public/recaptcha-key'
 import { Route as ApiPublicLeadRouteImport } from './routes/api/public/lead'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -126,6 +127,11 @@ const ServicesSlugChildRoute = ServicesSlugChildRouteImport.update({
   path: '/$child',
   getParentRoute: () => ServicesSlugRoute,
 } as any)
+const ApiPublicRecaptchaKeyRoute = ApiPublicRecaptchaKeyRouteImport.update({
+  id: '/api/public/recaptcha-key',
+  path: '/api/public/recaptcha-key',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicLeadRoute = ApiPublicLeadRouteImport.update({
   id: '/api/public/lead',
   path: '/api/public/lead',
@@ -151,6 +157,7 @@ export interface FileRoutesByFullPath {
   '/locations/': typeof LocationsIndexRoute
   '/services/': typeof ServicesIndexRoute
   '/api/public/lead': typeof ApiPublicLeadRoute
+  '/api/public/recaptcha-key': typeof ApiPublicRecaptchaKeyRoute
   '/services/$slug/$child': typeof ServicesSlugChildRoute
   '/services/$slug/': typeof ServicesSlugIndexRoute
 }
@@ -171,6 +178,7 @@ export interface FileRoutesByTo {
   '/locations': typeof LocationsIndexRoute
   '/services': typeof ServicesIndexRoute
   '/api/public/lead': typeof ApiPublicLeadRoute
+  '/api/public/recaptcha-key': typeof ApiPublicRecaptchaKeyRoute
   '/services/$slug/$child': typeof ServicesSlugChildRoute
   '/services/$slug': typeof ServicesSlugIndexRoute
 }
@@ -194,6 +202,7 @@ export interface FileRoutesById {
   '/locations/': typeof LocationsIndexRoute
   '/services/': typeof ServicesIndexRoute
   '/api/public/lead': typeof ApiPublicLeadRoute
+  '/api/public/recaptcha-key': typeof ApiPublicRecaptchaKeyRoute
   '/services/$slug/$child': typeof ServicesSlugChildRoute
   '/services/$slug/': typeof ServicesSlugIndexRoute
 }
@@ -218,6 +227,7 @@ export interface FileRouteTypes {
     | '/locations/'
     | '/services/'
     | '/api/public/lead'
+    | '/api/public/recaptcha-key'
     | '/services/$slug/$child'
     | '/services/$slug/'
   fileRoutesByTo: FileRoutesByTo
@@ -238,6 +248,7 @@ export interface FileRouteTypes {
     | '/locations'
     | '/services'
     | '/api/public/lead'
+    | '/api/public/recaptcha-key'
     | '/services/$slug/$child'
     | '/services/$slug'
   id:
@@ -260,6 +271,7 @@ export interface FileRouteTypes {
     | '/locations/'
     | '/services/'
     | '/api/public/lead'
+    | '/api/public/recaptcha-key'
     | '/services/$slug/$child'
     | '/services/$slug/'
   fileRoutesById: FileRoutesById
@@ -280,6 +292,7 @@ export interface RootRouteChildren {
   LocationsIndexRoute: typeof LocationsIndexRoute
   ServicesIndexRoute: typeof ServicesIndexRoute
   ApiPublicLeadRoute: typeof ApiPublicLeadRoute
+  ApiPublicRecaptchaKeyRoute: typeof ApiPublicRecaptchaKeyRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -417,6 +430,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesSlugChildRouteImport
       parentRoute: typeof ServicesSlugRoute
     }
+    '/api/public/recaptcha-key': {
+      id: '/api/public/recaptcha-key'
+      path: '/api/public/recaptcha-key'
+      fullPath: '/api/public/recaptcha-key'
+      preLoaderRoute: typeof ApiPublicRecaptchaKeyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/lead': {
       id: '/api/public/lead'
       path: '/api/public/lead'
@@ -483,7 +503,18 @@ const rootRouteChildren: RootRouteChildren = {
   LocationsIndexRoute: LocationsIndexRoute,
   ServicesIndexRoute: ServicesIndexRoute,
   ApiPublicLeadRoute: ApiPublicLeadRoute,
+  ApiPublicRecaptchaKeyRoute: ApiPublicRecaptchaKeyRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

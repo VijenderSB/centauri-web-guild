@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { PageShell, PageHero, Section } from "@/components/site/PageShell";
 import { Mail, Phone, MessageSquare, Siren, Calendar, CheckCircle2, MapPin } from "lucide-react";
+import { getRecaptchaToken } from "@/lib/recaptcha";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -52,10 +53,12 @@ function ContactPage() {
 
     setSubmitting(true);
     try {
+      const recaptchaToken = await getRecaptchaToken("contact");
       const res = await fetch("/api/public/lead", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
+          recaptchaToken,
           name,
           email,
           phone,

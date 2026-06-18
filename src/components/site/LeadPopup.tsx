@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRouterState } from "@tanstack/react-router";
+import { getRecaptchaToken } from "@/lib/recaptcha";
 import {
   X,
   ShieldCheck,
@@ -223,10 +224,12 @@ export function LeadPopup() {
 
     setSubmitting(true);
     try {
+      const recaptchaToken = await getRecaptchaToken("lead_popup");
       const res = await fetch("/api/public/lead", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
+          recaptchaToken,
           name: form.name.trim(),
           email: form.email.trim(),
           phone: form.phone.trim(),
